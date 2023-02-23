@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
@@ -15,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.autos.exampleAuto2;
 import frc.robot.commands.*;
 
 import frc.robot.subsystems.drive.Swerve;
@@ -101,6 +104,8 @@ public class RobotContainer {
   private final Slider slider;
 
   public RobotContainer() {
+    final HashMap<String, Command> eventMap = new HashMap<String, Command>();
+
     switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
       case REAL:
@@ -160,8 +165,7 @@ public class RobotContainer {
     // Set up auto routines
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
     // autoChooser.addOption("Spin", new SpinAuto(drive));
-    // autoChooser.addOption("Drive With Intake", new DriveWithIntakeAuto(drive,
-    // intake));
+    autoChooser.addOption("ExampleAuto2", new exampleAuto2(j_Swerve, intake,elevator,slider));
 
     // Configure the button bindings
 

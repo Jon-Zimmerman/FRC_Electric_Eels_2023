@@ -1,5 +1,8 @@
 package frc.robot.subsystems.drive;
 
+import java.util.HashMap;
+import java.util.function.Consumer;
+
 import org.littletonrobotics.junction.Logger;
 
 import frc.robot.Constants;//
@@ -14,13 +17,23 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 public class Swerve extends SubsystemBase {
     public SwerveDriveOdometry swerveOdometry;
     // public ModuleIO[] mSwerveMods;
     private final GyroIO gyroIO;
     private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
+
+    public SwerveAutoBuilder swerveAutoBuilder;
+
 
     private final ModuleIO[] ModuleIOs = new ModuleIO[4]; // FL, FR, BL, BR
     private final ModuleIOInputsAutoLogged[] moduleInputs = new ModuleIOInputsAutoLogged[] {
@@ -47,6 +60,16 @@ public class Swerve extends SubsystemBase {
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics,
                 Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
 
+        swerveAutoBuilder = new SwerveAutoBuilder(
+                this::getPose,
+                this::resetPose,
+                Constants.Swerve.swerveKinematics,
+                new PIDConstants(5.0, 0.0, 0.0),
+                new PIDConstants(5.0, 0.0, 0.0),
+                this::setModuleStatesAuto,
+                new HashMap<>(),
+                false,
+                this);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
@@ -107,25 +130,23 @@ public class Swerve extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), pose);
     }
+    public void resetPose(Pose2d pose) {
 
+    }
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
 
         states[0] = new SwerveModuleState(moduleInputs[0].driveMotorStateMetersPerSecond,
-                Rotation2d.fromDegrees(moduleInputs[0].angleMotorPositionDegrees
-                        ));
+                Rotation2d.fromDegrees(moduleInputs[0].angleMotorPositionDegrees));
 
         states[1] = new SwerveModuleState(moduleInputs[1].driveMotorStateMetersPerSecond,
-                Rotation2d.fromDegrees(moduleInputs[1].angleMotorPositionDegrees
-                        ));
+                Rotation2d.fromDegrees(moduleInputs[1].angleMotorPositionDegrees));
 
         states[2] = new SwerveModuleState(moduleInputs[2].driveMotorStateMetersPerSecond,
-                Rotation2d.fromDegrees(moduleInputs[2].angleMotorPositionDegrees
-                        ));
+                Rotation2d.fromDegrees(moduleInputs[2].angleMotorPositionDegrees));
 
         states[3] = new SwerveModuleState(moduleInputs[3].driveMotorStateMetersPerSecond,
-                Rotation2d.fromDegrees(moduleInputs[3].angleMotorPositionDegrees
-                        ));
+                Rotation2d.fromDegrees(moduleInputs[3].angleMotorPositionDegrees));
 
         Logger.getInstance().recordOutput("actualSwerveStates", states);
 
@@ -169,4 +190,5 @@ public class Swerve extends SubsystemBase {
         }
 
     }
+
 }
