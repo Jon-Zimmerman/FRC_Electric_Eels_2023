@@ -7,6 +7,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+
 public class Intake extends SubsystemBase {
   private final IntakeIO io;
   private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
@@ -18,18 +19,25 @@ public class Intake extends SubsystemBase {
 
     // Switch constants based on mode (the physics simulator is treated as a
     // separate robot with different tuning)
-    switch (Constants.currentMode) {
+    switch (Constants.getMode()) {
       case REAL:
+        ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+            Constants.IntakeSubsystem.kD);
+        break;
       case REPLAY:
-        ffModel = new SimpleMotorFeedforward(0.1, 0.05);
-        io.configurePID(1.0, 0.0, 0.0);
+        ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+            Constants.IntakeSubsystem.kD);
         break;
       case SIM:
         ffModel = new SimpleMotorFeedforward(0.1, 0.05);
         io.configurePID(0.5, 0.0, 0.0);
         break;
       default:
-        ffModel = new SimpleMotorFeedforward(0.0, 0.0);
+      ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+      io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+          Constants.IntakeSubsystem.kD);
         break;
     }
   }
@@ -50,6 +58,23 @@ public class Intake extends SubsystemBase {
 
     // Log intake setpoint
     Logger.getInstance().recordOutput("IntakeSetpointRPM", velocityRPM);
+  }
+
+  public void intakeIn() {
+    // TODO conemode eval intake in direction
+    // if conemode
+    runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+  }
+
+  public void intakeOut() {
+    // TODO conemode eval intake out direction
+    // if conemode
+    runVelocity(Constants.IntakeSubsystem.intakeOutConeVelRPM);
+  }
+
+  /** Stops the intake. */
+  public void holdCurrent() {
+    io.holdCurrent(Constants.IntakeSubsystem.holdCurrentAmps);
   }
 
   /** Stops the intake. */

@@ -15,8 +15,8 @@ import frc.lib.util.Alert;
 import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
-    public static final Mode currentMode = Mode.SIM;
-    private static final RobotType robot = RobotType.ROBOT_2023;
+    // public static final Mode currentMode = Mode.REAL;
+    private static final RobotType robot = RobotType.SIM;
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
@@ -78,8 +78,8 @@ public final class Constants {
          * loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
          */
-        public static final double openLoopRamp = 0.5;
-        public static final double closedLoopRamp = 0.5;
+        public static final double openLoopRamp = 0.25;
+        public static final double closedLoopRamp = 0.25;
 
         /* Angle Motor PID Values */
         public static final double angleKP = chosenModule.angleKP;
@@ -155,53 +155,102 @@ public final class Constants {
         }
     }
 
-    // Motors other than the drive system
-    public static final class Actuators {
-        // Elevator Extender Motor
-        public static final class Neo0 {
-            public static final int deviceID = 12;
-            public static final int min = 0;
-            public static final int max = 100;
+    // Elevator Extender Motor
+    public static final class ElevatorSubsystem {
+        public static final int deviceID = 12;
+        public static final int min = 0;
+        public static final int max = 100;
 
-            public static final double kP = 0.1;
-            public static final double kI = 1e-4;
-            public static final double kD = 1;
-            public static final double kIz = 0;
-            public static final double kFF = 0;
-            public static final double kMaxOutput = 1;
-            public static final double kMinOutput = -1;
+        // FeedForward Control
+        public static final double ks = 0.1;
+        public static final double kv = 0.05;
+        public static final double kg = 0.05;
 
-        }
+        public static final double kP = 0.1;
+        public static final double kI = 1e-4;
+        public static final double kD = 1;
+        public static final double kIz = 0;
+        public static final double kFF = 0;
+        public static final double kMaxOutput = 1;
+        public static final double kMinOutput = -1;
 
-        // Elevator Rotor Motor
-        public static final class Neo1 {
-            public static final int deviceID = 13;
-            public static final int min = 0;
-            public static final int max = 100;
+        public static final double gearRatio = 25.0;
+        public static final double sprocketDiameterInch = 2.0;
 
-            public static final double kP = 0.1;
-            public static final double kI = 1e-4;
-            public static final double kD = 1;
-            public static final double kIz = 0;
-            public static final double kFF = 0;
-            public static final double kMaxOutput = 1;
-            public static final double kMinOutput = -1;
-        }
+        //motor shaft details
+        public static final int maxCurrentAmps = 10;
+        public static final double maxAngularVelocityRPM = 1000.0;
+        public static final double maxAngularAccRPMPerSec = 10.0;
+        public static final double minOutputVelocityRPM = 100.0;
+        public static final double allowableSmartMotionPosErrorCounts = 100.0;
 
-        // Grabber motor
-        public static final class Neo2 {
-            public static final int deviceID = 14;
-            public static final int min = 0;
-            public static final int max = 100;
+        public static final double elevatorSoftLimitLower = 0;
+        public static final double elevatorSoftLimitUpper = 0;
+        public static final double elevatorPosBottom = 0.0;
+        public static final double elevatorPosMid = 40.0;
+        public static final double elevatorPosLoading = 70.0;
+        public static final double elevatorPosTop = 100.0;
 
-            public static final double kP = 0.1;
-            public static final double kI = 1e-4;
-            public static final double kD = 1;
-            public static final double kIz = 0;
-            public static final double kFF = 0;
-            public static final double kMaxOutput = 1;
-            public static final double kMinOutput = -1;
-        }
+    }
+
+    // Elevator Slider Motor
+    public static final class SliderSubsystem {
+        public static final int deviceID = 13;
+
+        // FeedForward Control
+        public static final double ks = 0.1;
+        public static final double kv = 0.05;
+        public static final double kg = 0.05;
+
+        public static final double gearRatio = 2.0;
+        public static final double sprocketDiameterInch = 2.0;
+
+        public static final double kP = 0.1;
+        public static final double kI = 1e-4;
+        public static final double kD = 1.0;
+        public static final double kIz = 0.0;
+        public static final double kFF = 0.0;
+        public static final double kMaxOutput = 1.0;
+        public static final double kMinOutput = -1.0;
+
+        public static final int maxCurrentAmps = 10;
+        public static final double maxLinearVelocityMPS = 10.0;
+        public static final double maxAngularVelocityRPM = 1000.0;
+        public static final double maxAngularAccRPMPerSec = 10.0;
+        public static final double minOutputVelocityRPM = 100.0;
+        public static final double allowableSmartMotionPosErrorCounts = 100.0;
+
+        public static final double sliderSoftLimitLower = 0.0;
+        public static final double sliderSoftLimitUpper = 0.0;
+        public static final double sliderIn = 0.0;
+        public static final double sliderOut = 0.0;
+
+    }
+
+    // Grabber motor
+    public static final class IntakeSubsystem {
+        public static final int deviceID = 14;
+
+        // FeedForward Control
+        public static final double ks = 0.1;
+        public static final double kv = 0.05;
+        // Closed Loop Control
+        public static final double kP = 0.05;
+        public static final double kI = 1e-4;
+        public static final double kD = 0.0;
+        public static final double kIz = 0;
+        public static final double kFF = 0;
+        public static final double kMaxOutput = 1;
+        public static final double kMinOutput = -1;
+
+        public static final int maxCurrentAmps = 10;
+        public static final double maxAngularVelocityRPM = 10.0;
+        public static final int holdCurrentAmps = 2;
+
+        public static final double intakeInCubeVelRPM = 100.0;
+        public static final double intakeInConeVelRPM = 100.0;
+        public static final double intakeOutCubeVelRPM = 100.0;
+        public static final double intakeOutConeVelRPM = 100.0;
     }
 
     public static final class AutoConstants {
@@ -225,9 +274,9 @@ public final class Constants {
 
     public static RobotType getRobot() {
         if (RobotBase.isReal()) {
-            if (robot == RobotType.ROBOT_SIM) { // Invalid robot selected
+            if (robot == RobotType.SIM) { // Invalid robot selected
                 invalidRobotAlert.set(true);
-                return RobotType.ROBOT_2023;
+                return RobotType.REAL;
             } else {
                 return robot;
             }
@@ -238,10 +287,10 @@ public final class Constants {
 
     public static Mode getMode() {
         switch (getRobot()) {
-            case ROBOT_2023:
+            case REAL:
                 return RobotBase.isReal() ? Mode.REAL : Mode.REPLAY;
 
-            case ROBOT_SIM:
+            case SIM:
                 return Mode.SIM;
 
             default:
@@ -250,7 +299,7 @@ public final class Constants {
     }
 
     public static enum RobotType {
-        ROBOT_2023, ROBOT_SIM
+        REAL, SIM
     }
 
     public static enum Mode {

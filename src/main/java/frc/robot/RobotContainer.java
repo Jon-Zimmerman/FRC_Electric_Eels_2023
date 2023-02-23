@@ -10,26 +10,13 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.ButtonType;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-//import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.PS4Controller.Button;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-import frc.robot.autos.*;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.commands.*;
-//import frc.robot.subsystems.*;
 
-// import frc.robot.commands.DriveWithIntakeAuto;
-// import frc.robot.commands.SpinAuto;
-// import frc.robot.subsystems.drive.Drive;
-// import frc.robot.subsystems.drive.DriveIO;
-// import frc.robot.subsystems.drive.DriveIOSim;
-// import frc.robot.subsystems.drive.DriveIOSparkMax;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.subsystems.drive.ModuleIOFalcon;
 import frc.robot.subsystems.drive.ModuleIOSim;
@@ -39,16 +26,13 @@ import frc.robot.subsystems.drive.GyroIONavx;
 import frc.robot.subsystems.drive.GyroIOSim;
 import frc.robot.subsystems.drive.GyroIO;
 
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.intake.IntakeIO;
-import frc.robot.subsystems.intake.IntakeIOSim;
-import frc.robot.subsystems.intake.IntakeIOSparkMax;
-import frc.robot.subsystems.intake.SparkMax;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.subsystems.intake.*;
+
+import frc.robot.subsystems.elevator.*;
+
+import frc.robot.subsystems.slider.*;
+
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -64,21 +48,35 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
-  private final LoggedDashboardNumber intakeSpeedInput = new LoggedDashboardNumber("Intake Speed", 1500.0);
+  //private final LoggedDashboardNumber intakeSpeedInput = new LoggedDashboardNumber("Intake Speed", 1500.0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
-   */  
-   private final Joystick driver = new Joystick(4);
+   */
+  private final Joystick driver = new Joystick(0);
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
   private final JoystickButton calibrate = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  // probably remove robotcentric
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton elevatorPos1 = new JoystickButton(driver, XboxController.Button.kA.value);
-  private final JoystickButton elevatorPos2 = new JoystickButton(driver, XboxController.Button.kB.value);
+  private final JoystickButton autoFocus = new JoystickButton(driver, XboxController.Button.kA.value);
+
+  private final Joystick driver2 = new Joystick(1);
+  private final JoystickButton coneMode = new JoystickButton(driver2, 7);
+  private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
+  private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
+
+  private final JoystickButton elevatorBottom = new JoystickButton(driver2, XboxController.Button.kA.value);
+  private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton elevatorLoading = new JoystickButton(driver2, XboxController.Button.kB.value);
+  private final JoystickButton elevatorTop = new JoystickButton(driver2, XboxController.Button.kY.value);
+
+  // DPad
+  private final POVButton sliderIn = new POVButton(driver2, 180);
+  private final POVButton sliderOut = new POVButton(driver2, 0);
   /* Driver Buttons */
   // private final Joystick driver = new Joystick(0);
   // private final int translationAxis = Joystick.AxisType.kY.value;
@@ -87,11 +85,10 @@ public class RobotContainer {
   // private final int throttleAxis = Joystick.AxisType.kTwist.value;
   // private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, 8  );
+  // private final JoystickButton zeroGyro = new JoystickButton(driver, 8 );
   // private final JoystickButton robotCentric = new JoystickButton(driver, 7);
   // private final JoystickButton elevatorPos1 = new JoystickButton(driver, 3);
   // private final JoystickButton elevatorPos2 = new JoystickButton(driver, 4);
-
 
   // Subsystems
   // private final Drive drive;
@@ -99,12 +96,12 @@ public class RobotContainer {
   /* Subsystems */
   // private final Swerve s_Swerve = new Swerve();
   private final Swerve j_Swerve;
-
-  private final SparkMax s_max = new SparkMax();
   private final Intake intake;
+  private final Elevator elevator;
+  private final Slider slider;
 
   public RobotContainer() {
-    switch (Constants.currentMode) {
+    switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
       case REAL:
         // drive = new Drive(new DriveIOSparkMax());
@@ -114,7 +111,8 @@ public class RobotContainer {
             new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
             new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
         intake = new Intake(new IntakeIOSparkMax());
-
+        elevator = new Elevator(new ElevatorIOSparkMax());
+        slider = new Slider(new SliderIOSparkMax());
         // new TeleopSwerve(
         // s_Swerve,
         // () -> -driver.getRawAxis(translationAxis),
@@ -130,23 +128,32 @@ public class RobotContainer {
       case SIM:
         // drive = new Drive(new DriveIOSim());
         j_Swerve = new Swerve(new GyroIOSim(() -> -driver.getRawAxis(rotationAxis)),
-        new ModuleIOSim(0, Constants.Swerve.Mod0.constants),
-        new ModuleIOSim(1, Constants.Swerve.Mod1.constants),
-        new ModuleIOSim(2, Constants.Swerve.Mod2.constants),
-        new ModuleIOSim(3, Constants.Swerve.Mod3.constants));
+            new ModuleIOSim(0, Constants.Swerve.Mod0.constants),
+            new ModuleIOSim(1, Constants.Swerve.Mod1.constants),
+            new ModuleIOSim(2, Constants.Swerve.Mod2.constants),
+            new ModuleIOSim(3, Constants.Swerve.Mod3.constants));
         intake = new Intake(new IntakeIOSim());
+        elevator = new Elevator(new ElevatorIOSim());
+        slider = new Slider(new SliderIOSim());
         break;
 
       // Replayed robot, disable IO implementations
       default:
         // drive = new Drive(new DriveIO() {});
-        j_Swerve = new Swerve(new GyroIO() {},
-        new ModuleIO() {},
-        new ModuleIO() {},
-        new ModuleIO() {},
-        new ModuleIO() {});
-        intake = new Intake(new IntakeIO() {});
-        
+        j_Swerve = new Swerve(new GyroIO() {
+        },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            },
+            new ModuleIO() {
+            });
+        intake = new Intake(new IntakeIO() {
+        });
+        elevator = new Elevator(new ElevatorIOSim());
+        slider = new Slider(new SliderIOSim());
         break;
     }
 
@@ -157,7 +164,7 @@ public class RobotContainer {
     // intake));
 
     // Configure the button bindings
-    s_max.maxInit();
+
     configureButtonBindings();
   }
 
@@ -178,15 +185,21 @@ public class RobotContainer {
         () -> -driver.getRawAxis(rotationAxis),
         () -> robotCentric.getAsBoolean()));
 
-        // driver.a()
-        // .whileTrue(new StartEndCommand(() -> intake.runVelocity(intakeSpeedInput.get()), intake::stop, intake));
-
     zeroGyro.onTrue(new InstantCommand(() -> j_Swerve.zeroGyro()));
-
-    elevatorPos1.onTrue(new InstantCommand(() -> s_max.extend(0d)));
-    elevatorPos2.onTrue(new InstantCommand(() -> s_max.extend(5d)));
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));
 
+    // intakeIn.whileTrue(new StartEndCommand(() ->
+    // intake.runVelocity(intakeSpeedInput.get()), intake::stop, intake));
+    intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
+    intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), () -> intake.stop(), intake));
+
+    elevatorBottom.onTrue(new InstantCommand(() -> elevator.elevatorBottom()));
+    elevatorMid.onTrue(new InstantCommand(() -> elevator.elevatorMid()));
+    elevatorLoading.onTrue(new InstantCommand(() -> elevator.elevatorLoading()));    
+    elevatorTop.onTrue(new InstantCommand(() -> elevator.elevatorTop()));
+
+    sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));    
+    sliderOut.onTrue(new InstantCommand(() -> slider.sliderOut()));
   }
 
   /**

@@ -9,47 +9,39 @@ import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import frc.robot.Constants;
+
+
 
 public class IntakeIOSparkMax implements IntakeIO {
-  private static final double GEAR_RATIO = 1.5;
+  private static final double GEAR_RATIO = 2.0;
+  private final CANSparkMax intakeMotor;
+  //private final CANSparkMax follower;
+  private final RelativeEncoder intakeEncoder;
 
-  private final CANSparkMax leader;
-  private final CANSparkMax follower;
-  private final RelativeEncoder encoder;
-  private final SparkMaxPIDController pid;
+
+  private final SparkMaxPIDController intakePidController;
 
   public IntakeIOSparkMax() {
-    leader = new CANSparkMax(5, MotorType.kBrushless);
-    follower = new CANSparkMax(6, MotorType.kBrushless);
+    intakeMotor= new CANSparkMax(Constants.IntakeSubsystem.deviceID, MotorType.kBrushless);
+    intakeEncoder = intakeMotor.getEncoder();
+    intakePidController = intakeMotor.getPIDController();
 
-    encoder = leader.getEncoder();
-    pid = leader.getPIDController();
-
-    leader.restoreFactoryDefaults();
-    follower.restoreFactoryDefaults();
-
-    leader.setInverted(false);
-    follower.follow(leader, false);
-
-    leader.enableVoltageCompensation(12.0);
-    leader.setSmartCurrentLimit(30);
-
-    leader.burnFlash();
-    follower.burnFlash();
+    //follower.burnFlash();
   }
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
-    inputs.positionRad = Units.rotationsToRadians(encoder.getPosition() / GEAR_RATIO);
+    //inputs.positionRad = Units.rotationsToRadians(intakeEncoder.getPosition() / GEAR_RATIO);
     inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
-        encoder.getVelocity() / GEAR_RATIO);
-    inputs.appliedVolts = leader.getAppliedOutput() * RobotController.getBatteryVoltage();
-    inputs.currentAmps = new double[] { leader.getOutputCurrent(), follower.getOutputCurrent() };
+      intakeEncoder.getVelocity() / GEAR_RATIO);
+    inputs.appliedVolts = intakeMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
+    inputs.currentAmps = intakeMotor.getOutputCurrent();
   }
 
   @Override
   public void setVelocity(double velocityRadPerSec, double ffVolts) {
-    pid.setReference(
+    intakePidController.setReference(
         Units.radiansPerSecondToRotationsPerMinute(velocityRadPerSec)
             * GEAR_RATIO,
         ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
@@ -57,14 +49,30 @@ public class IntakeIOSparkMax implements IntakeIO {
 
   @Override
   public void stop() {
-    leader.stopMotor();
+    intakeMotor.stopMotor();
   }
 
   @Override
+  public void holdCurrent(int amps) {
+    intakeMotor.set(4.0/12.0);
+    intakeMotor.setSmartCurrentLimit(amps);
+  }
+
+  
   public void configurePID(double kP, double kI, double kD) {
-    pid.setP(kP, 0);
-    pid.setI(kI, 0);
-    pid.setD(kD, 0);
-    pid.setFF(0, 0);
+    intakeMotor.restoreFactoryDefaults();
+    intakeMotor.setInverted(false);
+    intakeMotor.enableVoltageCompensation(12.0);
+    intakeMotor.setSmartCurrentLimit(Constants.IntakeSubsystem.maxCurrentAmps);
+
+    intakePidController.setP(kP);
+    intakePidController.setI(kI);
+    intakePidController.setD(kD);
+    intakePidController.setIZone(Constants.IntakeSubsystem.kIz);
+    intakePidController.setFF(Constants.IntakeSubsystem.kFF);
+    intakePidController.setOutputRange(Constants.IntakeSubsystem.kMinOutput, 
+    Constants.IntakeSubsystem.kMaxOutput);
+
+    intakeMotor.burnFlash();
   }
 }

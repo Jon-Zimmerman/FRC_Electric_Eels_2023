@@ -8,6 +8,7 @@ public interface GyroIO {
     public static class GyroIOInputs {
         //public boolean connected = false;
         public double yaw;
+        public double yawDegrees;
     }
 
 

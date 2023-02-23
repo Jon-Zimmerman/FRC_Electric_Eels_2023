@@ -14,8 +14,8 @@ public class GyroIOSim implements GyroIO{
     }
     public void updateInputs(GyroIOInputs inputs) {
         double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
-        inputs.yaw += rotationVal*Constants.Swerve.maxAngularVelocity*Constants.simLoopPeriodSecs*360.0/(2.0*Math.PI);
-
+        inputs.yawDegrees += rotationVal*Constants.Swerve.maxAngularVelocity*Constants.simLoopPeriodSecs*360.0/(2.0*Math.PI);
+        inputs.yaw+= rotationVal*Constants.Swerve.maxAngularVelocity*Constants.simLoopPeriodSecs;
     }
     public void zeroGyro(){
     }

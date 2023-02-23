@@ -6,7 +6,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 
 public class IntakeIOSim implements IntakeIO {
-  private FlywheelSim sim = new FlywheelSim(DCMotor.getNEO(1), 1.5, 0.004);
+  private FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNEO(1), 1.0, 0.001);
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
   private boolean closedLoop = false;
@@ -17,17 +17,17 @@ public class IntakeIOSim implements IntakeIO {
   public void updateInputs(IntakeIOInputs inputs) {
     if (closedLoop) {
       appliedVolts = MathUtil.clamp(
-          pid.calculate(sim.getAngularVelocityRadPerSec()) + ffVolts, -12.0,
+          pid.calculate(flywheelSim.getAngularVelocityRadPerSec()) + ffVolts, -12.0,
           12.0);
-      sim.setInputVoltage(appliedVolts);
+          flywheelSim.setInputVoltage(appliedVolts);
     }
 
-    sim.update(0.02);
+    flywheelSim.update(0.02);
 
-    inputs.positionRad = 0.0;
-    inputs.velocityRadPerSec = sim.getAngularVelocityRadPerSec();
+    //inputs.positionRad = 0.0;
+    inputs.velocityRadPerSec = flywheelSim.getAngularVelocityRadPerSec();
     inputs.appliedVolts = appliedVolts;
-    inputs.currentAmps = new double[] { sim.getCurrentDrawAmps() };
+    inputs.currentAmps = flywheelSim.getCurrentDrawAmps();
   }
 
   @Override
@@ -38,13 +38,18 @@ public class IntakeIOSim implements IntakeIO {
   }
 
   @Override
-  public void stop() {
-    closedLoop = false;
-    appliedVolts = 0.0;
-    sim.setInputVoltage(0.0);
+  public void holdCurrent(int amps) {
+    flywheelSim.setInputVoltage(4.0/12.0);
   }
 
   @Override
+  public void stop() {
+    closedLoop = false;
+    appliedVolts = 0.0;
+    flywheelSim.setInputVoltage(0.0);
+  }
+
+  
   public void configurePID(double kP, double kI, double kD) {
     pid.setPID(kP, kI, kD);
   }

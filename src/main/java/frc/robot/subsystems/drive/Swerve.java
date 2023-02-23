@@ -8,9 +8,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import frc.lib.math.Conversions;
-//import com.ctre.phoenix.sensors.Pigeon2;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -48,7 +45,7 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics,
-                Rotation2d.fromDegrees(gyroInputs.yaw), getModulePositions());
+                Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
 
     }
 
@@ -108,7 +105,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yaw), getModulePositions(), pose);
+        swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), pose);
     }
 
     public SwerveModuleState[] getModuleStates() {
@@ -162,7 +159,7 @@ public class Swerve extends SubsystemBase {
             Logger.getInstance().processInputs("Drive/Module" + Integer.toString(i),
                     moduleInputs[i]);
         }
-        swerveOdometry.update(Rotation2d.fromDegrees(gyroInputs.yaw), getModulePositions());
+        swerveOdometry.update(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
         getPose();
 
         for (int i = 0; i < 4; i++) {

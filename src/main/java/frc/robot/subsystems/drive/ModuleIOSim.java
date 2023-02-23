@@ -10,17 +10,8 @@ import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
-import frc.lib.util.SwerveModuleConstants;
-import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.Constants.Swerve;
 
 public class ModuleIOSim implements ModuleIO {
     public int moduleNumber;
@@ -105,15 +96,15 @@ public class ModuleIOSim implements ModuleIO {
                                                                                   // desiredState speed is too much
 
             SmartDashboard.putNumber("Throttle %", percentOutput * 100.0);
-            Logger.getInstance().recordOutput("OL Drive M" + moduleNumber + " % Throttle", percentOutput);
+            //Logger.getInstance().recordOutput("OL Drive M" + moduleNumber + " % Throttle", percentOutput);
             driveSim.setInputVoltage(percentOutput*12.0);
             // mDriveMotor.set(ControlMode.PercentOutput, percentOutput);
         } else {
-            double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond,
-                    Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
+            //double velocity = Conversions.MPSToFalcon(desiredState.speedMetersPerSecond,
+            //        Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
             
             double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
-            Logger.getInstance().recordOutput("CL Drive M" + moduleNumber + " % Throttle", percentOutput);
+            //Logger.getInstance().recordOutput("CL Drive M" + moduleNumber + " % Throttle", percentOutput);
             driveSim.setInputVoltage(percentOutput*12.0);
             
             // mDriveMotor.set(ControlMode.Velocity, velocity,
@@ -167,7 +158,7 @@ public class ModuleIOSim implements ModuleIO {
     }
 
     public static double falconRadsToWheelAngleDegs(double rads, double gearRatio) {
-        double test = rads * (1.0 / (gearRatio * 2.0 * Math.PI));
+        //double test = rads * (1.0 / (gearRatio * 2.0 * Math.PI));
         double deg = rads *36.0 * (1.0 / (gearRatio * 2.0 * Math.PI));
         return deg;
     }
