@@ -1,4 +1,4 @@
-package frc.robot.subsystems.elevator;
+package frc.robot.subsystems.slider;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -6,8 +6,8 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import frc.robot.Constants;
 
-public class ElevatorIOSim2 implements ElevatorIO {
-  private FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNEO(1), 1.0, 0.004);
+public class SliderIOSim2 implements SliderIO {
+  private FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNEO(1), 1.0, 0.00004);
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
   private boolean closedLoop = false;
@@ -15,12 +15,13 @@ public class ElevatorIOSim2 implements ElevatorIO {
   private double appliedVolts = 0.0;
   private double positionRotations = 0.0;
   @Override
-  public void updateInputs(ElevatorIOInputs inputs) {
+  public void updateInputs(SliderIOInputs inputs) {
+    inputs.appliedVolts = appliedVolts;
     if (closedLoop) {
-      appliedVolts = MathUtil.clamp(
-          pid.calculate(flywheelSim.getAngularVelocityRadPerSec()) + ffVolts, -12.0,
-          12.0);
-      flywheelSim.setInputVoltage(appliedVolts);
+      //appliedVolts = MathUtil.clamp(
+      //    pid.calculate(flywheelSim.getAngularVelocityRadPerSec()) + ffVolts, -12.0,
+      //    12.0);
+      //flywheelSim.setInputVoltage(appliedVolts);
     }
 
     flywheelSim.update(0.02);
@@ -56,3 +57,4 @@ public class ElevatorIOSim2 implements ElevatorIO {
     pid.setPID(kP, kI, kD);
   }
 }
+

@@ -43,7 +43,7 @@ public class SliderIOSparkMax implements SliderIO {
   @Override
   public void setPosition(double positionInch, double ffVolts) {
     double setPointRotations = positionInch/(Math.PI*Constants.SliderSubsystem.sprocketDiameterInch)*GEAR_RATIO;
-    sliderPidController.setReference(setPointRotations,ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
+    sliderPidController.setReference(setPointRotations,ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
   @Override

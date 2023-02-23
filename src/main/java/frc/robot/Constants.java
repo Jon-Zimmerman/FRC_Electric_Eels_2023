@@ -198,16 +198,16 @@ public final class Constants {
         public static final int deviceID = 13;
 
         // FeedForward Control
-        public static final double ks = 0.1;
-        public static final double kv = 0.05;
-        public static final double kg = 0.05;
+        public static final double ks = 0.0;
+        public static final double kv = 0.00;
+        public static final double kg = 0.00;
 
         public static final double gearRatio = 2.0;
         public static final double sprocketDiameterInch = 2.0;
 
-        public static final double kP = 0.1;
-        public static final double kI = 1e-4;
-        public static final double kD = 1.0;
+        public static final double kP = 100.0;
+        public static final double kI = 0;
+        public static final double kD = 10.0;
         public static final double kIz = 0.0;
         public static final double kFF = 0.0;
         public static final double kMaxOutput = 1.0;
@@ -223,20 +223,20 @@ public final class Constants {
         public static final double sliderSoftLimitLower = 0.0;
         public static final double sliderSoftLimitUpper = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 0.0;
+        public static final double sliderOut = 20.0;
 
     }
 
-    // Grabber motor
+    // Intake motor
     public static final class IntakeSubsystem {
         public static final int deviceID = 14;
 
         // FeedForward Control
-        public static final double ks = 0.1;
-        public static final double kv = 0.05;
+        public static final double ks = 0.0;
+        public static final double kv = 0.02;
         // Closed Loop Control
-        public static final double kP = 0.05;
-        public static final double kI = 1e-4;
+        public static final double kP = 0.8;
+        public static final double kI = 0.1;
         public static final double kD = 0.0;
         public static final double kIz = 0;
         public static final double kFF = 0;

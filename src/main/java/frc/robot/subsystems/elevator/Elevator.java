@@ -22,7 +22,8 @@ public class Elevator extends SubsystemBase {
       case SIM:
         ffModel = new ElevatorFeedforward(Constants.ElevatorSubsystem.ks, Constants.ElevatorSubsystem.kv,
             Constants.ElevatorSubsystem.kg);
-        io.configurePID(0.5, 0.0, 0.0);
+            io.configurePID(Constants.ElevatorSubsystem.kP, Constants.ElevatorSubsystem.kI,
+            Constants.ElevatorSubsystem.kD);
         break;
       case REAL:
       case REPLAY:

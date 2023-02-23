@@ -31,8 +31,9 @@ public class Intake extends SubsystemBase {
             Constants.IntakeSubsystem.kD);
         break;
       case SIM:
-        ffModel = new SimpleMotorFeedforward(0.1, 0.05);
-        io.configurePID(0.5, 0.0, 0.0);
+        ffModel = new SimpleMotorFeedforward(0.0, 0.00);
+        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+            Constants.IntakeSubsystem.kD);
         break;
       default:
       ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);

@@ -22,7 +22,8 @@ public class Slider extends SubsystemBase {
       case SIM:
         ffModel = new ElevatorFeedforward(Constants.SliderSubsystem.ks, Constants.SliderSubsystem.kv,
             Constants.SliderSubsystem.kg);
-        io.configurePID(0.5, 0.0, 0.0);
+            io.configurePID(Constants.SliderSubsystem.kP, Constants.SliderSubsystem.kI,
+            Constants.SliderSubsystem.kD);
         break;
       case REAL:
       case REPLAY:

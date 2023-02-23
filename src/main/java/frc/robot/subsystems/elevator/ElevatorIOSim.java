@@ -14,7 +14,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 
-//import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.Logger;
 
 public class ElevatorIOSim implements ElevatorIO {
   private static final double GEAR_RATIO = Constants.ElevatorSubsystem.gearRatio;
@@ -47,8 +47,11 @@ public class ElevatorIOSim implements ElevatorIO {
   @Override
   public void setPosition(double positionInch, double ffVolts) {
     double setPointRotations = positionInch / (Math.PI * Constants.ElevatorSubsystem.sprocketDiameterInch) * GEAR_RATIO;
-    elevatorPidController.setReference(setPointRotations, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
+    elevatorPidController.setReference(setPointRotations, CANSparkMax.ControlType.kPosition, 0);
+    //Logger.getInstance().recordOutput("Iacc", elevatorPidController.getIAccum());
+    //elevatorPidController.s
     //Logger.getInstance().recordOutput("ElevatorSetPos", setPointRotations);
+    
     positionSetPointInch = positionInch;
   }
 

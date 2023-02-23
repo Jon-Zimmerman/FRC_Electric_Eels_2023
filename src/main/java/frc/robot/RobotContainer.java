@@ -133,8 +133,8 @@ public class RobotContainer {
             new ModuleIOSim(2, Constants.Swerve.Mod2.constants),
             new ModuleIOSim(3, Constants.Swerve.Mod3.constants));
         intake = new Intake(new IntakeIOSim());
-        elevator = new Elevator(new ElevatorIOSim());
-        slider = new Slider(new SliderIOSim());
+        elevator = new Elevator(new ElevatorIOSim2());
+        slider = new Slider(new SliderIOSim2());
         break;
 
       // Replayed robot, disable IO implementations
@@ -152,8 +152,8 @@ public class RobotContainer {
             });
         intake = new Intake(new IntakeIO() {
         });
-        elevator = new Elevator(new ElevatorIOSim());
-        slider = new Slider(new SliderIOSim());
+        elevator = new Elevator(new ElevatorIO() {});
+        slider = new Slider(new SliderIO() {});
         break;
     }
 
@@ -210,4 +210,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
+
+  
 }
