@@ -34,3 +34,139 @@ Disconnect
 Show Timestamps
 Save Log
 Set Team Number
+
+
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3021.log
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3107.log
+[0.327s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 320k, guardsize: 0k, detached.
+Error occurred during initialization of VM
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3280.log
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3367.log
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3452.log
+[0.309s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 320k, guardsize: 0k, detached.
+Error occurred during initialization of VM
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+[0.287s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 320k, guardsize: 0k, detached.
+Error occurred during initialization of VM
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3712.log
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid3798.log
+[0.322s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 512k, guardsize: 0k, detached.
+Error occurred during initialization of VM
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+[0.284s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 320k, guardsize: 0k, detached.
+Error occurred during initialization of VM
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacd40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4059.log
+[0.301s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 320k, guardsize: 0k, detached.
+Error occurred during initialization of VM
+java.lang.OutOfMemoryError: unable to create native thread: possibly out of memory or process/resource limits reached
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4371.log
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacc00000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4454.log
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4536.log
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4620.log
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4704.log
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacc00000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4786.log
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4868.log
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 368648 bytes for Chunk::new
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid4952.log
+[0.045s][warning][os,thread] Failed to start thread - pthread_create failed (EAGAIN) for attributes: stacksize: 512k, guardsize: 4k, detached.
+Error occurred during initialization of VM
+Could not create G1ServiceThread
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacc40000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid5117.log
+OpenJDK Client VM warning: INFO: os::commit_memory(0xacda0000, 65536, 0) failed; error='Not enough space' (errno=12)
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 65536 bytes for committing reserved memory.
+# An error report file with more information is saved as:
+# /tmp/hs_err_pid5199.log
+Pause
+Discard
+Clear
+Don't Show Prints
+Switch to Viewer
+Don't Show Warnings
+Disconnect
+Show Timestamps
+Save Log
+Set Team Number
