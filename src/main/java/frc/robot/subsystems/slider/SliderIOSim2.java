@@ -14,6 +14,7 @@ public class SliderIOSim2 implements SliderIO {
   private double ffVolts = 0.0;
   private double appliedVolts = 0.0;
   private double positionRotations = 0.0;
+  private double positionSetPointInch = 0.0;
   @Override
   public void updateInputs(SliderIOInputs inputs) {
     inputs.appliedVolts = appliedVolts;
@@ -23,23 +24,25 @@ public class SliderIOSim2 implements SliderIO {
       //    12.0);
       //flywheelSim.setInputVoltage(appliedVolts);
     }
-
+    inputs.positionSetPointInch = positionSetPointInch;
     flywheelSim.update(0.02);
     //double elevator position
-    inputs.positionRad = flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs;
-    inputs.positionInch = flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs*
+    inputs.positionRad += flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs;
+    inputs.positionInch += flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs*
     Constants.ElevatorSubsystem.sprocketDiameterInch/(2*Math.PI);
     inputs.velocityRadPerSec = flywheelSim.getAngularVelocityRadPerSec();
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = flywheelSim.getCurrentDrawAmps();
+
   }
 
   @Override
   public void setPosition(double positionInch, double ffVolts) {
     pid.setSetpoint(positionInch/(Constants.ElevatorSubsystem.sprocketDiameterInch*Math.PI));
-
+    double setPointRotations = positionInch / (Math.PI * Constants.ElevatorSubsystem.sprocketDiameterInch) * Constants.ElevatorSubsystem.gearRatio;
+    positionSetPointInch = positionInch;
     appliedVolts = MathUtil.clamp(
-      pid.calculate(positionRotations), -12.0,
+      pid.calculate(setPointRotations), -12.0,
       12.0);
     flywheelSim.setInputVoltage(appliedVolts);
   }

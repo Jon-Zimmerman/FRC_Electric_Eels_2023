@@ -64,23 +64,23 @@ public class Swerve extends SubsystemBase {
                 this::getPose,
                 this::resetPose,
                 Constants.Swerve.swerveKinematics,
-                new PIDConstants(5.0, 0.0, 0.0),
-                new PIDConstants(5.0, 0.0, 0.0),
+                new PIDConstants(1.0, 0.0, 0.2),
+                new PIDConstants(0.5, 0.0, 0.2),
                 this::setModuleStatesAuto,
                 new HashMap<>(),
-                false,
+                true,
                 this);
     }
 
     public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
-        SmartDashboard.putNumber("gyroyaw", gyroInputs.yaw);
+        SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                         translation.getX(),
                         translation.getY(),
                         rotation,
-                        Rotation2d.fromDegrees(gyroInputs.yaw))
+                        Rotation2d.fromDegrees(gyroInputs.yawDegrees))
                         : new ChassisSpeeds(
                                 translation.getX(),
                                 translation.getY(),
@@ -131,7 +131,7 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), pose);
     }
     public void resetPose(Pose2d pose) {
-
+        swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), pose);
     }
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];

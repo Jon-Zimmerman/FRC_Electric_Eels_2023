@@ -41,7 +41,9 @@ public class Slider extends SubsystemBase {
     Logger.getInstance().processInputs("slider", inputs);
 
     // Log slider speed in RPM
-    Logger.getInstance().recordOutput("SliderSpeedRPM", getVelocityRPM());
+    Logger.getInstance().recordOutput("SliderVelRPM", getVelocityRPM());
+    Logger.getInstance().recordOutput("SliderPosInch", inputs.positionInch);
+    Logger.getInstance().recordOutput("SliderSetpointInch", inputs.positionSetPointInch);
   }
 
   public void runPosition(double positionInch) {
@@ -50,7 +52,7 @@ public class Slider extends SubsystemBase {
     io.setPosition(positionInch, ffModel.calculate(velocityRadPerSec));
 
     // Log slider setpoint
-    Logger.getInstance().recordOutput("SliderSetpointRPM", velocityRPM);
+
   }
 
   public void sliderIn() {

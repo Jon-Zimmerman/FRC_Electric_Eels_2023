@@ -1,5 +1,8 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Robocentric yes?" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="156"/>
+	</widget>
 	<widget field="Gyro Rate" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="516"/>
 	</widget>
@@ -58,41 +61,42 @@
 		<location x="173" y="181"/>
 	</widget>
 	<widget field="Mod 3 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="16" y="92"/>
+		<location x="343" y="514"/>
 	</widget>
 	<widget field="Mod 1 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="186" y="10"/>
+		<location x="349" y="359"/>
 	</widget>
 	<widget field="Mod 3 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="24" y="136"/>
+		<location x="350" y="569"/>
 	</widget>
 	<widget field="Mod 1 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="194" y="45"/>
+		<location x="356" y="410"/>
+		<height>19</height>
 	</widget>
 	<widget field="Mod 2 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="184" y="134"/>
+		<location x="339" y="484"/>
 		<height>19</height>
 	</widget>
 	<widget field="Mod 0 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="8" y="29"/>
+		<location x="350" y="334"/>
 	</widget>
 	<widget field="Mod 2 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="188" y="94"/>
+		<location x="347" y="433"/>
 	</widget>
 	<widget field="Mod 0 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="11" y="9"/>
+		<location x="348" y="290"/>
 	</widget>
 	<widget field="Mod 2 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="196" y="112"/>
+		<location x="352" y="456"/>
 	</widget>
 	<widget field="Mod 0 Velocity" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="19" y="54"/>
+		<location x="350" y="312"/>
 	</widget>
 	<widget field="Mod 3 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="12" y="115"/>
+		<location x="339" y="542"/>
 	</widget>
 	<widget field="Mod 1 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="182" y="28"/>
+		<location x="346" y="383"/>
 	</widget>
 	<widget field="maxspeed" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="376" y="10"/>
@@ -104,7 +108,11 @@
 	<widget field="gyroyaw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="404" y="89"/>
 	</widget>
+	<widget field="Auto Choices" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
+		<location x="2" y="21"/>
+	</widget>
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="Alerts"/>
 </xml>

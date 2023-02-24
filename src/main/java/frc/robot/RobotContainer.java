@@ -11,6 +11,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -67,19 +68,20 @@ public class RobotContainer {
   private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
   private final JoystickButton autoFocus = new JoystickButton(driver, XboxController.Button.kA.value);
 
-  // private final Joystick driver2 = new Joystick(1);
-  // private final JoystickButton coneMode = new JoystickButton(driver2, 7);
-  // private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
-  // private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
+  private final Joystick driver2 = new Joystick(1);
+  private final JoystickButton coneMode = new JoystickButton(driver2, 7);
+  private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
+  private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
-  // private final JoystickButton elevatorBottom = new JoystickButton(driver2, XboxController.Button.kA.value);
-  // private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kX.value);
-  // private final JoystickButton elevatorLoading = new JoystickButton(driver2, XboxController.Button.kB.value);
-  // private final JoystickButton elevatorTop = new JoystickButton(driver2, XboxController.Button.kY.value);
+  private final JoystickButton elevatorBottom = new JoystickButton(driver2, XboxController.Button.kA.value);
+  private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton elevatorLoading = new JoystickButton(driver2, XboxController.Button.kB.value);
+  private final JoystickButton elevatorTop = new JoystickButton(driver2, XboxController.Button.kY.value);
 
   // DPad
-  // private final POVButton sliderIn = new POVButton(driver2, 180);
-  // private final POVButton sliderOut = new POVButton(driver2, 0);
+  private final POVButton sliderIn = new POVButton(driver2, 180);
+  private final POVButton sliderOut = new POVButton(driver2, 0);
+
   /* Driver Buttons */
   // private final Joystick driver = new Joystick(0);
   // private final int translationAxis = Joystick.AxisType.kY.value;
@@ -166,6 +168,7 @@ public class RobotContainer {
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
     // autoChooser.addOption("Spin", new SpinAuto(drive));
     autoChooser.addOption("ExampleAuto2", new exampleAuto2(j_Swerve, intake,elevator,slider));
+    //SmartDashboard.putData("Auto Routine", autoChooser);
 
     // Configure the button bindings
 
@@ -192,18 +195,17 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> j_Swerve.zeroGyro()));
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));
 
-    // intakeIn.whileTrue(new StartEndCommand(() ->
-    // intake.runVelocity(intakeSpeedInput.get()), intake::stop, intake));
-    // intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
-    // intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), () -> intake.stop(), intake));
 
-    // elevatorBottom.onTrue(new InstantCommand(() -> elevator.elevatorBottom()));
-    // elevatorMid.onTrue(new InstantCommand(() -> elevator.elevatorMid()));
-    // elevatorLoading.onTrue(new InstantCommand(() -> elevator.elevatorLoading()));    
-    // elevatorTop.onTrue(new InstantCommand(() -> elevator.elevatorTop()));
+    intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
+    intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), () -> intake.stop(), intake));
 
-    // sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));    
-    // sliderOut.onTrue(new InstantCommand(() -> slider.sliderOut()));
+    elevatorBottom.onTrue(new InstantCommand(() -> elevator.elevatorBottom()));
+    elevatorMid.onTrue(new InstantCommand(() -> elevator.elevatorMid()));
+    elevatorLoading.onTrue(new InstantCommand(() -> elevator.elevatorLoading()));    
+    elevatorTop.onTrue(new InstantCommand(() -> elevator.elevatorTop()));
+
+    sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));    
+    sliderOut.onTrue(new InstantCommand(() -> slider.sliderOut()));
   }
 
   /**

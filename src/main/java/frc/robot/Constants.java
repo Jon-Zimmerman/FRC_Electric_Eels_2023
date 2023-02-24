@@ -16,7 +16,7 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.REAL;
+    private static final RobotType robot = RobotType.SIM;
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
@@ -166,7 +166,7 @@ public final class Constants {
         public static final double kv = 0.05;
         public static final double kg = 0.05;
 
-        public static final double kP = 0.1;
+        public static final double kP = 100.0;
         public static final double kI = 1e-4;
         public static final double kD = 1;
         public static final double kIz = 0;
@@ -207,7 +207,7 @@ public final class Constants {
 
         public static final double kP = 100.0;
         public static final double kI = 0;
-        public static final double kD = 10.0;
+        public static final double kD = 0.0;
         public static final double kIz = 0.0;
         public static final double kFF = 0.0;
         public static final double kMaxOutput = 1.0;
@@ -247,9 +247,9 @@ public final class Constants {
         public static final double maxAngularVelocityRPM = 10.0;
         public static final int holdCurrentAmps = 2;
 
-        public static final double intakeInCubeVelRPM = 100.0;
-        public static final double intakeInConeVelRPM = 100.0;
-        public static final double intakeOutCubeVelRPM = 100.0;
+        public static final double intakeInCubeVelRPM = 50.0;
+        public static final double intakeInConeVelRPM = -100.0;
+        public static final double intakeOutCubeVelRPM = -50.0;
         public static final double intakeOutConeVelRPM = 100.0;
     }
 
