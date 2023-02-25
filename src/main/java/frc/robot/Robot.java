@@ -13,7 +13,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import com.revrobotics.REVPhysicsSim;
+
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -62,7 +62,10 @@ public class Robot extends LoggedRobot {
         //logger.addDataReceiver(new WPILOGWriter("/media/sda1/"));
         logger.addDataReceiver(new NT4Publisher());
         break;
-
+      case CHASSIS:
+        //logger.addDataReceiver(new WPILOGWriter("/media/sda1/"));
+        logger.addDataReceiver(new NT4Publisher());
+        break;
       // Running a physics simulator, log to local folder
       case SIM:
         logger.addDataReceiver(new WPILOGWriter(""));

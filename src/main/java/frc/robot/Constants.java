@@ -16,7 +16,7 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.SIM;
+    private static final RobotType robot = RobotType.CHASSIS;
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
@@ -78,8 +78,8 @@ public final class Constants {
          * loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
          */
-        public static final double openLoopRamp = 0.25;
-        public static final double closedLoopRamp = 0.25;
+        public static final double openLoopRamp = 0.50;
+        public static final double closedLoopRamp = 0.50;
 
         /* Angle Motor PID Values */
         public static final double angleKP = chosenModule.angleKP;
@@ -103,7 +103,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4;
+        public static final double maxSpeed = 10.0;
         /** Radians per Second */
         public static final double maxAngularVelocity = (2 * Math.PI);// 1;
         // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
@@ -119,7 +119,7 @@ public final class Constants {
             public static final int driveMotorID = 0;
             public static final int angleMotorID = 2;
             public static final int canCoderID = 8;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(44.648);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(224.208);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -129,7 +129,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 3;
             public static final int canCoderID = 9;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(349.71);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(169.892);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -139,7 +139,7 @@ public final class Constants {
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 7;
             public static final int canCoderID = 10;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(197.49);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(17.050);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -149,7 +149,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 4;
             public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(129.78);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(291.000);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -278,7 +278,7 @@ public final class Constants {
 
     public static RobotType getRobot() {
         if (RobotBase.isReal()) {
-            if (robot == RobotType.SIM ||robot == RobotType.CHASSIS  ) { // Invalid robot selected
+            if (robot == RobotType.SIM  ) { // Invalid robot selected
                 invalidRobotAlert.set(true);
                 return RobotType.REAL;
             } else {

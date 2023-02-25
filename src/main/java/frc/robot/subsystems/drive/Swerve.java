@@ -34,7 +34,6 @@ public class Swerve extends SubsystemBase {
 
     public SwerveAutoBuilder swerveAutoBuilder;
 
-
     private final ModuleIO[] ModuleIOs = new ModuleIO[4]; // FL, FR, BL, BR
     private final ModuleIOInputsAutoLogged[] moduleInputs = new ModuleIOInputsAutoLogged[] {
             new ModuleIOInputsAutoLogged(),
@@ -60,8 +59,6 @@ public class Swerve extends SubsystemBase {
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics,
                 Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
 
-
-
         swerveAutoBuilder = new SwerveAutoBuilder(
                 this::getPose,
                 this::resetPose,
@@ -78,15 +75,12 @@ public class Swerve extends SubsystemBase {
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
         SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
         SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-                fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
                         translation.getX(),
                         translation.getY(),
                         rotation,
-                        Rotation2d.fromDegrees(gyroInputs.yawDegrees))
-                        : new ChassisSpeeds(
-                                translation.getX(),
-                                translation.getY(),
-                                rotation));
+                        Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
+                        
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
         SmartDashboard.putNumber("Robocentric yes?", fieldRelative ? 1d : 0d);
         getModuleStates();
@@ -117,43 +111,42 @@ public class Swerve extends SubsystemBase {
         setModuleStates(desiredStates, false);
     }
 
-    //#####################################################################################
-    //#####################################################################################
-    //#####################################################################################
+    // #####################################################################################
+    // #####################################################################################
+    // #####################################################################################
     public void driveOntoChargeStation() {
-        if (DriverStation.getAlliance() == Alliance.Red){
-            //Lock wheels toward heading
-            //drive forward at slow speed X -> 
-                
-                //SwerveModuleState desiredState = new SwerveModuleState();
-                //for motors i=0 -> 3 
-                    //desiredState.speedMetersPerSecond = X;
-                    //desiredState.angle = Y (degrees);
-                    //ModuleIOs[i].setDesiredState(desiredState, false); //maybe true would be better
-            //while(endcondition != true)
-                    //scan navx roll or pitch
-                    //if roll or pitch > trigger angle
-                            //set rampEngaged = true
-                    //if roll or pitch ~ 0 
-                        //motorsstop
-                        //wait 1 second
-                        //if roll or pitch < -trigger angle 
-                            //drive backward extra slow
-                        //else if roll or pitch < -trigger angle 
-                            //drive forward extra slow
-                        //else 
-                            //end condition = true
+        if (DriverStation.getAlliance() == Alliance.Red) {
+            // Lock wheels toward heading
+            // drive forward at slow speed X ->
+
+            // SwerveModuleState desiredState = new SwerveModuleState();
+            // for motors i=0 -> 3
+            // desiredState.speedMetersPerSecond = X;
+            // desiredState.angle = Y (degrees);
+            // ModuleIOs[i].setDesiredState(desiredState, false); //maybe true would be
+            // better
+            // while(endcondition != true)
+            // scan navx roll or pitch
+            // if roll or pitch > trigger angle
+            // set rampEngaged = true
+            // if roll or pitch ~ 0
+            // motorsstop
+            // wait 1 second
+            // if roll or pitch < -trigger angle
+            // drive backward extra slow
+            // else if roll or pitch < -trigger angle
+            // drive forward extra slow
+            // else
+            // end condition = true
             //
-        }
-        else{
-            //repeat logic
+        } else {
+            // repeat logic
         }
     }
 
-    //#####################################################################################
-    //#####################################################################################
-    //#####################################################################################
-
+    // #####################################################################################
+    // #####################################################################################
+    // #####################################################################################
 
     public Pose2d getPose() {
         Logger.getInstance().recordOutput("SwervePose", swerveOdometry.getPoseMeters());
@@ -163,9 +156,11 @@ public class Swerve extends SubsystemBase {
     public void resetOdometry(Pose2d pose) {
         swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), pose);
     }
+
     public void resetPose(Pose2d pose) {
         swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), pose);
     }
+
     public SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = new SwerveModuleState[4];
 

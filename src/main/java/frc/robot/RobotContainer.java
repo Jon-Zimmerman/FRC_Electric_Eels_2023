@@ -58,16 +58,16 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  private final Joystick driver = new Joystick(0);
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  // private final Joystick driver = new Joystick(0);
+  // private final int translationAxis = XboxController.Axis.kLeftY.value;
+  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  // private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  private final JoystickButton calibrate = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
-  // probably remove robotcentric
-  private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  private final JoystickButton autoFocus = new JoystickButton(driver, XboxController.Button.kA.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
+  // private final JoystickButton calibrate = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  // // probably remove robotcentric
+  // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  // private final JoystickButton autoFocus = new JoystickButton(driver, XboxController.Button.kA.value);
 
   private final Joystick driver2 = new Joystick(1);
   private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
@@ -84,17 +84,15 @@ public class RobotContainer {
   private final POVButton sliderOut = new POVButton(driver2, 0);
 
   /* Driver Buttons */
-  // private final Joystick driver = new Joystick(0);
-  // private final int translationAxis = Joystick.AxisType.kY.value;
-  // private final int strafeAxis = Joystick.AxisType.kX.value;
-  // private final int rotationAxis = Joystick.AxisType.kZ.value;
-  // private final int throttleAxis = Joystick.AxisType.kTwist.value;
-  // private final JoystickButton calibrate = new JoystickButton(driver, 12);
+  private final Joystick driver = new Joystick(0);
+  private final int translationAxis = Joystick.AxisType.kY.value;
+  private final int strafeAxis = Joystick.AxisType.kX.value;
+  private final int rotationAxis = Joystick.AxisType.kZ.value;
+  private final int throttleAxis = Joystick.AxisType.kTwist.value;
+  private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, 8 );
-  // private final JoystickButton robotCentric = new JoystickButton(driver, 7);
-  // private final JoystickButton elevatorPos1 = new JoystickButton(driver, 3);
-  // private final JoystickButton elevatorPos2 = new JoystickButton(driver, 4);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, 8 );
+  private final JoystickButton robotCentric = new JoystickButton(driver, 7);
 
   // Subsystems
   // private final Drive drive;
@@ -107,7 +105,7 @@ public class RobotContainer {
   private final Slider slider;
 
   public RobotContainer() {
-    final HashMap<String, Command> eventMap = new HashMap<String, Command>();
+    //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     // Set up auto routines
 
     // autoChooser.addOption("Spin", new SpinAuto(drive));
@@ -145,7 +143,7 @@ public class RobotContainer {
         break;
       case CHASSIS:
         // drive = new Drive(new DriveIOSim());
-        j_Swerve = new Swerve(new GyroIOSim(() -> -driver.getRawAxis(rotationAxis)),
+        j_Swerve = new Swerve(new GyroIONavx(),
             new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
             new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
             new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
@@ -199,7 +197,7 @@ public class RobotContainer {
         j_Swerve,
         () -> -driver.getRawAxis(translationAxis),
         () -> -driver.getRawAxis(strafeAxis),
-        () -> -driver.getRawAxis(rotationAxis),
+        () -> driver.getRawAxis(rotationAxis),
         () -> robotCentric.getAsBoolean()));
 
     zeroGyro.onTrue(new InstantCommand(() -> j_Swerve.zeroGyro()));
