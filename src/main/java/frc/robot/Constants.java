@@ -162,13 +162,13 @@ public final class Constants {
         public static final int max = 100;
 
         // FeedForward Control
-        public static final double ks = 0.1;
-        public static final double kv = 0.05;
-        public static final double kg = 0.05;
+        public static final double ks = 0.00;
+        public static final double kv = 0.00;
+        public static final double kg = 0.00;
 
-        public static final double kP = 100.0;
-        public static final double kI = 1e-4;
-        public static final double kD = 1;
+        public static final double kP = 1.0;
+        public static final double kI = 0.5;
+        public static final double kD = 0.0;
         public static final double kIz = 0;
         public static final double kFF = 0;
         public static final double kMaxOutput = 1;
@@ -183,6 +183,7 @@ public final class Constants {
         public static final double maxAngularAccRPMPerSec = 10.0;
         public static final double minOutputVelocityRPM = 100.0;
         public static final double allowableSmartMotionPosErrorCounts = 100.0;
+        public static final double autoPositionErrorInch = 2.0;
 
         public static final double elevatorSoftLimitLower = 0;
         public static final double elevatorSoftLimitUpper = 0;
@@ -205,8 +206,8 @@ public final class Constants {
         public static final double gearRatio = 2.0;
         public static final double sprocketDiameterInch = 2.0;
 
-        public static final double kP = 100.0;
-        public static final double kI = 0;
+        public static final double kP = 3.0;
+        public static final double kI = 0.5;
         public static final double kD = 0.0;
         public static final double kIz = 0.0;
         public static final double kFF = 0.0;
@@ -233,7 +234,7 @@ public final class Constants {
 
         // FeedForward Control
         public static final double ks = 0.0;
-        public static final double kv = 0.02;
+        public static final double kv = 0.00;
         // Closed Loop Control
         public static final double kP = 0.8;
         public static final double kI = 0.1;
@@ -277,7 +278,7 @@ public final class Constants {
 
     public static RobotType getRobot() {
         if (RobotBase.isReal()) {
-            if (robot == RobotType.SIM) { // Invalid robot selected
+            if (robot == RobotType.SIM ||robot == RobotType.CHASSIS  ) { // Invalid robot selected
                 invalidRobotAlert.set(true);
                 return RobotType.REAL;
             } else {
@@ -296,16 +297,18 @@ public final class Constants {
             case SIM:
                 return Mode.SIM;
 
+            case CHASSIS:
+                return Mode.CHASSIS;
             default:
                 return Mode.REAL;
         }
     }
 
     public static enum RobotType {
-        REAL, SIM
+        REAL, SIM, CHASSIS
     }
 
     public static enum Mode {
-        REAL, REPLAY, SIM
+        REAL, REPLAY, SIM, CHASSIS
     }
 }

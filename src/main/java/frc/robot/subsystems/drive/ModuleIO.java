@@ -2,6 +2,8 @@ package frc.robot.subsystems.drive;
 
 import org.littletonrobotics.junction.AutoLog;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public interface ModuleIO {
@@ -25,7 +27,7 @@ public interface ModuleIO {
     }
 
     public default void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {}
-
+    //public default void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {}
     //public default void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {}
 
     //public default void setAngle(SwerveModuleState desiredState) {}

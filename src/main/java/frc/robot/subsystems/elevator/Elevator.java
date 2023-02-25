@@ -43,30 +43,40 @@ public class Elevator extends SubsystemBase {
     // Log elevator speed in RPM
     Logger.getInstance().recordOutput("ElevatorSpeedRPM", getVelocityRPM());
     Logger.getInstance().recordOutput("ElevatorSetpointInch", inputs.positionSetPointInch);
-
+    Logger.getInstance().recordOutput("PosErrorInch", getError());
   }
 
-  public void runPosition(double positionInch) {
+  public void setPosition(double positionInch) {
     var velocityRPM = getVelocityRPM();
     var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
     io.setPosition(positionInch, ffModel.calculate(velocityRadPerSec));
 
   }
+  public double getError() {
+    Logger.getInstance().recordOutput("PosErrorInch",inputs.positionSetPointInch - inputs.positionInch);
+    return Math.abs(inputs.positionSetPointInch - inputs.positionInch);
+  }
 
   public void elevatorBottom() {
-    runPosition(Constants.ElevatorSubsystem.elevatorPosBottom);
+    setPosition(Constants.ElevatorSubsystem.elevatorPosBottom);
+    //while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
+
   }
 
   public void elevatorMid() {
-    runPosition(Constants.ElevatorSubsystem.elevatorPosMid);
+    setPosition(Constants.ElevatorSubsystem.elevatorPosMid);
+    //while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
   }
 
   public void elevatorLoading() {
-    runPosition(Constants.ElevatorSubsystem.elevatorPosLoading);
+    setPosition(Constants.ElevatorSubsystem.elevatorPosLoading);
+    //while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
   }
 
   public void elevatorTop() {
-    runPosition(Constants.ElevatorSubsystem.elevatorPosTop);
+    setPosition(Constants.ElevatorSubsystem.elevatorPosTop);
+    
+    //while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
   }
 
   /** Stops the elevator. */

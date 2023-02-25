@@ -15,11 +15,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
@@ -108,19 +110,50 @@ public class Swerve extends SubsystemBase {
 
         }
         Logger.getInstance().recordOutput("desiredSwerveStates", desiredStates);
-
     }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStatesAuto(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
-        for (int i = 0; i < 4; i++) {
-            ModuleIOs[i].setDesiredState(desiredStates[i], false);
-
-        }
-        Logger.getInstance().recordOutput("desiredSwerveStates", desiredStates);
-
+        setModuleStates(desiredStates, false);
     }
+
+    //#####################################################################################
+    //#####################################################################################
+    //#####################################################################################
+    public void driveOntoChargeStation() {
+        if (DriverStation.getAlliance() == Alliance.Red){
+            //Lock wheels toward heading
+            //drive forward at slow speed X -> 
+                
+                //SwerveModuleState desiredState = new SwerveModuleState();
+                //for motors i=0 -> 3 
+                    //desiredState.speedMetersPerSecond = X;
+                    //desiredState.angle = Y (degrees);
+                    //ModuleIOs[i].setDesiredState(desiredState, false); //maybe true would be better
+            //while(endcondition != true)
+                    //scan navx roll or pitch
+                    //if roll or pitch > trigger angle
+                            //set rampEngaged = true
+                    //if roll or pitch ~ 0 
+                        //motorsstop
+                        //wait 1 second
+                        //if roll or pitch < -trigger angle 
+                            //drive backward extra slow
+                        //else if roll or pitch < -trigger angle 
+                            //drive forward extra slow
+                        //else 
+                            //end condition = true
+            //
+        }
+        else{
+            //repeat logic
+        }
+    }
+
+    //#####################################################################################
+    //#####################################################################################
+    //#####################################################################################
+
 
     public Pose2d getPose() {
         Logger.getInstance().recordOutput("SwervePose", swerveOdometry.getPoseMeters());

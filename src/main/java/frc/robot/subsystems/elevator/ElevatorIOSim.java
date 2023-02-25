@@ -1,88 +1,68 @@
 package frc.robot.subsystems.elevator;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.REVPhysicsSim;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
-import com.revrobotics.REVPhysicsSim;
-
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import frc.robot.Constants;
 
-import org.littletonrobotics.junction.Logger;
-
 public class ElevatorIOSim implements ElevatorIO {
-  private static final double GEAR_RATIO = Constants.ElevatorSubsystem.gearRatio;
-  private final CANSparkMax elevatorMotor;
-  // private final CANSparkMax follower;
-  private final RelativeEncoder elevatorEncoder;
+  private FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNEO(1), 1.0, 0.00001);
+  private PIDController pid = new PIDController(0.0, 0.0, 0.0);
 
-  private final SparkMaxPIDController elevatorPidController;
+  private boolean closedLoop = false;
+  private double ffVolts = 0.0;
+  private double appliedVolts = 0.0;
 
-  public ElevatorIOSim() {
-    elevatorMotor = new CANSparkMax(Constants.ElevatorSubsystem.deviceID, MotorType.kBrushless);
-    REVPhysicsSim.getInstance().addSparkMax(elevatorMotor, DCMotor.getNEO(1));
-
-    elevatorEncoder = elevatorMotor.getEncoder();
-    elevatorPidController = elevatorMotor.getPIDController();
-
-    // follower.burnFlash();
-  }
-  private double positionSetPointInch = 0.0;
+  private double positionSetPointInch = 2.0;
+  
+  private double positionInch = 0.0;
   @Override
   public void updateInputs(ElevatorIOInputs inputs) {
+    if (closedLoop) {
+      appliedVolts = MathUtil.clamp(
+          pid.calculate(flywheelSim.getAngularVelocityRadPerSec()) + ffVolts, -12.0,
+          12.0);
+      flywheelSim.setInputVoltage(appliedVolts);
+    }
     inputs.positionSetPointInch = positionSetPointInch;
-    inputs.positionRad = Units.rotationsToRadians(elevatorEncoder.getPosition() / GEAR_RATIO);
-    inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
-        elevatorEncoder.getVelocity() / GEAR_RATIO);
-    inputs.appliedVolts = elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
-    inputs.currentAmps = elevatorMotor.getOutputCurrent();
+    flywheelSim.update(0.02);
+    //double elevator position
+    inputs.positionRad += flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs;
+
+    inputs.positionInch += flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs/ (2*Math.PI) *
+    Constants.ElevatorSubsystem.sprocketDiameterInch*Math.PI/25;
+    positionInch +=flywheelSim.getAngularVelocityRadPerSec() * Constants.simLoopPeriodSecs/ (2*Math.PI) *
+    Constants.ElevatorSubsystem.sprocketDiameterInch*Math.PI/25;
+    inputs.velocityRadPerSec = flywheelSim.getAngularVelocityRadPerSec();
+    inputs.appliedVolts = appliedVolts;
+    inputs.currentAmps = flywheelSim.getCurrentDrawAmps();
+
+    double rotationsMeasurement = positionInch/(Constants.ElevatorSubsystem.sprocketDiameterInch*Math.PI)*Constants.ElevatorSubsystem.gearRatio;
+    appliedVolts = MathUtil.clamp(
+      pid.calculate(rotationsMeasurement), -12.0,
+      12.0);
+    flywheelSim.setInputVoltage(appliedVolts);
   }
 
   @Override
-  public void setPosition(double positionInch, double ffVolts) {
-    double setPointRotations = positionInch / (Math.PI * Constants.ElevatorSubsystem.sprocketDiameterInch) * GEAR_RATIO;
-    elevatorPidController.setReference(setPointRotations, CANSparkMax.ControlType.kPosition, 0);
-    //Logger.getInstance().recordOutput("Iacc", elevatorPidController.getIAccum());
-    //elevatorPidController.s
-    //Logger.getInstance().recordOutput("ElevatorSetPos", setPointRotations);
-    
-    positionSetPointInch = positionInch;
+  public void setPosition(double positionSetInch, double ffVolts) {
+    double setPointRotationsOutput = positionSetInch/(Constants.ElevatorSubsystem.sprocketDiameterInch*Math.PI)*Constants.ElevatorSubsystem.gearRatio;
+    pid.setSetpoint(setPointRotationsOutput);
+    positionSetPointInch = positionSetInch;
+
   }
+
+
 
   @Override
   public void stop() {
-    // maybe unsafe with elevator falling back?
-    elevatorMotor.stopMotor();
+    closedLoop = false;
+    appliedVolts = 0.0;
+    flywheelSim.setInputVoltage(0.0);
   }
 
   public void configurePID(double kP, double kI, double kD) {
-    elevatorMotor.restoreFactoryDefaults();
-    elevatorMotor.setInverted(false);
-    elevatorMotor.enableVoltageCompensation(12.0);
-    elevatorMotor.setSmartCurrentLimit(Constants.ElevatorSubsystem.maxCurrentAmps);
-
-    elevatorPidController.setP(kP);
-    elevatorPidController.setI(kI);
-    elevatorPidController.setD(kD);
-    elevatorPidController.setIZone(Constants.ElevatorSubsystem.kIz);
-    elevatorPidController.setFF(Constants.ElevatorSubsystem.kFF);
-    elevatorPidController.setOutputRange(Constants.ElevatorSubsystem.kMinOutput,
-        Constants.ElevatorSubsystem.kMaxOutput);
-
-    int smartMotionSlot = 0;
-    elevatorPidController.setSmartMotionMaxVelocity(Constants.ElevatorSubsystem.maxAngularVelocityRPM, smartMotionSlot);
-    elevatorPidController.setSmartMotionMinOutputVelocity(Constants.ElevatorSubsystem.minOutputVelocityRPM,
-        smartMotionSlot);
-    elevatorPidController.setSmartMotionMaxAccel(Constants.ElevatorSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    elevatorPidController.setSmartMotionAllowedClosedLoopError(
-        Constants.ElevatorSubsystem.allowableSmartMotionPosErrorCounts, smartMotionSlot);
-
-    elevatorMotor.burnFlash();
+    pid.setPID(kP, kI, kD);
   }
 }

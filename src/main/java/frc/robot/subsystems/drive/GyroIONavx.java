@@ -13,7 +13,8 @@ public class GyroIONavx implements GyroIO{
     }
     public void updateInputs(GyroIOInputs inputs) {
         inputs.yawDegrees = (Constants.Swerve.invertGyro) ? 360.0 - ahrs.getYaw() : ahrs.getYaw();
-
+        inputs.rollDegrees = ahrs.getRoll();
+        inputs.yawDegrees = ahrs.getPitch();
         //inputs.yaw = (Constants.Swerve.invertGyro) ? 360.0 - ahrs.getYaw() : ahrs.getYaw();
         //inputs.connected = get status
     }

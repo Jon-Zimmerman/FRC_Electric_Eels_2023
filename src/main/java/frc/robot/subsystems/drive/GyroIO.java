@@ -9,6 +9,8 @@ public interface GyroIO {
         //public boolean connected = false;
         //public double yaw;
         public double yawDegrees;
+        public double rollDegrees;
+        public double pitchDegrees;
     }
 
 

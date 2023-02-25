@@ -18,7 +18,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import frc.robot.autos.exampleAuto2;
+import frc.robot.autos.One_Cone_And_Balance;
+import frc.robot.autos.One_Cone_And_Balance_Chassis;
 import frc.robot.commands.*;
 
 import frc.robot.subsystems.drive.Swerve;
@@ -107,6 +108,13 @@ public class RobotContainer {
 
   public RobotContainer() {
     final HashMap<String, Command> eventMap = new HashMap<String, Command>();
+    // Set up auto routines
+
+    // autoChooser.addOption("Spin", new SpinAuto(drive));
+    
+
+
+
 
     switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
@@ -120,15 +128,7 @@ public class RobotContainer {
         intake = new Intake(new IntakeIOSparkMax());
         elevator = new Elevator(new ElevatorIOSparkMax());
         slider = new Slider(new SliderIOSparkMax());
-        // new TeleopSwerve(
-        // s_Swerve,
-        // () -> -driver.getRawAxis(translationAxis),
-        // () -> -driver.getRawAxis(strafeAxis),
-        // () -> -driver.getRawAxis(rotationAxis),
-        // () -> robotCentric.getAsBoolean()));
 
-        // drive = new Drive(new DriveIOFalcon500());
-        // intake = new Intake(new IntakeIOSparkMax());
         break;
 
       // Sim robot, instantiate physics sim IO implementations
@@ -140,10 +140,21 @@ public class RobotContainer {
             new ModuleIOSim(2, Constants.Swerve.Mod2.constants),
             new ModuleIOSim(3, Constants.Swerve.Mod3.constants));
         intake = new Intake(new IntakeIOSim());
-        elevator = new Elevator(new ElevatorIOSim2());
-        slider = new Slider(new SliderIOSim2());
+        elevator = new Elevator(new ElevatorIOSim());
+        slider = new Slider(new SliderIOSim());
         break;
-
+      case CHASSIS:
+        // drive = new Drive(new DriveIOSim());
+        j_Swerve = new Swerve(new GyroIOSim(() -> -driver.getRawAxis(rotationAxis)),
+            new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
+            new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
+            new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
+            new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
+        
+        intake = new Intake(new IntakeIO() {});
+        elevator = new Elevator(new ElevatorIO() {});
+        slider = new Slider(new SliderIO() {});
+        break;
       // Replayed robot, disable IO implementations
       default:
         // drive = new Drive(new DriveIO() {});
@@ -164,10 +175,9 @@ public class RobotContainer {
         break;
     }
 
-    // Set up auto routines
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    // autoChooser.addOption("Spin", new SpinAuto(drive));
-    autoChooser.addOption("ExampleAuto2", new exampleAuto2(j_Swerve, intake,elevator,slider));
+    autoChooser.addOption("One_Cone_And_Balance_Chassis", new One_Cone_And_Balance_Chassis(j_Swerve));
+    autoChooser.addOption("One_Cone_And_Balance", new One_Cone_And_Balance(j_Swerve, intake,elevator,slider));
     //SmartDashboard.putData("Auto Routine", autoChooser);
 
     // Configure the button bindings
@@ -198,7 +208,7 @@ public class RobotContainer {
     flipIntakeMode.onTrue(new InstantCommand(() -> intake.flipIntakeMode()));
     
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
-    intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), () -> intake.stop(), intake));
+    intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
     elevatorBottom.onTrue(new InstantCommand(() -> elevator.elevatorBottom()));
     elevatorMid.onTrue(new InstantCommand(() -> elevator.elevatorMid()));
