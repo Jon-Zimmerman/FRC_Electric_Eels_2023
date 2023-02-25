@@ -69,7 +69,7 @@ public class RobotContainer {
   private final JoystickButton autoFocus = new JoystickButton(driver, XboxController.Button.kA.value);
 
   private final Joystick driver2 = new Joystick(1);
-  private final JoystickButton coneMode = new JoystickButton(driver2, 7);
+  private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
   private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
   private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
@@ -195,7 +195,8 @@ public class RobotContainer {
     zeroGyro.onTrue(new InstantCommand(() -> j_Swerve.zeroGyro()));
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));
 
-
+    flipIntakeMode.onTrue(new InstantCommand(() -> intake.flipIntakeMode()));
+    
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), () -> intake.stop(), intake));
 

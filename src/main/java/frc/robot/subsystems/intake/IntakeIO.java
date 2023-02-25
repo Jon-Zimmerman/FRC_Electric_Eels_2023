@@ -23,7 +23,7 @@ public interface IntakeIO {
   public default void stop() {
   }
 
-  public default void holdCurrent(int amps) {
+  public default void holdCurrent(int amps, double voltage) {
   }
 
   public default void configurePID(double kP, double kI, double kD) {

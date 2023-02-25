@@ -7,11 +7,11 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
 public class Intake extends SubsystemBase {
   private final IntakeIO io;
   private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
   private final SimpleMotorFeedforward ffModel;
+  private boolean ConeMode;
 
   /** Creates a new Intake. */
   public Intake(IntakeIO io) {
@@ -36,9 +36,9 @@ public class Intake extends SubsystemBase {
             Constants.IntakeSubsystem.kD);
         break;
       default:
-      ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
-      io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
-          Constants.IntakeSubsystem.kD);
+        ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
+        io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
+            Constants.IntakeSubsystem.kD);
         break;
     }
   }
@@ -62,20 +62,35 @@ public class Intake extends SubsystemBase {
   }
 
   public void intakeIn() {
-    // TODO conemode eval intake in direction
-    // if conemode
-    runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+    if(ConeMode){
+      runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+    }
+    else{
+      runVelocity(Constants.IntakeSubsystem.intakeInCubeVelRPM);
+    }
+
   }
 
-  public void intakeOut() {
-    // TODO conemode eval intake out direction
-    // if conemode
-    runVelocity(Constants.IntakeSubsystem.intakeOutConeVelRPM);
+  public void intakeOut() {  
+    if(ConeMode){
+      runVelocity(Constants.IntakeSubsystem.intakeOutConeVelRPM);
+    }
+    else{
+      runVelocity(Constants.IntakeSubsystem.intakeOutCubeVelRPM);
+    }
   }
 
   /** Stops the intake. */
   public void holdCurrent() {
-    io.holdCurrent(Constants.IntakeSubsystem.holdCurrentAmps);
+    if(ConeMode){
+      io.holdCurrent(Constants.IntakeSubsystem.holdConeCurrentAmps,-4.0);
+    }
+    else{
+      io.holdCurrent(Constants.IntakeSubsystem.holdCubeCurrentAmps, 4.0);
+    }
+
+
+
   }
 
   /** Stops the intake. */
@@ -87,4 +102,9 @@ public class Intake extends SubsystemBase {
   public double getVelocityRPM() {
     return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
   }
+
+  public void flipIntakeMode() {
+    ConeMode = !ConeMode;
+  }
+
 }

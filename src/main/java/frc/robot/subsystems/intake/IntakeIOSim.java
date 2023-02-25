@@ -40,7 +40,7 @@ public class IntakeIOSim implements IntakeIO {
   }
 
   @Override
-  public void holdCurrent(int amps) {
+  public void holdCurrent(int amps,double voltage) {
     flywheelSim.setInputVoltage(1.0/12.0);
   }
 

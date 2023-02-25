@@ -53,8 +53,8 @@ public class IntakeIOSparkMax implements IntakeIO {
   }
 
   @Override
-  public void holdCurrent(int amps) {
-    intakeMotor.set(4.0/12.0);
+  public void holdCurrent(int amps, double voltage) {
+    intakeMotor.set(voltage/12.0);
     intakeMotor.setSmartCurrentLimit(amps);
   }
 

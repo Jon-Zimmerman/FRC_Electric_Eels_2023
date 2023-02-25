@@ -245,11 +245,14 @@ public final class Constants {
 
         public static final int maxCurrentAmps = 10;
         public static final double maxAngularVelocityRPM = 10.0;
-        public static final int holdCurrentAmps = 2;
+
 
         public static final double intakeInCubeVelRPM = 50.0;
-        public static final double intakeInConeVelRPM = -100.0;
+        public static final int holdCubeCurrentAmps = 2;
         public static final double intakeOutCubeVelRPM = -50.0;
+        
+        public static final double intakeInConeVelRPM = -100.0;
+        public static final int holdConeCurrentAmps = 2;
         public static final double intakeOutConeVelRPM = 100.0;
     }
 
