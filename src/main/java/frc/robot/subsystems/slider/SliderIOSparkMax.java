@@ -62,15 +62,15 @@ public class SliderIOSparkMax implements SliderIO {
     sliderPidController.setI(kI);
     sliderPidController.setD(kD);
     sliderPidController.setIZone(Constants.SliderSubsystem.kIz);
-    sliderPidController.setFF(Constants.SliderSubsystem.kFF);
+    sliderPidController.setFF(Constants.SliderSubsystem.kF);
     sliderPidController.setOutputRange(Constants.SliderSubsystem.kMinOutput, Constants.SliderSubsystem.kMaxOutput);
 
 
     int smartMotionSlot = 0;
-    sliderPidController.setSmartMotionMaxVelocity(Constants.SliderSubsystem.maxAngularVelocityRPM, smartMotionSlot);
-    sliderPidController.setSmartMotionMinOutputVelocity(Constants.SliderSubsystem.minOutputVelocityRPM, smartMotionSlot);
-    sliderPidController.setSmartMotionMaxAccel(Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    sliderPidController.setSmartMotionAllowedClosedLoopError(Constants.SliderSubsystem.allowableSmartMotionPosErrorCounts, smartMotionSlot);
+    // sliderPidController.setSmartMotionMaxVelocity(Constants.SliderSubsystem.maxAngularVelocityRPM, smartMotionSlot);
+    // sliderPidController.setSmartMotionMinOutputVelocity(Constants.SliderSubsystem.minOutputVelocityRPM, smartMotionSlot);
+    // sliderPidController.setSmartMotionMaxAccel(Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
+    // sliderPidController.setSmartMotionAllowedClosedLoopError(Constants.SliderSubsystem.allowableSmartMotionPosErrorCounts, smartMotionSlot);
 
 
     sliderMotor.burnFlash();

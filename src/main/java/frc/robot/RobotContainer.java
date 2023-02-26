@@ -4,14 +4,9 @@
 
 package frc.robot;
 
-import java.util.HashMap;
-
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -30,6 +25,10 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.GyroIONavx;
 import frc.robot.subsystems.drive.GyroIOSim;
 import frc.robot.subsystems.drive.GyroIO;
+
+import frc.robot.subsystems.drive.LimelightIONetwork;
+import frc.robot.subsystems.drive.LimelightIOSim;
+import frc.robot.subsystems.drive.LimelightIO;
 
 import frc.robot.subsystems.intake.*;
 
@@ -53,7 +52,8 @@ public class RobotContainer {
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
-  //private final LoggedDashboardNumber intakeSpeedInput = new LoggedDashboardNumber("Intake Speed", 1500.0);
+  // private final LoggedDashboardNumber intakeSpeedInput = new
+  // LoggedDashboardNumber("Intake Speed", 1500.0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -63,11 +63,15 @@ public class RobotContainer {
   // private final int strafeAxis = XboxController.Axis.kLeftX.value;
   // private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-  // private final JoystickButton calibrate = new JoystickButton(driver, XboxController.Button.kRightBumper.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver,
+  // XboxController.Button.kY.value);
+  // private final JoystickButton calibrate = new JoystickButton(driver,
+  // XboxController.Button.kRightBumper.value);
   // // probably remove robotcentric
-  // private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  // private final JoystickButton autoFocus = new JoystickButton(driver, XboxController.Button.kA.value);
+  // private final JoystickButton robotCentric = new JoystickButton(driver,
+  // XboxController.Button.kLeftBumper.value);
+  // private final JoystickButton autoFocus = new JoystickButton(driver,
+  // XboxController.Button.kA.value);
 
   private final Joystick driver2 = new Joystick(1);
   private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
@@ -88,10 +92,10 @@ public class RobotContainer {
   private final int translationAxis = Joystick.AxisType.kY.value;
   private final int strafeAxis = Joystick.AxisType.kX.value;
   private final int rotationAxis = Joystick.AxisType.kZ.value;
-  private final int throttleAxis = Joystick.AxisType.kTwist.value;
+  // private final int throttleAxis = Joystick.AxisType.kTwist.value;
   private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
-  private final JoystickButton zeroGyro = new JoystickButton(driver, 8 );
+  private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
   private final JoystickButton robotCentric = new JoystickButton(driver, 7);
 
   // Subsystems
@@ -105,20 +109,18 @@ public class RobotContainer {
   private final Slider slider;
 
   public RobotContainer() {
-    //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
+    // final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     // Set up auto routines
 
     // autoChooser.addOption("Spin", new SpinAuto(drive));
-    
-
-
-
 
     switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
       case REAL:
         // drive = new Drive(new DriveIOSparkMax());
-        j_Swerve = new Swerve(new GyroIONavx(),
+        j_Swerve = new Swerve(
+            new LimelightIONetwork(),
+            new GyroIONavx(),
             new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
             new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
             new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
@@ -132,7 +134,9 @@ public class RobotContainer {
       // Sim robot, instantiate physics sim IO implementations
       case SIM:
         // drive = new Drive(new DriveIOSim());
-        j_Swerve = new Swerve(new GyroIOSim(() -> -driver.getRawAxis(rotationAxis)),
+        j_Swerve = new Swerve(
+            new LimelightIOSim(),
+            new GyroIOSim(() -> -driver.getRawAxis(rotationAxis)),
             new ModuleIOSim(0, Constants.Swerve.Mod0.constants),
             new ModuleIOSim(1, Constants.Swerve.Mod1.constants),
             new ModuleIOSim(2, Constants.Swerve.Mod2.constants),
@@ -143,21 +147,29 @@ public class RobotContainer {
         break;
       case CHASSIS:
         // drive = new Drive(new DriveIOSim());
-        j_Swerve = new Swerve(new GyroIONavx(),
+        j_Swerve = new Swerve(
+            new LimelightIONetwork(),
+            new GyroIONavx(),
             new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
             new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
             new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
             new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
-        
-        intake = new Intake(new IntakeIO() {});
-        elevator = new Elevator(new ElevatorIO() {});
-        slider = new Slider(new SliderIO() {});
+
+        intake = new Intake(new IntakeIO() {
+        });
+        elevator = new Elevator(new ElevatorIO() {
+        });
+        slider = new Slider(new SliderIO() {
+        });
         break;
       // Replayed robot, disable IO implementations
       default:
         // drive = new Drive(new DriveIO() {});
-        j_Swerve = new Swerve(new GyroIO() {
-        },
+        j_Swerve = new Swerve(
+            new LimelightIO() {
+            },
+            new GyroIO() {
+            },
             new ModuleIO() {
             },
             new ModuleIO() {
@@ -168,15 +180,17 @@ public class RobotContainer {
             });
         intake = new Intake(new IntakeIO() {
         });
-        elevator = new Elevator(new ElevatorIO() {});
-        slider = new Slider(new SliderIO() {});
+        elevator = new Elevator(new ElevatorIO() {
+        });
+        slider = new Slider(new SliderIO() {
+        });
         break;
     }
 
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
     autoChooser.addOption("One_Cone_And_Balance_Chassis", new One_Cone_And_Balance_Chassis(j_Swerve));
-    autoChooser.addOption("One_Cone_And_Balance", new One_Cone_And_Balance(j_Swerve, intake,elevator,slider));
-    //SmartDashboard.putData("Auto Routine", autoChooser);
+    autoChooser.addOption("One_Cone_And_Balance", new One_Cone_And_Balance(j_Swerve, intake, elevator, slider));
+    // SmartDashboard.putData("Auto Routine", autoChooser);
 
     // Configure the button bindings
 
@@ -204,16 +218,16 @@ public class RobotContainer {
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));
 
     flipIntakeMode.onTrue(new InstantCommand(() -> intake.flipIntakeMode()));
-    
+
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
     elevatorBottom.onTrue(new InstantCommand(() -> elevator.elevatorBottom()));
     elevatorMid.onTrue(new InstantCommand(() -> elevator.elevatorMid()));
-    elevatorLoading.onTrue(new InstantCommand(() -> elevator.elevatorLoading()));    
+    elevatorLoading.onTrue(new InstantCommand(() -> elevator.elevatorLoading()));
     elevatorTop.onTrue(new InstantCommand(() -> elevator.elevatorTop()));
 
-    sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));    
+    sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));
     sliderOut.onTrue(new InstantCommand(() -> slider.sliderOut()));
   }
 
@@ -226,5 +240,4 @@ public class RobotContainer {
     return autoChooser.get();
   }
 
-  
 }

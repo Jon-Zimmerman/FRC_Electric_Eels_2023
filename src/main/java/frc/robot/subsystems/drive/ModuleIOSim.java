@@ -65,7 +65,7 @@ public class ModuleIOSim implements ModuleIO {
                 Constants.Swerve.driveGearRatio);
 
         inputs.angleMotorPositionDegrees = test2;
-        Logger.getInstance().recordOutput("test2" + moduleNumber, test2);
+        
 
         inputs.driveMotorStateMetersPerSecond = falconRadsPerSecToMetersPerSec(driveVelocityRadPerSec,
                 Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
@@ -95,7 +95,7 @@ public class ModuleIOSim implements ModuleIO {
                                                                                   // reasonable number becasue
                                                                                   // desiredState speed is too much
 
-            SmartDashboard.putNumber("Throttle %", percentOutput * 100.0);
+            //SmartDashboard.putNumber("Throttle %", percentOutput * 100.0);
             //Logger.getInstance().recordOutput("OL Drive M" + moduleNumber + " % Throttle", percentOutput);
             driveSim.setInputVoltage(percentOutput*12.0);
             // mDriveMotor.set(ControlMode.PercentOutput, percentOutput);

@@ -10,7 +10,7 @@ public interface GyroIO {
         //public double yaw;
         public double yawDegrees;
         public double rollDegrees;
-        public double pitchDegrees;
+        //public double pitchDegrees;
     }
 
 

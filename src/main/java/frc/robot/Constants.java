@@ -1,6 +1,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.pathplanner.lib.auto.PIDConstants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -20,18 +21,15 @@ public final class Constants {
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
-    public static final double stickDeadband = 0.11;
-
-    public static final class SparkMax {
-        // High and low rotations for dead reckoning (not sure if degrees or rads yet)
-        public static final double top = 100;
-        public static final double bottom = 0;
-    }
+    public static final double translationStickDeadband = 0.15;
+    public static final double rotationStickDeadband = 0.15;
 
     public static final class Swerve {
-        public static final int pigeonID = 1;
+        
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
         public static final boolean teleopIsOpenLoop = false;
+        public static final boolean fieldRelative = true; //note changing to false will not change operation mode
+
         public static final COTSFalconSwerveConstants chosenModule = COTSFalconSwerveConstants
                 .SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
 
@@ -103,14 +101,15 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 10.0;
+        public static final double maxSpeed = 8.0;
         /** Radians per Second */
-        public static final double maxAngularVelocity = (2 * Math.PI);// 1;
+        public static final double maxAngularVelocity = (Math.PI);// 1;
         // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
         public static final double maxOpenLoopThrottle = 1.0;
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
+
 
         /* Module Specific Constants */
 
@@ -154,7 +153,21 @@ public final class Constants {
                     canCoderID, angleOffset);
         }
     }
+    public static final class AutoConstants {
+        public static final boolean readAllianceColortoFlipPaths = true;
 
+        public static final double kMaxSpeedMetersPerSecond = 3;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+
+        public static final PIDConstants translationPIDConstants = new PIDConstants(1.3, 0.0, 0.0);
+        public static final PIDConstants rotationPIDConstants = new PIDConstants(1.3, 0.0, 0.0);
+
+        /* Constraint for the motion profilied robot angle controller */
+        public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
+                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+    }
     // Elevator Extender Motor
     public static final class ElevatorSubsystem {
         public static final int deviceID = 12;
@@ -167,7 +180,7 @@ public final class Constants {
         public static final double kg = 0.00;
 
         public static final double kP = 1.0;
-        public static final double kI = 0.5;
+        public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
         public static final double kFF = 0;
@@ -197,29 +210,31 @@ public final class Constants {
     // Elevator Slider Motor
     public static final class SliderSubsystem {
         public static final int deviceID = 13;
-
+        public static final int SensorResolution = 2048;
         // FeedForward Control
         public static final double ks = 0.0;
-        public static final double kv = 0.00;
+        public static final double kv = 0.005;
         public static final double kg = 0.00;
 
-        public static final double gearRatio = 2.0;
+        public static final double gearRatio = 3.0;
         public static final double sprocketDiameterInch = 2.0;
-
-        public static final double kP = 3.0;
-        public static final double kI = 0.5;
+        //public static final double sprocketDiameterMeter = Units.inchesToMeters(2.0);
+        public static final double kP = 0.6;
+        public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0.0;
-        public static final double kFF = 0.0;
+        public static final double kF = 0.0;
         public static final double kMaxOutput = 1.0;
         public static final double kMinOutput = -1.0;
+        public static final int kTimeoutMs = 30;
 
         public static final int maxCurrentAmps = 10;
-        public static final double maxLinearVelocityMPS = 10.0;
-        public static final double maxAngularVelocityRPM = 1000.0;
-        public static final double maxAngularAccRPMPerSec = 10.0;
-        public static final double minOutputVelocityRPM = 100.0;
-        public static final double allowableSmartMotionPosErrorCounts = 100.0;
+        public static final double maxLinearVelocityInchPS = 0.05;
+        public static final double maxLinearAccInchPSPerSec = 0.05;
+        //public static final double maxAngularVelocityRPM = 1000.0;
+        //public static final double maxAngularAccRPMPerSec = 10.0;
+        //public static final double minOutputVelocityRPM = 100.0;
+        //public static final double allowableSmartMotionPosErrorCounts = 100.0;
 
         public static final double sliderSoftLimitLower = 0.0;
         public static final double sliderSoftLimitUpper = 0.0;
@@ -234,10 +249,10 @@ public final class Constants {
 
         // FeedForward Control
         public static final double ks = 0.0;
-        public static final double kv = 0.00;
+        public static final double kv = 0.005;
         // Closed Loop Control
         public static final double kP = 0.8;
-        public static final double kI = 0.1;
+        public static final double kI = 0.01;
         public static final double kD = 0.0;
         public static final double kIz = 0;
         public static final double kFF = 0;
@@ -257,20 +272,7 @@ public final class Constants {
         public static final double intakeOutConeVelRPM = 100.0;
     }
 
-    public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 0.25;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 0.25;
-        public static final double kMaxAngularSpeedRadiansPerSecond = (2 * Math.PI) / 4;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = (2 * Math.PI) / 4;
 
-        public static final double kPXController = 0.1;
-        public static final double kPYController = 0.1;
-        public static final double kPThetaController = 0.1;
-
-        /* Constraint for the motion profilied robot angle controller */
-        public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-    }
 
     private static final Alert invalidRobotAlert = new Alert(
             "Invalid robot selected, using competition robot as default.",
