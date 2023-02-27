@@ -93,7 +93,7 @@ public class ModuleIOFalcon implements ModuleIO {
     }
 
     private void setAngle(SwerveModuleState desiredState) {
-        Rotation2d desiredAngle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * 0.015))
+        Rotation2d desiredAngle = (Math.abs(desiredState.speedMetersPerSecond) <= (Constants.Swerve.maxSpeed * Constants.Swerve.JitterCutoff))
                 ? lastAngle
                 : desiredState.angle; // Prevent rotating module if speed is less then 1%. Prevents Jittering.
 
