@@ -78,6 +78,7 @@ public final class Constants {
          */
         public static final double openLoopRamp = 0.50;
         public static final double closedLoopRamp = 0.50;
+        public static final double JitterCutoff = 0.015; //jitter cutoff value to stop the motors from turning at low speeds and being unable to start due to low starting torque
 
         /* Angle Motor PID Values */
         public static final double angleKP = chosenModule.angleKP;

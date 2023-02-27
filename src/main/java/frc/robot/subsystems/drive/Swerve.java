@@ -3,12 +3,12 @@ package frc.robot.subsystems.drive;
 import java.util.HashMap;
 import org.littletonrobotics.junction.Logger;
 
-import frc.robot.Constants;//
-import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
+import frc.robot.Constants;
+//import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
 //import frc.robot.subsystems.drive.ModuleIO.ModuleIOInputs;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+//import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -23,7 +23,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
-import com.pathplanner.lib.auto.PIDConstants;
+import com.kauailabs.navx.frc.AHRS;
+//import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 public class Swerve extends SubsystemBase {
@@ -87,7 +88,7 @@ public class Swerve extends SubsystemBase {
                         Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
-        SmartDashboard.putNumber("Robocentric yes?", fieldRelative ? 1d : 0d);
+        SmartDashboard.putNumber("Field Relative?", fieldRelative ? 1d : 0d);
         getModuleStates();
 
         setModuleStates(swerveModuleStates, isOpenLoop);
@@ -120,20 +121,47 @@ public class Swerve extends SubsystemBase {
     // #####################################################################################
     // #####################################################################################
     public void driveOntoChargeStation() {
+        boolean onRamp = false;
+        double stopThresholdDegrees=10;
+        double mountingSpeed=0.5; //meters per second;
+        Timer timecheck = Timer();
         if (DriverStation.getAlliance() == Alliance.Red) {
             // Lock wheels toward heading
-            // drive forward at slow speed X ->
+            
+            
 
-            // SwerveModuleState desiredState = new SwerveModuleState();
+
+            SwerveModuleState desiredState = new SwerveModuleState();
+            desiredState.speedMetersPerSecond = mountingSpeed;
+            desiredState.angle =Rotation2d.fromDegrees(0);
             // for motors i=0 -> 3
-            // desiredState.speedMetersPerSecond = X;
-            // desiredState.angle = Y (degrees);
-            // ModuleIOs[i].setDesiredState(desiredState, false); //maybe true would be
-            // better
-            // while(endcondition != true)
-            // scan navx roll or pitch
-            // if roll or pitch > trigger angle
-            // set rampEngaged = true
+            for (int i = 0; i < 4; i++) { //TODO change this to "for(SwerveModule mod : mSwerveMods){"
+            ModuleIOs[i].setDesiredState(desiredState, false); //maybe true would be better
+            }
+            double pitch = gyroInputs.pitchDegrees;
+            timecheck.start();
+            while(timecheck.hasElapsed(3)!= true && !onRamp) { // if roll or pitch > trigger angle
+                pitch = gyroInputs.pitchDegrees; // scan navx roll or pitch
+                if (pitch > 10){
+                    onRamp=true;// set rampEngaged = true
+                    timecheck.reset();
+                }
+            
+            }
+            
+            while(timecheck.hasElapsed(3)!= true) {
+                pitch=gyroInputs.pitchDegrees; 
+                if (pitch <stopThresholdDegrees && pitch > -stopThresholdDegrees) { // if we have become """"level""""
+                    desiredState.speedMetersPerSecond =0; // set speed to 0
+                    for (int i=0;i<4;i++) {
+                        desiredState.angle= Rotation2d.fromDegrees(i*90+45); //set angles for 45, 135,225,315 in order to brake really well
+                        ModuleIOs[i].setDesiredState(desiredState, false); 
+                    }
+                }
+            }
+            // this should build, ill make it more complicated later if needed, or make it simpler if necessary
+
+
             // if roll or pitch ~ 0
             // motorsstop
             // wait 1 second
@@ -152,6 +180,10 @@ public class Swerve extends SubsystemBase {
     // #####################################################################################
     // #####################################################################################
     // #####################################################################################
+
+    private Timer Timer() {
+        return null;
+    }
 
     public Pose2d getPose() {
         Pose2d pose = swerveDrivePoseEstimator.getEstimatedPosition();
