@@ -5,22 +5,17 @@
 package frc.robot;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+
 import frc.robot.autos.One_Cone_And_Balance;
 import frc.robot.autos.One_Cone_And_Balance_Chassis;
-import frc.robot.commands.*;
-
-import frc.robot.subsystems.drive.Swerve;
-import frc.robot.subsystems.drive.ModuleIOFalcon;
-import frc.robot.subsystems.drive.ModuleIOSim;
-import frc.robot.subsystems.drive.ModuleIO;
 
 import frc.robot.subsystems.drive.GyroIONavx;
 import frc.robot.subsystems.drive.GyroIOSim;
@@ -29,14 +24,27 @@ import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.LimelightIONetwork;
 import frc.robot.subsystems.drive.LimelightIOSim;
 import frc.robot.subsystems.drive.LimelightIO;
+import frc.robot.subsystems.drive.Swerve;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.drive.ModuleIO;
+import frc.robot.subsystems.drive.ModuleIOSim;
+import frc.robot.subsystems.drive.ModuleIOFalcon;
 
-import frc.robot.subsystems.intake.*;
 
-import frc.robot.subsystems.elevator.*;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIO;
+import frc.robot.subsystems.intake.IntakeIOSim;
+import frc.robot.subsystems.intake.IntakeIOSparkMax;
 
-import frc.robot.subsystems.slider.*;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOSim;
+import frc.robot.subsystems.elevator.ElevatorIOSparkMax;
 
-import edu.wpi.first.wpilibj2.command.StartEndCommand;
+import frc.robot.subsystems.slider.Slider;
+import frc.robot.subsystems.slider.SliderIO;
+import frc.robot.subsystems.slider.SliderIOSim;
+import frc.robot.subsystems.slider.SliderIOFalcon;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -58,20 +66,7 @@ public class RobotContainer {
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  // private final Joystick driver = new Joystick(0);
-  // private final int translationAxis = XboxController.Axis.kLeftY.value;
-  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  // private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver,
-  // XboxController.Button.kY.value);
-  // private final JoystickButton calibrate = new JoystickButton(driver,
-  // XboxController.Button.kRightBumper.value);
-  // // probably remove robotcentric
-  // private final JoystickButton robotCentric = new JoystickButton(driver,
-  // XboxController.Button.kLeftBumper.value);
-  // private final JoystickButton autoFocus = new JoystickButton(driver,
-  // XboxController.Button.kA.value);
 
   private final Joystick driver2 = new Joystick(1);
   private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
@@ -87,16 +82,32 @@ public class RobotContainer {
   private final POVButton sliderIn = new POVButton(driver2, 180);
   private final POVButton sliderOut = new POVButton(driver2, 0);
 
-  /* Driver Buttons */
-  private final Joystick driver = new Joystick(0);
-  private final int translationAxis = Joystick.AxisType.kY.value;
-  private final int strafeAxis = Joystick.AxisType.kX.value;
-  private final int rotationAxis = Joystick.AxisType.kZ.value;
-  // private final int throttleAxis = Joystick.AxisType.kTwist.value;
-  private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
-  private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
-  private final JoystickButton robotCentric = new JoystickButton(driver, 7);
+  private final Joystick driver = new Joystick(0);
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+  private final JoystickButton zeroGyro = new JoystickButton(driver,
+  XboxController.Button.kY.value);
+  private final JoystickButton calibrate = new JoystickButton(driver,
+  XboxController.Button.kRightBumper.value);
+  // probably remove robotcentric
+  private final JoystickButton robotCentric = new JoystickButton(driver,
+  XboxController.Button.kLeftBumper.value);
+  private final JoystickButton autoFocus = new JoystickButton(driver,
+  XboxController.Button.kA.value);
+
+  // /* Driver Buttons */
+  // private final Joystick driver = new Joystick(0);
+  // private final int translationAxis = Joystick.AxisType.kY.value;
+  // private final int strafeAxis = Joystick.AxisType.kX.value;
+  // private final int rotationAxis = Joystick.AxisType.kZ.value;
+  // // private final int throttleAxis = Joystick.AxisType.kTwist.value;
+  // private final JoystickButton calibrate = new JoystickButton(driver, 12);
+
+  // private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
+  // private final JoystickButton robotCentric = new JoystickButton(driver, 7);
 
   // Subsystems
   // private final Drive drive;
@@ -127,7 +138,7 @@ public class RobotContainer {
             new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
         intake = new Intake(new IntakeIOSparkMax());
         elevator = new Elevator(new ElevatorIOSparkMax());
-        slider = new Slider(new SliderIOSparkMax());
+        slider = new Slider(new SliderIOFalcon());
 
         break;
 
@@ -222,10 +233,10 @@ public class RobotContainer {
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
-    elevatorBottom.onTrue(new InstantCommand(() -> elevator.elevatorBottom()));
-    elevatorMid.onTrue(new InstantCommand(() -> elevator.elevatorMid()));
-    elevatorLoading.onTrue(new InstantCommand(() -> elevator.elevatorLoading()));
-    elevatorTop.onTrue(new InstantCommand(() -> elevator.elevatorTop()));
+    elevatorBottom.whileTrue(new StartEndCommand(() -> elevator.elevatorBottom(),elevator::stop,elevator));
+    elevatorMid.whileTrue(new StartEndCommand(() -> elevator.elevatorMid(),elevator::stop,elevator));
+    elevatorLoading.whileTrue(new StartEndCommand(() -> elevator.elevatorLoading(),elevator::stop,elevator));
+    elevatorTop.whileTrue(new StartEndCommand(() -> elevator.elevatorTop(),elevator::stop,elevator));
 
     sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));
     sliderOut.onTrue(new InstantCommand(() -> slider.sliderOut()));

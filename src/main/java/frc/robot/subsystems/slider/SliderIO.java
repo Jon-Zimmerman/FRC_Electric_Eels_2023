@@ -5,11 +5,14 @@ import org.littletonrobotics.junction.AutoLog;
 public interface SliderIO {
   @AutoLog
   public static class SliderIOInputs {
-    //at output shaft
-    public double positionSetPointInch = 0.0;
-    public double positionRad = 0.0;
-    public double positionInch = 0.0;
-    public double velocityRadPerSec = 0.0;
+
+
+    public double positionSliderSetPointInch = 0.0;
+    public double positionSliderInch = 0.0;
+    public double velocitySliderInchPerSec = 0.0;
+    public double positionMotorSetPointRot = 0.0;
+    public double positionMotorShaftRot = 0.0;
+    public double velocityMotorRPM = 0.0;
     public double appliedVolts = 0.0;
     public double currentAmps =  0.0;
   }
@@ -25,7 +28,9 @@ public interface SliderIO {
   /** Stop in open loop. */
   public default void stop() {
   }
-
+  public default void updateState(){
+    
+  }
   public default void holdCurrent(int amps) {
   }
 

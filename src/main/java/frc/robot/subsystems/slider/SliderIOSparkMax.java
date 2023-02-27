@@ -33,9 +33,9 @@ public class SliderIOSparkMax implements SliderIO {
 
   @Override
   public void updateInputs(SliderIOInputs inputs) {
-    inputs.positionRad = Units.rotationsToRadians(sliderEncoder.getPosition() / GEAR_RATIO);
-    inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
-      sliderEncoder.getVelocity() / GEAR_RATIO);
+    //inputs.positionRad = Units.rotationsToRadians(sliderEncoder.getPosition() / GEAR_RATIO);
+    //inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(
+    //  sliderEncoder.getVelocity() / GEAR_RATIO);
     inputs.appliedVolts = sliderMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     inputs.currentAmps = sliderMotor.getOutputCurrent();
   }

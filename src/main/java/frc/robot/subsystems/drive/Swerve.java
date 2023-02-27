@@ -217,11 +217,14 @@ public class Swerve extends SubsystemBase {
                     moduleInputs[i]);
         }
 
-        double botPose[] = limelightInputs.botPoseWPI;
-
-        swerveDrivePoseEstimator.addVisionMeasurement(
+        
+        if (Constants.enableLimelight){
+            double botPose[] = limelightInputs.botPoseWPI;
+            swerveDrivePoseEstimator.addVisionMeasurement(
                 new Pose2d(new Translation2d(botPose[0], botPose[1]), new Rotation2d(botPose[5])),
                 Timer.getFPGATimestamp() - limelightInputs.latency);
+        }
+
         swerveDrivePoseEstimator.update(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
 
         getPose();
