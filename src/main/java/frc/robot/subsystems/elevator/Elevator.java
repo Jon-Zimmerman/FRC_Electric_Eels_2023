@@ -33,7 +33,7 @@ public class Elevator extends SubsystemBase {
         Constants.ElevatorSubsystem.kD);
 
   }
- 
+
   @Override
   public void periodic() {
     io.updateInputs(inputs);
@@ -64,33 +64,18 @@ public class Elevator extends SubsystemBase {
     return Math.abs(inputs.positionElevatorSetPointInch - inputs.positionElevatorInch);
   }
 
-  public void elevatorBottom() {
-    setPositionSetPoint(Constants.ElevatorSubsystem.elevatorPosBottom);
-    // while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
-
-  }
-
-  public void elevatorMid() {
-    setPositionSetPoint(Constants.ElevatorSubsystem.elevatorPosMid);
-    // while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
-  }
-
-  public void elevatorLoading() {
-    setPositionSetPoint(Constants.ElevatorSubsystem.elevatorPosLoading);
-    // while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
-  }
-
-  public void elevatorTop() {
-    setPositionSetPoint(Constants.ElevatorSubsystem.elevatorPosTop);
-
-    // while(getError()>Constants.ElevatorSubsystem.autoPositionErrorInch){}
-  }
 
   /** Stops the elevator. */
   public void stop() {
     io.stop();
   }
 
+  public boolean atSetpoint() {
+    return ((Math.abs(m_goal.position
+        - inputs.positionElevatorInch)) < Constants.ElevatorSubsystem.allowableErrorInch);
+
+    
+  }
   // /** Returns the current velocity in RPM. */
   // public double getVelocityRPMFromRadsPerSec() {
   // return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);

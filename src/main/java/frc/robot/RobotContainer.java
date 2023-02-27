@@ -30,7 +30,6 @@ import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOFalcon;
 
-
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.intake.IntakeIO;
 import frc.robot.subsystems.intake.IntakeIOSim;
@@ -45,6 +44,9 @@ import frc.robot.subsystems.slider.Slider;
 import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
 import frc.robot.subsystems.slider.SliderIOFalcon;
+import frc.robot.commands.ElevatorGoToPosition;
+//Commands:
+import frc.robot.commands.SliderGoToPosition;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -67,7 +69,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
 
-
   private final Joystick driver2 = new Joystick(1);
   private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
   private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
@@ -82,21 +83,20 @@ public class RobotContainer {
   private final POVButton sliderIn = new POVButton(driver2, 180);
   private final POVButton sliderOut = new POVButton(driver2, 0);
 
-
   private final Joystick driver = new Joystick(0);
   private final int translationAxis = XboxController.Axis.kLeftY.value;
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   private final JoystickButton zeroGyro = new JoystickButton(driver,
-  XboxController.Button.kY.value);
+      XboxController.Button.kY.value);
   private final JoystickButton calibrate = new JoystickButton(driver,
-  XboxController.Button.kRightBumper.value);
+      XboxController.Button.kRightBumper.value);
   // probably remove robotcentric
   private final JoystickButton robotCentric = new JoystickButton(driver,
-  XboxController.Button.kLeftBumper.value);
+      XboxController.Button.kLeftBumper.value);
   private final JoystickButton autoFocus = new JoystickButton(driver,
-  XboxController.Button.kA.value);
+      XboxController.Button.kA.value);
 
   // /* Driver Buttons */
   // private final Joystick driver = new Joystick(0);
@@ -233,13 +233,13 @@ public class RobotContainer {
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
-    elevatorBottom.whileTrue(new StartEndCommand(() -> elevator.elevatorBottom(),elevator::stop,elevator));
-    elevatorMid.whileTrue(new StartEndCommand(() -> elevator.elevatorMid(),elevator::stop,elevator));
-    elevatorLoading.whileTrue(new StartEndCommand(() -> elevator.elevatorLoading(),elevator::stop,elevator));
-    elevatorTop.whileTrue(new StartEndCommand(() -> elevator.elevatorTop(),elevator::stop,elevator));
+    elevatorBottom.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,elevator));
+    elevatorMid.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid,elevator));
+    elevatorLoading.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,elevator));
+    elevatorTop.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,elevator));
 
-    sliderIn.onTrue(new InstantCommand(() -> slider.sliderIn()));
-    sliderOut.onTrue(new InstantCommand(() -> slider.sliderOut()));
+    sliderIn.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,slider));
+    sliderOut.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,slider));
   }
 
   /**

@@ -14,8 +14,10 @@ public class ElevatorIOSim implements ElevatorIO {
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
   private static final double sprocketDiameterMeter = Units.inchesToMeters(sprocketDiameterInch);
   private static final double simCarriageWeightKg = Constants.ElevatorSubsystem.simCarriageWeightKg;
-  private static final double elevatorSoftLimitUpperMeters =  Units.inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch);
-  private static final double elevatorSoftLimitLowerMeters =  Units.inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch);
+  private static final double elevatorSoftLimitUpperMeters = Units
+      .inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch);
+  private static final double elevatorSoftLimitLowerMeters = Units
+      .inchesToMeters(Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch);
   private ElevatorSim elevatorSim = new ElevatorSim(
       DCMotor.getNEO(1),
       gearRatio,
@@ -74,8 +76,8 @@ public class ElevatorIOSim implements ElevatorIO {
 
   @Override
   public void stop() {
-    // appliedVolts = 0.0;
-    // elevatorSim.setInputVoltage(0.0);
+    appliedVolts = 0.0;
+    elevatorSim.setInputVoltage(0.0);
   }
 
   public void configurePID(double kP, double kI, double kD) {

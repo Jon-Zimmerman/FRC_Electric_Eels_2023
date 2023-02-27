@@ -5,6 +5,7 @@ import frc.robot.subsystems.drive.Swerve;
 import java.util.List;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 
@@ -14,7 +15,11 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.Constants;
-import java.util.HashMap;
+import frc.robot.commands.SliderGoToPosition;
+import frc.robot.commands.ElevatorGoToPosition;
+import frc.robot.commands.GetOnChargeStation;
+
+//import java.util.HashMap;
 //import frc.robot.commands.GoToElevatorTop;
 
 import frc.robot.subsystems.intake.Intake;
@@ -25,7 +30,7 @@ import frc.robot.subsystems.slider.Slider;
 
 public class One_Cone_And_Balance extends SequentialCommandGroup {
     List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Path1", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-    final HashMap<String, Command> eventMap = new HashMap<String, Command>();
+    //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     final Command followPath1;
     public One_Cone_And_Balance(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
         //Could try and use this method which allows you to put points in pathplanner GUI,
@@ -43,10 +48,12 @@ public class One_Cone_And_Balance extends SequentialCommandGroup {
         
         addCommands(
         s_Swerve.swerveAutoBuilder.resetPose(pathGroup.get(0)),
-        new StartEndCommand(() -> elevator.elevatorTop(), () -> {}, elevator).withTimeout(3.0),
-        new StartEndCommand(() -> slider.sliderOut(), () ->  intake.intakeOut(),  slider,intake).withTimeout(1.0),
-       new StartEndCommand(() -> slider.sliderIn(), () ->  elevator.elevatorBottom(),  slider,elevator).withTimeout(1.0),
-       new StartEndCommand(() -> {}, () -> {},  slider,elevator).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,elevator).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,slider).withTimeout(3.0),
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(1.0), //make time based
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,slider).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,elevator).withTimeout(3.0),
+        new GetOnChargeStation(s_Swerve),
         followPath1
         );
     }

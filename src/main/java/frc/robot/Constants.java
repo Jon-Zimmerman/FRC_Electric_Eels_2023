@@ -214,7 +214,7 @@ public final class Constants {
         public static final double elevatorSoftLimitUpperInch = 40.0;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
-
+        public static final double allowableErrorInch = 1.0;
     }
 
     // Slider Motor
@@ -256,7 +256,7 @@ public final class Constants {
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
 
-
+        public static final double allowableErrorInch = 1.0;
 
     }
 

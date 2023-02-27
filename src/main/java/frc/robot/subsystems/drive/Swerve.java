@@ -124,6 +124,7 @@ public class Swerve extends SubsystemBase {
         boolean onRamp = false;
         boolean balanced = false;
         double stopThresholdDegrees = 3;
+        double initialTriggerDegrees = 9;
         double mountingSpeed = 1.0; // meters per second;
         double balancingSpeed = 0.3; // meters per second;
         Timer timecheck = Timer();
@@ -148,7 +149,7 @@ public class Swerve extends SubsystemBase {
         timecheck.start();
         while (timecheck.hasElapsed(3) != true && !onRamp) { // if roll or pitch > trigger angle
             roll = gyroInputs.rollDegrees; // scan navx roll or pitch
-            if (roll > 9) {
+            if (roll > initialTriggerDegrees) {
                 onRamp = true;// set rampEngaged = true
                 timecheck.reset();
             }
@@ -156,17 +157,15 @@ public class Swerve extends SubsystemBase {
         while (timecheck.hasElapsed(4) != true && !balanced) { // if roll or pitch > trigger angle
             roll = gyroInputs.rollDegrees; // scan navx roll or pitch
 
-            if (roll > 4) {
+            if (roll > stopThresholdDegrees) {
                 for (int i = 0; i < 4; i++) {
-                    desiredState.angle = Rotation2d.fromDegrees(0); // set angles for 45, 135,225,315 in order to brake
-                                                                    // really well
+                    desiredState.angle = Rotation2d.fromDegrees(0);
                     desiredState.speedMetersPerSecond = balancingSpeed; // set speed to 0
                     ModuleIOs[i].setDesiredState(desiredState, true);
                 }
-            } else if (roll < -4) {
+            } else if (roll < -stopThresholdDegrees) {
                 for (int i = 0; i < 4; i++) {
-                    desiredState.angle = Rotation2d.fromDegrees(0); // set angles for 45, 135,225,315 in order to brake
-                                                                    // really well
+                    desiredState.angle = Rotation2d.fromDegrees(0); 
                     desiredState.speedMetersPerSecond = -balancingSpeed; // set speed to 0
                     ModuleIOs[i].setDesiredState(desiredState, true);
                 }

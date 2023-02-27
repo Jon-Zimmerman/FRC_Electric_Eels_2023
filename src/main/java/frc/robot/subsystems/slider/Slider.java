@@ -64,16 +64,16 @@ public class Slider extends SubsystemBase {
     return Math.abs(inputs.positionSliderSetPointInch - inputs.positionSliderInch);
   }
 
-  public void sliderIn() {
-    setPositionSetPoint(Constants.SliderSubsystem.sliderIn);
-    // while(getError()>Constants.SliderSubsystem.autoPositionErrorInch){}
+  // public void sliderIn() {
+  //   setPositionSetPoint(Constants.SliderSubsystem.sliderIn);
+  //   // while(getError()>Constants.SliderSubsystem.autoPositionErrorInch){}
 
-  }
+  // }
 
-  public void sliderOut() {
-    setPositionSetPoint(Constants.SliderSubsystem.sliderOut);
-    // while(getError()>Constants.SliderSubsystem.autoPositionErrorInch){}
-  }
+  // public void sliderOut() {
+  //   setPositionSetPoint(Constants.SliderSubsystem.sliderOut);
+  //   // while(getError()>Constants.SliderSubsystem.autoPositionErrorInch){}
+  // }
 
 
   /** Stops the slider. */
@@ -81,6 +81,10 @@ public class Slider extends SubsystemBase {
     io.stop();
   }
 
+  public boolean atSetpoint() {
+    return ((Math.abs(m_goal.position
+        - inputs.positionSliderInch)) < Constants.SliderSubsystem.allowableErrorInch);
+  }
   // /** Returns the current velocity in RPM. */
   // public double getVelocityRPMFromRadsPerSec() {
   // return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
