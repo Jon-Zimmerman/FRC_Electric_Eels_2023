@@ -122,59 +122,79 @@ public class Swerve extends SubsystemBase {
     // #####################################################################################
     public void driveOntoChargeStation() {
         boolean onRamp = false;
-        double stopThresholdDegrees=10;
-        double mountingSpeed=0.5; //meters per second;
+        boolean balanced = false;
+        double stopThresholdDegrees = 3;
+        double mountingSpeed = 1.0; // meters per second;
+        double balancingSpeed = 0.3; // meters per second;
         Timer timecheck = Timer();
-        if (DriverStation.getAlliance() == Alliance.Red) {
-            // Lock wheels toward heading
-            
-            
+        // if (DriverStation.getAlliance() == Alliance.Red) {
+        // driveDirection = 0;
 
+        // }
 
-            SwerveModuleState desiredState = new SwerveModuleState();
+        // Lock wheels toward heading
+
+        SwerveModuleState desiredState = new SwerveModuleState();
+        // TODO change this to "for(SwerveModule mod : mSwerveMods){"
+        // - RE: yes could write as for(ModuleIO mod : ModuleIOs){ but it has to be a
+        // for loop elsewhere in this file
+        // and I would rather keep it all the same
+        for (int i = 0; i < 4; i++) {
             desiredState.speedMetersPerSecond = mountingSpeed;
-            desiredState.angle =Rotation2d.fromDegrees(0);
-            // for motors i=0 -> 3
-            for (int i = 0; i < 4; i++) { //TODO change this to "for(SwerveModule mod : mSwerveMods){"
-            ModuleIOs[i].setDesiredState(desiredState, false); //maybe true would be better
-            }
-            double pitch = gyroInputs.pitchDegrees;
-            timecheck.start();
-            while(timecheck.hasElapsed(3)!= true && !onRamp) { // if roll or pitch > trigger angle
-                pitch = gyroInputs.pitchDegrees; // scan navx roll or pitch
-                if (pitch > 10){
-                    onRamp=true;// set rampEngaged = true
-                    timecheck.reset();
-                }
-            
-            }
-            
-            while(timecheck.hasElapsed(3)!= true) {
-                pitch=gyroInputs.pitchDegrees; 
-                if (pitch <stopThresholdDegrees && pitch > -stopThresholdDegrees) { // if we have become """"level""""
-                    desiredState.speedMetersPerSecond =0; // set speed to 0
-                    for (int i=0;i<4;i++) {
-                        desiredState.angle= Rotation2d.fromDegrees(i*90+45); //set angles for 45, 135,225,315 in order to brake really well
-                        ModuleIOs[i].setDesiredState(desiredState, false); 
-                    }
-                }
-            }
-            // this should build, ill make it more complicated later if needed, or make it simpler if necessary
-
-
-            // if roll or pitch ~ 0
-            // motorsstop
-            // wait 1 second
-            // if roll or pitch < -trigger angle
-            // drive backward extra slow
-            // else if roll or pitch < -trigger angle
-            // drive forward extra slow
-            // else
-            // end condition = true
-            //
-        } else {
-            // repeat logic
+            desiredState.angle = Rotation2d.fromDegrees(0);
+            ModuleIOs[i].setDesiredState(desiredState, false); // maybe true would be better
         }
+        double roll = gyroInputs.rollDegrees;
+        timecheck.start();
+        while (timecheck.hasElapsed(3) != true && !onRamp) { // if roll or pitch > trigger angle
+            roll = gyroInputs.rollDegrees; // scan navx roll or pitch
+            if (roll > 9) {
+                onRamp = true;// set rampEngaged = true
+                timecheck.reset();
+            }
+        }
+        while (timecheck.hasElapsed(4) != true && !balanced) { // if roll or pitch > trigger angle
+            roll = gyroInputs.rollDegrees; // scan navx roll or pitch
+
+            if (roll > 4) {
+                for (int i = 0; i < 4; i++) {
+                    desiredState.angle = Rotation2d.fromDegrees(0); // set angles for 45, 135,225,315 in order to brake
+                                                                    // really well
+                    desiredState.speedMetersPerSecond = balancingSpeed; // set speed to 0
+                    ModuleIOs[i].setDesiredState(desiredState, true);
+                }
+            } else if (roll < -4) {
+                for (int i = 0; i < 4; i++) {
+                    desiredState.angle = Rotation2d.fromDegrees(0); // set angles for 45, 135,225,315 in order to brake
+                                                                    // really well
+                    desiredState.speedMetersPerSecond = -balancingSpeed; // set speed to 0
+                    ModuleIOs[i].setDesiredState(desiredState, true);
+                }
+            }
+        }
+        //Balanced
+        for (int i = 0; i < 4; i++) {
+            desiredState.angle = Rotation2d.fromDegrees(i * 90 + 45); // set angles for 45, 135,225,315 in order to
+                                                                      // brake really well
+            desiredState.speedMetersPerSecond = 0; // set speed to 0
+            ModuleIOs[i].setDesiredState(desiredState, false);
+        }
+        // lets abstract this to its own function since that would be nice to do
+        // whenever stationary
+
+        // this should build, ill make it more complicated later if needed, or make it
+        // simpler if necessary
+
+        // if roll or pitch ~ 0
+        // motorsstop
+        // wait 1 second
+        // if roll or pitch < -trigger angle
+        // drive backward extra slow
+        // else if roll or pitch < -trigger angle
+        // drive forward extra slow
+        // else
+        // end condition = true
+        //
     }
 
     // #####################################################################################
@@ -249,12 +269,11 @@ public class Swerve extends SubsystemBase {
                     moduleInputs[i]);
         }
 
-        
-        if (Constants.enableLimelight){
+        if (Constants.enableLimelight) {
             double botPose[] = limelightInputs.botPoseWPI;
             swerveDrivePoseEstimator.addVisionMeasurement(
-                new Pose2d(new Translation2d(botPose[0], botPose[1]), new Rotation2d(botPose[5])),
-                Timer.getFPGATimestamp() - limelightInputs.latency);
+                    new Pose2d(new Translation2d(botPose[0], botPose[1]), new Rotation2d(botPose[5])),
+                    Timer.getFPGATimestamp() - limelightInputs.latency);
         }
 
         swerveDrivePoseEstimator.update(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
