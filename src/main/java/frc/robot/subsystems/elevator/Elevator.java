@@ -14,6 +14,7 @@ public class Elevator extends SubsystemBase {
   private static final double maxLinearVelocityInchPerSec = Constants.ElevatorSubsystem.maxLinearVelocityInchPerSec;
   private static final double maxLinearAccelerationInchPerSec = Constants.ElevatorSubsystem.maxLinearAccelerationInchPerSec;
 
+
   private final TrapezoidProfile.Constraints m_constraints = new TrapezoidProfile.Constraints(
       maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
@@ -21,7 +22,7 @@ public class Elevator extends SubsystemBase {
 
   private final ElevatorFeedforward ffModel;
 
-  private double positionSetPointInch = 0.0;
+  //private double positionSetPointInch = 0.0;
 
   /** Creates a new elevator. */
   public Elevator(ElevatorIO io) {
@@ -56,7 +57,7 @@ public class Elevator extends SubsystemBase {
 
   public void setPositionSetPoint(double positionInch) {
     m_goal = new TrapezoidProfile.State(positionInch, 0);
-    positionSetPointInch = positionInch;
+    //positionSetPointInch = positionInch;
 
   }
 
@@ -70,9 +71,9 @@ public class Elevator extends SubsystemBase {
     io.stop();
   }
 
-  public boolean atSetpoint() {
+  public boolean atSetpoint(double goal_tolerance) {
     return ((Math.abs(m_goal.position
-        - inputs.positionElevatorInch)) < Constants.ElevatorSubsystem.allowableErrorInch);
+        - inputs.positionElevatorInch)) < goal_tolerance);
 
     
   }

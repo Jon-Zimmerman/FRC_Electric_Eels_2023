@@ -203,8 +203,9 @@ public final class Constants {
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 20.0;
+        public static final double maxLinearVelocityInchPerSec = 18.0;
         public static final double maxLinearAccelerationInchPerSec = 25.0;
+
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
         public static final double elevatorPosBottom = 0.0;
@@ -214,7 +215,7 @@ public final class Constants {
         public static final double elevatorSoftLimitUpperInch = 40.0;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
-        public static final double allowableErrorInch = 1.0;
+        public static final double allowableTeleopErrorInch = 1.0;
     }
 
     // Slider Motor

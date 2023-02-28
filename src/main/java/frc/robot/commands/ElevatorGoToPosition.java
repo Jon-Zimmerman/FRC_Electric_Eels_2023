@@ -8,16 +8,17 @@ public class ElevatorGoToPosition extends CommandBase {
 
   private final Elevator m_elevator;
   private final double m_setpoint;
-
+  private final double goal_tolerance;
   /**
    * Create a new ElevatorGoToPosition command.
    *
    * @param setpoint The setpoint to set the elevator to
    * @param elevator The elevator to use
    */
-  public ElevatorGoToPosition(double setpointInch, Elevator elevator) {
+  public ElevatorGoToPosition(double setpointInch, double goalTolerance, Elevator elevator) {
     m_elevator = elevator;
     m_setpoint = setpointInch;
+    goal_tolerance = goalTolerance;
     addRequirements(m_elevator);
   }
 
@@ -32,6 +33,6 @@ public class ElevatorGoToPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return m_elevator.atSetpoint();
+    return m_elevator.atSetpoint(goal_tolerance);
   }
 }

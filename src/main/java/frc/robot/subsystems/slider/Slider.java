@@ -81,9 +81,9 @@ public class Slider extends SubsystemBase {
     io.stop();
   }
 
-  public boolean atSetpoint() {
+  public boolean atSetpoint(double goal_tolerance) {
     return ((Math.abs(m_goal.position
-        - inputs.positionSliderInch)) < Constants.SliderSubsystem.allowableErrorInch);
+        - inputs.positionSliderInch)) < goal_tolerance);
   }
   // /** Returns the current velocity in RPM. */
   // public double getVelocityRPMFromRadsPerSec() {

@@ -48,13 +48,13 @@ public class One_Cone_And_Balance extends SequentialCommandGroup {
         
         addCommands(
         s_Swerve.swerveAutoBuilder.resetPose(pathGroup.get(0)),
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,elevator).withTimeout(3.0),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,slider).withTimeout(3.0),
-        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(1.0), //make time based
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,slider).withTimeout(3.0),
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,elevator).withTimeout(3.0),
-        new GetOnChargeStation(s_Swerve),
-        followPath1
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.25), //make time based
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,10.0,slider).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,15.0,elevator).withTimeout(3.0),
+        followPath1,
+        new GetOnChargeStation(s_Swerve)
         );
     }
 

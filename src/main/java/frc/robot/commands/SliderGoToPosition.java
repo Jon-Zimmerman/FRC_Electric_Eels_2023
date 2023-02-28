@@ -8,16 +8,17 @@ public class SliderGoToPosition extends CommandBase {
 
   private final Slider m_slider;
   private final double m_setpoint;
-
+  private final double goal_tolerance;
   /**
    * Create a new SliderGoToPosition command.
    *
    * @param setpoint The setpoint to set the slider to
    * @param elevator The slider to use
    */
-  public SliderGoToPosition(double setpointInch, Slider slider) {
+  public SliderGoToPosition(double setpointInch, double goalTolerance, Slider slider) {
     m_slider = slider;
     m_setpoint = setpointInch;
+    goal_tolerance = goalTolerance;
     addRequirements(m_slider);
   }
 
@@ -32,6 +33,6 @@ public class SliderGoToPosition extends CommandBase {
   @Override
   public boolean isFinished() {
     
-    return m_slider.atSetpoint();
+    return m_slider.atSetpoint(goal_tolerance);
   }
 }

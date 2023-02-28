@@ -31,7 +31,7 @@ public class Swerve extends SubsystemBase {
     public SwerveDrivePoseEstimator swerveDrivePoseEstimator;
     // public ModuleIO[] mSwerveMods;
     private final GyroIO gyroIO;
-    private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
+    public final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
 
     public SwerveAutoBuilder swerveAutoBuilder;
 
@@ -77,18 +77,24 @@ public class Swerve extends SubsystemBase {
     }
 
     public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
-        boolean fieldRelative = Constants.Swerve.fieldRelative;
+        // boolean fieldRelative = Constants.Swerve.fieldRelative;
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
         SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
-        SwerveModuleState[] swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
-                ChassisSpeeds.fromFieldRelativeSpeeds(
-                        translation.getX(),
-                        translation.getY(),
-                        rotation,
-                        Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
+        SwerveModuleState[] swerveModuleStates;
+        if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0) {
+            swerveModuleStates = getLockWheels45();
+        } else {
+            swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                    ChassisSpeeds.fromFieldRelativeSpeeds(
+                            translation.getX(),
+                            translation.getY(),
+                            rotation,
+                            Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
+        }
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
-        SmartDashboard.putNumber("Field Relative?", fieldRelative ? 1d : 0d);
+        // SmartDashboard.putNumber("Field Relative?", fieldRelative ? 1d : 0d);
+
         getModuleStates();
 
         setModuleStates(swerveModuleStates, isOpenLoop);
@@ -120,88 +126,93 @@ public class Swerve extends SubsystemBase {
     // #####################################################################################
     // #####################################################################################
     // #####################################################################################
-    public void driveOntoChargeStation() {
-        boolean onRamp = false;
-        boolean balanced = false;
-        double stopThresholdDegrees = 3;
-        double initialTriggerDegrees = 9;
-        double mountingSpeed = 1.0; // meters per second;
-        double balancingSpeed = 0.3; // meters per second;
-        Timer timecheck = Timer();
-        // if (DriverStation.getAlliance() == Alliance.Red) {
-        // driveDirection = 0;
+    // public void driveOntoChargeStation(boolean onRamp, boolean balanced,Timer
+    // timecheck) {
+    // double stopThresholdDegrees = 3;
+    // double initialTriggerDegrees = 9;
+    // double mountingSpeed = 1.0; // meters per second;
+    // double balancingSpeed = 0.3; // meters per second;
 
-        // }
+    // // if (DriverStation.getAlliance() == Alliance.Red) {
+    // // driveDirection = 0;}
 
-        // Lock wheels toward heading
+    // // Lock wheels toward heading
+    // getModuleStates();
+    // SwerveModuleState desiredState = new SwerveModuleState();
+    // // TODO change this to "for(SwerveModule mod : mSwerveMods){"
+    // // - RE: yes could write as for(ModuleIO mod : ModuleIOs){ but it has to be a
+    // // for loop elsewhere in this file and I would rather keep it all the same
 
-        SwerveModuleState desiredState = new SwerveModuleState();
-        // TODO change this to "for(SwerveModule mod : mSwerveMods){"
-        // - RE: yes could write as for(ModuleIO mod : ModuleIOs){ but it has to be a
-        // for loop elsewhere in this file
-        // and I would rather keep it all the same
+    // double roll = gyroInputs.rollDegrees;
+
+    // while (timecheck.hasElapsed(4) != true && !onRamp) { // if roll or pitch >
+    // trigger angle
+    // roll = gyroInputs.rollDegrees; // scan navx roll or pitch
+    // for (int i = 0; i < 4; i++) {
+    // desiredState.speedMetersPerSecond = mountingSpeed;
+    // desiredState.angle = Rotation2d.fromDegrees(0);
+    // ModuleIOs[i].setDesiredState(desiredState, false); // maybe true would be
+    // better
+    // }
+    // if (roll > initialTriggerDegrees) {
+    // onRamp = true;// set rampEngaged = true
+    // timecheck.reset();
+    // }
+    // }
+    // while (timecheck.hasElapsed(5) != true && !balanced) { // if roll or pitch >
+    // trigger angle
+    // roll = gyroInputs.rollDegrees; // scan navx roll or pitch
+
+    // if (roll > stopThresholdDegrees) {
+    // for (int i = 0; i < 4; i++) {
+    // desiredState.angle = Rotation2d.fromDegrees(0);
+    // desiredState.speedMetersPerSecond = balancingSpeed; // set speed to 0
+    // ModuleIOs[i].setDesiredState(desiredState, true);
+    // }
+    // } else if (roll < -stopThresholdDegrees) {
+    // for (int i = 0; i < 4; i++) {
+    // desiredState.angle = Rotation2d.fromDegrees(0);
+    // desiredState.speedMetersPerSecond = -balancingSpeed; // set speed to 0
+    // ModuleIOs[i].setDesiredState(desiredState, true);
+    // }
+    // }
+    // }
+    // // Balanced
+    // lockWheels45();
+    // }
+
+    // #####################################################################################
+    // #####################################################################################
+    // #####################################################################################
+
+    // private Timer Timer() {
+    // return null;
+    // }
+
+    // public void resetOdometry(Pose2d pose) {
+    // swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees),
+    // getModulePositions(), pose);
+    // }
+    public SwerveModuleState[] getLockWheels45() {
+        SwerveModuleState[] WheelStates45 = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
+                ChassisSpeeds.fromFieldRelativeSpeeds(
+                        0.0,
+                        0.0,
+                        0.0,
+                        Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
+        // SwerveModuleState desiredState = new SwerveModuleState();
         for (int i = 0; i < 4; i++) {
-            desiredState.speedMetersPerSecond = mountingSpeed;
-            desiredState.angle = Rotation2d.fromDegrees(0);
-            ModuleIOs[i].setDesiredState(desiredState, false); // maybe true would be better
+            WheelStates45[i].angle = Rotation2d.fromDegrees(i * 90 + 45); // set angles for 45, 135,225,315 in order to
+            // brake really well
+            WheelStates45[i].speedMetersPerSecond = 0; // set speed to 0
         }
-        double roll = gyroInputs.rollDegrees;
-        timecheck.start();
-        while (timecheck.hasElapsed(3) != true && !onRamp) { // if roll or pitch > trigger angle
-            roll = gyroInputs.rollDegrees; // scan navx roll or pitch
-            if (roll > initialTriggerDegrees) {
-                onRamp = true;// set rampEngaged = true
-                timecheck.reset();
-            }
-        }
-        while (timecheck.hasElapsed(4) != true && !balanced) { // if roll or pitch > trigger angle
-            roll = gyroInputs.rollDegrees; // scan navx roll or pitch
-
-            if (roll > stopThresholdDegrees) {
-                for (int i = 0; i < 4; i++) {
-                    desiredState.angle = Rotation2d.fromDegrees(0);
-                    desiredState.speedMetersPerSecond = balancingSpeed; // set speed to 0
-                    ModuleIOs[i].setDesiredState(desiredState, true);
-                }
-            } else if (roll < -stopThresholdDegrees) {
-                for (int i = 0; i < 4; i++) {
-                    desiredState.angle = Rotation2d.fromDegrees(0); 
-                    desiredState.speedMetersPerSecond = -balancingSpeed; // set speed to 0
-                    ModuleIOs[i].setDesiredState(desiredState, true);
-                }
-            }
-        }
-        //Balanced
-        for (int i = 0; i < 4; i++) {
-            desiredState.angle = Rotation2d.fromDegrees(i * 90 + 45); // set angles for 45, 135,225,315 in order to
-                                                                      // brake really well
-            desiredState.speedMetersPerSecond = 0; // set speed to 0
-            ModuleIOs[i].setDesiredState(desiredState, false);
-        }
-        // lets abstract this to its own function since that would be nice to do
-        // whenever stationary
-
-        // this should build, ill make it more complicated later if needed, or make it
-        // simpler if necessary
-
-        // if roll or pitch ~ 0
-        // motorsstop
-        // wait 1 second
-        // if roll or pitch < -trigger angle
-        // drive backward extra slow
-        // else if roll or pitch < -trigger angle
-        // drive forward extra slow
-        // else
-        // end condition = true
-        //
+        return WheelStates45;
     }
 
-    // #####################################################################################
-    // #####################################################################################
-    // #####################################################################################
 
-    private Timer Timer() {
-        return null;
+    public void resetPose(Pose2d pose) {
+        swerveDrivePoseEstimator.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
+                pose);
     }
 
     public Pose2d getPose() {
@@ -209,16 +220,6 @@ public class Swerve extends SubsystemBase {
         Logger.getInstance().recordOutput("SwervePose", pose);
 
         return pose;
-    }
-
-    // public void resetOdometry(Pose2d pose) {
-    // swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees),
-    // getModulePositions(), pose);
-    // }
-
-    public void resetPose(Pose2d pose) {
-        swerveDrivePoseEstimator.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
-                pose);
     }
 
     public SwerveModuleState[] getModuleStates() {

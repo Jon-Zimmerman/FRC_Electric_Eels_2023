@@ -56,9 +56,11 @@ import frc.robot.commands.SliderGoToPosition;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final double allowableElevatorTeleopInch = Constants.ElevatorSubsystem.allowableTeleopErrorInch;
 
-  // Controllers
-  //
+  private final double allowableSliderTeleopInch = Constants.ElevatorSubsystem.allowableTeleopErrorInch;
+
+  //Controllers
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
@@ -233,13 +235,13 @@ public class RobotContainer {
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
-    elevatorBottom.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,elevator));
-    elevatorMid.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid,elevator));
-    elevatorLoading.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,elevator));
-    elevatorTop.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,elevator));
+    elevatorBottom.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,allowableElevatorTeleopInch,elevator));
+    elevatorMid.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid,allowableElevatorTeleopInch,elevator));
+    elevatorLoading.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,allowableElevatorTeleopInch,elevator));
+    elevatorTop.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,allowableElevatorTeleopInch,elevator));
 
-    sliderIn.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,slider));
-    sliderOut.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,slider));
+    sliderIn.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,allowableSliderTeleopInch,slider));
+    sliderOut.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,allowableSliderTeleopInch,slider));
   }
 
   /**

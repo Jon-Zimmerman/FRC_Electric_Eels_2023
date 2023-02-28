@@ -14,6 +14,8 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.Constants;
+import frc.robot.commands.GetOnChargeStation;
+
 import java.util.HashMap;
 //import frc.robot.commands.GoToElevatorTop;
 
@@ -40,7 +42,7 @@ public class One_Cone_And_Balance_Chassis extends SequentialCommandGroup {
         addCommands(
         s_Swerve.swerveAutoBuilder.resetPose(pathGroup.get(0)),
         followPath1,
-        new StartEndCommand(() -> s_Swerve.driveOntoChargeStation(),() -> {}, s_Swerve)
+        new GetOnChargeStation(s_Swerve)
         );
     }
 
