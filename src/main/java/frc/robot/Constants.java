@@ -19,6 +19,7 @@ public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
     private static final RobotType robot = RobotType.SIM;
     public static boolean enableLimelight = false;
+    public static double acceptableLimelightMergeDistMeters = 1.5; //distance from grid in X to allow tag inputs
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
@@ -163,7 +164,7 @@ public final class Constants {
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-        public static final PIDConstants translationPIDConstants = new PIDConstants(1.3, 0.0, 0.0);
+        public static final PIDConstants translationPIDConstants = new PIDConstants(2.1, 0.0, 0.0);
         public static final PIDConstants rotationPIDConstants = new PIDConstants(1.3, 0.0, 0.0);
 
         /* Constraint for the motion profilied robot angle controller */

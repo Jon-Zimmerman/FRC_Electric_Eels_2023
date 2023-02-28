@@ -20,6 +20,7 @@ public class LimelightIONetwork implements LimelightIO{
             inputs.botPoseWPI = table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
         }
         inputs.latency = inputs.botPoseWPI[6];
+        //Botpos transform in field-space (driver station WPILIB origin). Translation (X,Y,Z) Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
     }
 
 }

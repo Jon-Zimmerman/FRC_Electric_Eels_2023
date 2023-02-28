@@ -29,7 +29,7 @@ import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.slider.Slider;
 
 public class One_Cone_And_Balance extends SequentialCommandGroup {
-    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Path1", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Path3", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     final Command followPath1;
     public One_Cone_And_Balance(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){

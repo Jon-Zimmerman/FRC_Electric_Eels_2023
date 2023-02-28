@@ -90,15 +90,17 @@ public class RobotContainer {
   private final int strafeAxis = XboxController.Axis.kLeftX.value;
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
+  private final JoystickButton lockToHeading = new JoystickButton(driver,
+      XboxController.Button.kA.value);
+
   private final JoystickButton zeroGyro = new JoystickButton(driver,
       XboxController.Button.kY.value);
   private final JoystickButton calibrate = new JoystickButton(driver,
       XboxController.Button.kRightBumper.value);
   // probably remove robotcentric
-  private final JoystickButton robotCentric = new JoystickButton(driver,
-      XboxController.Button.kLeftBumper.value);
-  private final JoystickButton autoFocus = new JoystickButton(driver,
-      XboxController.Button.kA.value);
+
+  // private final JoystickButton autoFocus = new JoystickButton(driver,
+  //     XboxController.Button.kA.value);
 
   // /* Driver Buttons */
   // private final Joystick driver = new Joystick(0);
@@ -112,20 +114,13 @@ public class RobotContainer {
   // private final JoystickButton robotCentric = new JoystickButton(driver, 7);
 
   // Subsystems
-  // private final Drive drive;
 
-  /* Subsystems */
-  // private final Swerve s_Swerve = new Swerve();
   private final Swerve j_Swerve;
   private final Intake intake;
   private final Elevator elevator;
   private final Slider slider;
 
   public RobotContainer() {
-    // final HashMap<String, Command> eventMap = new HashMap<String, Command>();
-    // Set up auto routines
-
-    // autoChooser.addOption("Spin", new SpinAuto(drive));
 
     switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
@@ -225,7 +220,7 @@ public class RobotContainer {
         () -> -driver.getRawAxis(translationAxis),
         () -> -driver.getRawAxis(strafeAxis),
         () -> driver.getRawAxis(rotationAxis),
-        () -> robotCentric.getAsBoolean()));
+        () -> lockToHeading.getAsBoolean()));
 
     zeroGyro.onTrue(new InstantCommand(() -> j_Swerve.zeroGyro()));
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));

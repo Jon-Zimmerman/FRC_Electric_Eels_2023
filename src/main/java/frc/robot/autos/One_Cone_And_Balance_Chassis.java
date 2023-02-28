@@ -22,7 +22,7 @@ import java.util.HashMap;
 
 
 public class One_Cone_And_Balance_Chassis extends SequentialCommandGroup {
-    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Path2", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Path3", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     final Command followPath1;
     public One_Cone_And_Balance_Chassis(Swerve s_Swerve){

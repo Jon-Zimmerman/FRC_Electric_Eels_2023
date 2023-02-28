@@ -4,6 +4,7 @@ import java.util.HashMap;
 import org.littletonrobotics.junction.Logger;
 
 import frc.robot.Constants;
+import frc.robot.Constants.Mode;
 //import frc.robot.subsystems.drive.LimelightIO.LimelightIOInputs;
 //import frc.robot.subsystems.drive.ModuleIO.ModuleIOInputs;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -76,21 +77,40 @@ public class Swerve extends SubsystemBase {
                 this);
     }
 
-    public void drive(Translation2d translation, double rotation, boolean isOpenLoop) {
+    public void drive(Translation2d translation, double rotation, boolean isOpenLoop, boolean lockToHeading) {
         // boolean fieldRelative = Constants.Swerve.fieldRelative;
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
         SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
         SwerveModuleState[] swerveModuleStates;
-        if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0) {
-            swerveModuleStates = getLockWheels45();
-        } else {
+        double lockToHeadingPScalar = 0.3;
+        double translationScalar = 0.6;
+        double degreeThreshold = 15.0;
+        if (lockToHeading) {
+            double error = 0.0;
+            if ((Math.abs(gyroInputs.yawDegrees % 360.0)) < degreeThreshold) {
+                error = 0.0 - (gyroInputs.yawDegrees % 360.0);
+            } else if ((gyroInputs.yawDegrees % 360.0) > (180.0 - degreeThreshold)) {
+                error = 180.0 - (gyroInputs.yawDegrees % 360.0);
+            } else if ((gyroInputs.yawDegrees % 360.0) < (-180.0 + degreeThreshold)) {
+                error = -180.0 - (gyroInputs.yawDegrees % 360.0);
+            }
+            rotation = error / 10.0 * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
+            translation = translation.times(translationScalar);
+            if (Constants.getMode() == Mode.SIM) {
+                gyroIO.additionalRotation(rotation);
+            }
+        }
+
+        // if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0) {
+        //     swerveModuleStates = getLockWheels45();
+        // } else {
             swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                     ChassisSpeeds.fromFieldRelativeSpeeds(
                             translation.getX(),
                             translation.getY(),
                             rotation,
                             Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
-        }
+        //}
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
         // SmartDashboard.putNumber("Field Relative?", fieldRelative ? 1d : 0d);
@@ -113,7 +133,6 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         for (int i = 0; i < 4; i++) {
             ModuleIOs[i].setDesiredState(desiredStates[i], isOpenLoop);
-
         }
         Logger.getInstance().recordOutput("desiredSwerveStates", desiredStates);
     }
@@ -123,76 +142,6 @@ public class Swerve extends SubsystemBase {
         setModuleStates(desiredStates, false);
     }
 
-    // #####################################################################################
-    // #####################################################################################
-    // #####################################################################################
-    // public void driveOntoChargeStation(boolean onRamp, boolean balanced,Timer
-    // timecheck) {
-    // double stopThresholdDegrees = 3;
-    // double initialTriggerDegrees = 9;
-    // double mountingSpeed = 1.0; // meters per second;
-    // double balancingSpeed = 0.3; // meters per second;
-
-    // // if (DriverStation.getAlliance() == Alliance.Red) {
-    // // driveDirection = 0;}
-
-    // // Lock wheels toward heading
-    // getModuleStates();
-    // SwerveModuleState desiredState = new SwerveModuleState();
-    // // TODO change this to "for(SwerveModule mod : mSwerveMods){"
-    // // - RE: yes could write as for(ModuleIO mod : ModuleIOs){ but it has to be a
-    // // for loop elsewhere in this file and I would rather keep it all the same
-
-    // double roll = gyroInputs.rollDegrees;
-
-    // while (timecheck.hasElapsed(4) != true && !onRamp) { // if roll or pitch >
-    // trigger angle
-    // roll = gyroInputs.rollDegrees; // scan navx roll or pitch
-    // for (int i = 0; i < 4; i++) {
-    // desiredState.speedMetersPerSecond = mountingSpeed;
-    // desiredState.angle = Rotation2d.fromDegrees(0);
-    // ModuleIOs[i].setDesiredState(desiredState, false); // maybe true would be
-    // better
-    // }
-    // if (roll > initialTriggerDegrees) {
-    // onRamp = true;// set rampEngaged = true
-    // timecheck.reset();
-    // }
-    // }
-    // while (timecheck.hasElapsed(5) != true && !balanced) { // if roll or pitch >
-    // trigger angle
-    // roll = gyroInputs.rollDegrees; // scan navx roll or pitch
-
-    // if (roll > stopThresholdDegrees) {
-    // for (int i = 0; i < 4; i++) {
-    // desiredState.angle = Rotation2d.fromDegrees(0);
-    // desiredState.speedMetersPerSecond = balancingSpeed; // set speed to 0
-    // ModuleIOs[i].setDesiredState(desiredState, true);
-    // }
-    // } else if (roll < -stopThresholdDegrees) {
-    // for (int i = 0; i < 4; i++) {
-    // desiredState.angle = Rotation2d.fromDegrees(0);
-    // desiredState.speedMetersPerSecond = -balancingSpeed; // set speed to 0
-    // ModuleIOs[i].setDesiredState(desiredState, true);
-    // }
-    // }
-    // }
-    // // Balanced
-    // lockWheels45();
-    // }
-
-    // #####################################################################################
-    // #####################################################################################
-    // #####################################################################################
-
-    // private Timer Timer() {
-    // return null;
-    // }
-
-    // public void resetOdometry(Pose2d pose) {
-    // swerveOdometry.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees),
-    // getModulePositions(), pose);
-    // }
     public SwerveModuleState[] getLockWheels45() {
         SwerveModuleState[] WheelStates45 = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -208,7 +157,6 @@ public class Swerve extends SubsystemBase {
         }
         return WheelStates45;
     }
-
 
     public void resetPose(Pose2d pose) {
         swerveDrivePoseEstimator.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
@@ -271,9 +219,13 @@ public class Swerve extends SubsystemBase {
 
         if (Constants.enableLimelight) {
             double botPose[] = limelightInputs.botPoseWPI;
-            swerveDrivePoseEstimator.addVisionMeasurement(
-                    new Pose2d(new Translation2d(botPose[0], botPose[1]), new Rotation2d(botPose[5])),
-                    Timer.getFPGATimestamp() - limelightInputs.latency);
+            // Botpos transform in field-space (driver station WPILIB origin). Translation
+            // (X,Y,Z) Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
+            if (botPose[0] < Constants.acceptableLimelightMergeDistMeters && botPose[0] != 0.0)
+
+                swerveDrivePoseEstimator.addVisionMeasurement(
+                        new Pose2d(new Translation2d(botPose[0], botPose[1]), new Rotation2d(botPose[5])),
+                        Timer.getFPGATimestamp() - limelightInputs.latency);
         }
 
         swerveDrivePoseEstimator.update(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());

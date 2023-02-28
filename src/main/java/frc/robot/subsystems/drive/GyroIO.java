@@ -18,4 +18,5 @@ public interface GyroIO {
 
   public default void zeroGyro() {}
   public default void calibrateGyro() {}
+  public default void additionalRotation(double rotation) {}
 }

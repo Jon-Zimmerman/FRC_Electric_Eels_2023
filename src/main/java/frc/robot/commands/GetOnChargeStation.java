@@ -13,11 +13,12 @@ public class GetOnChargeStation extends CommandBase {
   private final Timer timecheck;
   private boolean onRamp;
   private boolean balanced;
+  private boolean failed;
   private double roll;
-  private final double stopThresholdDegrees = 3;
-  private final double initialTriggerDegrees = 9;
+  private final double stopThresholdDegrees = 3.0;
+  private final double initialTriggerDegrees = 9.0;
   private final double approachTimeLimit = 4.0;
-  private final double balancingTimeLimit = 5.0;
+  private final double balancingTimeLimit = 8.0;
   private final Translation2d stop = new Translation2d(0.0, 0.0); 
   private final Translation2d approachTranslation = new Translation2d(-1.0, 0); // meters per second;
   private final Translation2d balancingTranslation = new Translation2d(-0.3, 0); // meters per second;
@@ -33,6 +34,7 @@ public class GetOnChargeStation extends CommandBase {
   public void initialize() {
     onRamp = false;
     balanced = false;
+    failed = false;
     timecheck.start();
 
   }
@@ -40,34 +42,41 @@ public class GetOnChargeStation extends CommandBase {
   @Override
   public void execute() {
     roll = -m_swerve.gyroInputs.rollDegrees;
-    if (!onRamp) {
-      if (!(timecheck.hasElapsed(approachTimeLimit))) { // cascade logic to decrease calls to timer
-        m_swerve.drive(approachTranslation, 0.0, false);
-        if (roll > initialTriggerDegrees) {
-          onRamp = true;// set rampEngaged = true
-          timecheck.reset();
-        }
-      }
-    } else {
-      if (!balanced) {
-        if (!(timecheck.hasElapsed(balancingTimeLimit))) {
-          if (roll > stopThresholdDegrees) {
-            m_swerve.drive(balancingTranslation, 0.0, false);
-          } else if (roll < -stopThresholdDegrees) {
-            m_swerve.drive(balancingTranslation.times(-1.0), 0.0, false);
-          } else {
-            balanced = true;
+    if(!failed){
+      if (!onRamp ) {
+        if (!(timecheck.hasElapsed(approachTimeLimit))) { // cascade logic to decrease calls to timer
+          m_swerve.drive(approachTranslation, 0.0, false, true);
+          if (roll > initialTriggerDegrees || m_swerve.getPose().getX()<4.5) {
+            onRamp = true;// set rampEngaged = true
+            timecheck.reset();
           }
         }
       } else {
-        // sit here till end of teleop
-        if ((roll < stopThresholdDegrees) && (roll > -stopThresholdDegrees)) {
-          //auto lock wheels to 45
-          m_swerve.drive(stop, 0.0, false);
+        if (!balanced) {
+          if (!(timecheck.hasElapsed(balancingTimeLimit))) {
+            if (roll > stopThresholdDegrees || m_swerve.getPose().getX()>4.25) {
+              m_swerve.drive(balancingTranslation, 0.0, false,true);
+            } else if (roll < -stopThresholdDegrees) {
+              m_swerve.drive(balancingTranslation.times(-1.0), 0.0, false,true);
+            } else {
+              balanced = true;
+            }
+          }
         } else {
-          balanced = false;
+          // sit here till end of teleop bc we think we are balanced
+          if ((roll < stopThresholdDegrees) && (roll > -stopThresholdDegrees)) {
+            //auto lock wheels to 45
+            m_swerve.drive(stop, 0.0, false , true);
+          } else {
+            balanced = false;
+          }
         }
       }
+    }
+   
+    if(m_swerve.getPose().getX()>7.0 || m_swerve.getPose().getX()<2.0){
+      failed = true;
+      m_swerve.drive(stop, 0.0, false , false);
     }
   }
 

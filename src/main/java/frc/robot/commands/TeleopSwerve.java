@@ -16,14 +16,15 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
+    private BooleanSupplier lockToHeading;
 
-
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier lockToHeadingSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
         this.translationSup = translationSup;
         this.strafeSup = strafeSup;
         this.rotationSup = rotationSup;
+        this.lockToHeading = lockToHeadingSup;
     }
 
     @Override
@@ -37,7 +38,8 @@ public class TeleopSwerve extends CommandBase {
         s_Swerve.drive(
             new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
             rotationVal * Constants.Swerve.maxAngularVelocity, 
-            Constants.Swerve.teleopIsOpenLoop      
+            Constants.Swerve.teleopIsOpenLoop,
+            lockToHeading.getAsBoolean()   
         );
 
     }

@@ -13,6 +13,15 @@ public class GyroIONavx implements GyroIO{
     }
     public void updateInputs(GyroIOInputs inputs) {
         inputs.yawDegrees = (Constants.Swerve.invertGyro) ? 360.0 - ahrs.getYaw() : ahrs.getYaw();
+
+        // if (ahrs.isMagnetometerCalibrated()) {
+        //     //      // We will only get valid fused headings if the magnetometer is calibrated
+        //        inputs.yawDegrees =  ahrs.getFusedHeading();
+        //        }
+        //     //
+        //     //    // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
+        //        return (ahrs.getAngle() *-1);
+        //       }
         inputs.rollDegrees = ahrs.getRoll();
         inputs.pitchDegrees = ahrs.getPitch();
         //inputs.yaw = (Constants.Swerve.invertGyro) ? 360.0 - ahrs.getYaw() : ahrs.getYaw();
