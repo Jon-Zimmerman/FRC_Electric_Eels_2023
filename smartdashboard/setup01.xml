@@ -77,7 +77,7 @@
 		<height>19</height>
 	</widget>
 	<widget field="Mod 0 Integrated" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="2" y="29"/>
+		<location x="6" y="32"/>
 	</widget>
 	<widget field="Mod 2 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="188" y="94"/>
@@ -108,10 +108,10 @@
 		<location x="404" y="89"/>
 	</widget>
 	<widget field="Auto Choices" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
-		<location x="273" y="490"/>
+		<location x="292" y="336"/>
 	</widget>
 	<widget field="Throttle %" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="10" y="18"/>
+		<location x="496" y="297"/>
 	</widget>
 </dashboard>
 <live-window>

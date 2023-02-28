@@ -17,7 +17,7 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.SIM;
+    private static final RobotType robot = RobotType.CHASSIS;
     public static boolean enableLimelight = false;
     public static double acceptableLimelightMergeDistMeters = 1.5; //distance from grid in X to allow tag inputs
     public static final double simLoopPeriodSecs = 0.02;
