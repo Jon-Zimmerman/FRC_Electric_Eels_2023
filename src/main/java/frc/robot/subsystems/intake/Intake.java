@@ -3,7 +3,7 @@ package frc.robot.subsystems.intake;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.util.Units;
+//import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -12,6 +12,10 @@ public class Intake extends SubsystemBase {
   private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
   private final SimpleMotorFeedforward ffModel;
   private boolean ConeMode;
+  private double wheelVelocitySetPointRPM;
+  public double wheelVelocityRPM = 0.0;
+  public double motorVelocityRPM = 0.0;
+  private static final double gearRatio = Constants.IntakeSubsystem.gearRatio;
 
   /** Creates a new Intake. */
   public Intake(IntakeIO io) {
@@ -53,12 +57,12 @@ public class Intake extends SubsystemBase {
   }
 
   /** Run closed loop at the specified velocity. */
-  public void runVelocity(double velocityRPM) {
-    var velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(velocityRPM);
-    io.setVelocity(velocityRadPerSec, ffModel.calculate(velocityRadPerSec));
+  public void runVelocity(double wheelVelocitySetRPM) {
+    wheelVelocitySetPointRPM = wheelVelocitySetRPM;
+    io.setVelocity(wheelVelocitySetPointRPM*gearRatio, ffModel.calculate(wheelVelocitySetRPM));
 
     // Log intake setpoint
-    Logger.getInstance().recordOutput("IntakeSetpointRPM", velocityRPM);
+    Logger.getInstance().recordOutput("IntakeSetpointRPM", wheelVelocitySetRPM);
   }
 
   public void intakeIn() {
@@ -100,7 +104,7 @@ public class Intake extends SubsystemBase {
 
   /** Returns the current velocity in RPM. */
   public double getVelocityRPM() {
-    return Units.radiansPerSecondToRotationsPerMinute(inputs.velocityRadPerSec);
+    return inputs.motorVelocityRPM/gearRatio;
   }
 
   public void flipIntakeMode() {

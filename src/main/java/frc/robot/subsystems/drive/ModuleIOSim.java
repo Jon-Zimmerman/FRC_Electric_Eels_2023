@@ -1,7 +1,5 @@
 package frc.robot.subsystems.drive;
 
-import org.littletonrobotics.junction.Logger;
-
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.lib.util.SwerveModuleConstants;
 import frc.robot.Constants;
@@ -10,7 +8,6 @@ import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.util.CTREModuleState;
 
 public class ModuleIOSim implements ModuleIO {

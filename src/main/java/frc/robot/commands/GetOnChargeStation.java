@@ -65,7 +65,7 @@ public class GetOnChargeStation extends CommandBase {
         } else {
           // sit here till end of teleop bc we think we are balanced
           if ((roll < stopThresholdDegrees) && (roll > -stopThresholdDegrees)) {
-            //auto lock wheels to 45
+            
             m_swerve.drive(stop, 0.0, false , true);
           } else {
             balanced = false;

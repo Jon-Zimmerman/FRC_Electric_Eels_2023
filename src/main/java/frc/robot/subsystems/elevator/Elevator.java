@@ -4,7 +4,7 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
+//import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -39,7 +39,7 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.getInstance().processInputs("elevator", inputs);
-    // TODO fix setPosition()
+
 
     // Log elevator speed in RPM
     // Logger.getInstance().recordOutput("ElevatorSpeedRPM",

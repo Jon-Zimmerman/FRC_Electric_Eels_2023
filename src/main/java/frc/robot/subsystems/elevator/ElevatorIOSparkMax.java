@@ -19,6 +19,7 @@ public class ElevatorIOSparkMax implements ElevatorIO {
   private static final double sprocketDiameterInch = Constants.ElevatorSubsystem.sprocketDiameterInch;
   private static final double elevatorSoftLimitUpper = Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch;
   private static final double elevatorSoftLimitLower = Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch;
+  private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
 
   public double positionElevatorSetPointInch = 0.0;
   public double positionElevatorInch = 0.0;
@@ -54,15 +55,15 @@ public class ElevatorIOSparkMax implements ElevatorIO {
   @Override
   public void setPosition(double positionSetInch, double ffVolts) {
     positionElevatorSetPointInch = positionSetInch;
-    positionMotorSetPointRot = positionSetInch / (sprocketDiameterInch * Math.PI) * gearRatio;
+    positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
     elevatorPidController.setReference(positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
   @Override
   public void updateState() {
     positionMotorShaftRot = elevatorEncoder.getPosition();
     velocityMotorRPM = elevatorEncoder.getVelocity();
-    positionElevatorInch = elevatorEncoder.getPosition()/gearRatio*sprocketDiameterInch*Math.PI;
-    velocityElevatorInchPerSec = velocityMotorRPM/gearRatio*sprocketDiameterInch*Math.PI;
+    positionElevatorInch = positionMotorShaftRot/gearRatio*sprocketCircumferenceInch;
+    velocityElevatorInchPerSec = velocityMotorRPM/gearRatio*sprocketCircumferenceInch;
     appliedVolts = elevatorMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     currentAmps = elevatorMotor.getOutputCurrent();
   }

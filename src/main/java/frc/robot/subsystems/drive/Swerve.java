@@ -16,15 +16,11 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
-import com.kauailabs.navx.frc.AHRS;
 //import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
@@ -36,7 +32,6 @@ public class Swerve extends SubsystemBase {
 
     public SwerveAutoBuilder swerveAutoBuilder;
 
-    private final LimelightIO limelightIO;
     private final LimelightIOInputsAutoLogged limelightInputs = new LimelightIOInputsAutoLogged();
 
     private final ModuleIO[] ModuleIOs = new ModuleIO[4]; // FL, FR, BL, BR
@@ -48,7 +43,6 @@ public class Swerve extends SubsystemBase {
 
     public Swerve(LimelightIO limelightIO, GyroIO gyroIO, ModuleIO flModuleIO, ModuleIO frModuleIO,
             ModuleIO blModuleIO, ModuleIO brModuleIO) {
-        this.limelightIO = limelightIO;
         this.gyroIO = gyroIO;
         ModuleIOs[0] = flModuleIO;
         ModuleIOs[1] = frModuleIO;
@@ -85,7 +79,7 @@ public class Swerve extends SubsystemBase {
         double lockToHeadingPScalar = 0.3;
         double translationScalar = 0.6;
         double degreeThreshold = 15.0;
-        if (lockToHeading) {
+        if (lockToHeading && Constants.enableLockToHeading) {
             double error = 0.0;
             if ((Math.abs(gyroInputs.yawDegrees % 360.0)) < degreeThreshold) {
                 error = 0.0 - (gyroInputs.yawDegrees % 360.0);
@@ -101,16 +95,16 @@ public class Swerve extends SubsystemBase {
             }
         }
 
-        // if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0) {
-        //     swerveModuleStates = getLockWheels45();
-        // } else {
+        if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0 && Constants.enableLockWheelsAt45) {
+            swerveModuleStates = getLockWheels45();
+        } else {
             swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                     ChassisSpeeds.fromFieldRelativeSpeeds(
                             translation.getX(),
                             translation.getY(),
                             rotation,
                             Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
-        //}
+        }
 
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
         // SmartDashboard.putNumber("Field Relative?", fieldRelative ? 1d : 0d);
@@ -143,6 +137,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public SwerveModuleState[] getLockWheels45() {
+        
         SwerveModuleState[] WheelStates45 = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                         0.0,

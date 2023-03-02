@@ -2,6 +2,7 @@ package frc.robot.subsystems.slider;
 
 
 
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -10,13 +11,15 @@ import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
-
+import frc.lib.math.Conversions;
 
 
 public class SliderIOFalcon implements SliderIO {
   private static final double gearRatio = Constants.SliderSubsystem.gearRatio;
-  private static final double sensorResolution = Constants.SliderSubsystem.sensorResolution;
+  private static final double sensorResolution = (double)Constants.SliderSubsystem.sensorResolution;
   private static final double sprocketDiameterInch = Constants.SliderSubsystem.sprocketDiameterInch;
+  private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
+
    private final WPI_TalonFX  sliderMotor;
   //private final CANSparkMax follower;
 
@@ -51,8 +54,9 @@ public class SliderIOFalcon implements SliderIO {
   @Override
   public void setPosition(double positionInch, double ffVolts) {
 
-
-    double setPointSensorCounts = positionInch/(sprocketDiameterInch)/gearRatio* sensorResolution*10.0;
+    
+    double setPointSensorCounts = Conversions.MetersToFalcon(Units.inchesToMeters(positionInch), Units.inchesToMeters(sprocketCircumferenceInch), gearRatio);
+    //double setPointSensorCounts = positionInch/(sprocketCircumferenceInch)/Math.PI/gearRatio* sensorResolution*10.0;
     sliderMotor.set(TalonFXControlMode.MotionMagic,setPointSensorCounts);
   }
   
@@ -60,8 +64,8 @@ public class SliderIOFalcon implements SliderIO {
   public void updateState() {
     positionMotorShaftRot = sliderMotor.getSelectedSensorPosition() / gearRatio;
     velocityMotorRPM = sliderMotor.getSelectedSensorVelocity() * 10.0 /sensorResolution * gearRatio;
-    positionSliderInch = positionMotorShaftRot/gearRatio*sprocketDiameterInch*Math.PI;
-    velocitySliderInchPerSec = velocityMotorRPM/gearRatio*sprocketDiameterInch*Math.PI;
+    positionSliderInch = positionMotorShaftRot/gearRatio*sprocketCircumferenceInch;
+    velocitySliderInchPerSec = velocityMotorRPM/gearRatio*sprocketCircumferenceInch;
     appliedVolts = sliderMotor.getMotorOutputPercent() * RobotController.getBatteryVoltage();
     currentAmps = sliderMotor.getSupplyCurrent();
   }
@@ -99,9 +103,9 @@ public class SliderIOFalcon implements SliderIO {
 		sliderMotor.config_kI(0, kI, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.config_kD(0, kD, Constants.SliderSubsystem.kTimeoutMs);
     double CruiseVel = Constants.SliderSubsystem.maxLinearVelocityInchPerSec /
-    ( Constants.SliderSubsystem.sprocketDiameterInch * Math.PI) * 100.0/1000.0 * (float)Constants.SliderSubsystem.sensorResolution;
+    ( sprocketCircumferenceInch) * 100.0/1000.0 * sensorResolution;
     double CruiseAcc= Constants.SliderSubsystem.maxLinearAccelerationInchPerSec /
-    ( Constants.SliderSubsystem.sprocketDiameterInch * Math.PI) * 100.0/1000.0 * (float)Constants.SliderSubsystem.sensorResolution;
+    ( sprocketCircumferenceInch) * 100.0/1000.0 * sensorResolution;
 		
     /* Set acceleration and vcruise velocity - see documentation */
 		sliderMotor.configMotionCruiseVelocity(CruiseVel, Constants.SliderSubsystem.kTimeoutMs);

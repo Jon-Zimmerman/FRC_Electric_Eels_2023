@@ -1,31 +1,25 @@
 package frc.robot.subsystems.slider;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
+//import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 
 
 
 public class SliderIOSparkMax implements SliderIO {
-  private static final double GEAR_RATIO = Constants.SliderSubsystem.gearRatio;
+  private static final double gearRatio = Constants.SliderSubsystem.gearRatio;
   private final CANSparkMax sliderMotor;
-  //private final CANSparkMax follower;
-  private final RelativeEncoder sliderEncoder;
-
-
-
   private final SparkMaxPIDController sliderPidController;
 
   public SliderIOSparkMax() {
     sliderMotor= new CANSparkMax(Constants.SliderSubsystem.deviceID, MotorType.kBrushless);
-    sliderEncoder = sliderMotor.getEncoder();
+    sliderMotor.getEncoder();
     sliderPidController = sliderMotor.getPIDController();
 
     //follower.burnFlash();
@@ -42,7 +36,7 @@ public class SliderIOSparkMax implements SliderIO {
 
   @Override
   public void setPosition(double positionInch, double ffVolts) {
-    double setPointRotations = positionInch/(Math.PI*Constants.SliderSubsystem.sprocketDiameterInch)*GEAR_RATIO;
+    double setPointRotations = positionInch/(Math.PI*Constants.SliderSubsystem.sprocketDiameterInch)*gearRatio;
     sliderPidController.setReference(setPointRotations,ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
@@ -66,7 +60,7 @@ public class SliderIOSparkMax implements SliderIO {
     sliderPidController.setOutputRange(Constants.SliderSubsystem.kMinOutput, Constants.SliderSubsystem.kMaxOutput);
 
 
-    int smartMotionSlot = 0;
+    //int smartMotionSlot = 0;
     // sliderPidController.setSmartMotionMaxVelocity(Constants.SliderSubsystem.maxAngularVelocityRPM, smartMotionSlot);
     // sliderPidController.setSmartMotionMinOutputVelocity(Constants.SliderSubsystem.minOutputVelocityRPM, smartMotionSlot);
     // sliderPidController.setSmartMotionMaxAccel(Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);

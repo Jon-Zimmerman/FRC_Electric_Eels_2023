@@ -17,13 +17,8 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.One_Cone_And_Balance;
 import frc.robot.autos.One_Cone_And_Balance_Chassis;
 
-import frc.robot.subsystems.drive.GyroIONavx;
-import frc.robot.subsystems.drive.GyroIOSim;
-import frc.robot.subsystems.drive.GyroIO;
 
-import frc.robot.subsystems.drive.LimelightIONetwork;
-import frc.robot.subsystems.drive.LimelightIOSim;
-import frc.robot.subsystems.drive.LimelightIO;
+
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -44,8 +39,17 @@ import frc.robot.subsystems.slider.Slider;
 import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
 import frc.robot.subsystems.slider.SliderIOFalcon;
-import frc.robot.commands.ElevatorGoToPosition;
+
+import frc.robot.subsystems.drive.GyroIO;
+import frc.robot.subsystems.drive.GyroIOSim;
+import frc.robot.subsystems.drive.GyroIONavx;
+
+import frc.robot.subsystems.drive.LimelightIO;
+import frc.robot.subsystems.drive.LimelightIOSim;
+import frc.robot.subsystems.drive.LimelightIONetwork;
+
 //Commands:
+import frc.robot.commands.ElevatorGoToPosition;
 import frc.robot.commands.SliderGoToPosition;
 
 /**

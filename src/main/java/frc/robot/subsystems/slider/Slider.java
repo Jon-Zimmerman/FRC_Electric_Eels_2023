@@ -4,7 +4,6 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -18,7 +17,7 @@ public class Slider extends SubsystemBase {
       maxLinearVelocityInchPerSec, maxLinearAccelerationInchPerSec);
   private TrapezoidProfile.State m_goal = new TrapezoidProfile.State();
   private TrapezoidProfile.State m_setpoint = new TrapezoidProfile.State();
-
+  
   private final ElevatorFeedforward ffModel;
 
   private double positionSetPointInch = 0.0;
@@ -38,13 +37,13 @@ public class Slider extends SubsystemBase {
   public void periodic() {
     io.updateInputs(inputs);
     Logger.getInstance().processInputs("slider", inputs);
-    // TODO fix setPosition()
+
 
     // Log slider speed in RPM
     // Logger.getInstance().recordOutput("SliderSpeedRPM",
     // getVelocityRPMFromRadsPerSec());
-    // Logger.getInstance().recordOutput("SliderSetpointInch",
-    // inputs.positionSetPointInch);
+     Logger.getInstance().recordOutput("SliderSetpointInch",
+     positionSetPointInch);
 
     var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
     m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
@@ -54,9 +53,9 @@ public class Slider extends SubsystemBase {
 
   }
 
-  public void setPositionSetPoint(double positionInch) {
-    m_goal = new TrapezoidProfile.State(positionInch, 0);
-    positionSetPointInch = positionInch;
+  public void setPositionSetPoint(double positionSetInch) {
+    m_goal = new TrapezoidProfile.State(positionSetInch, 0);
+    positionSetPointInch = positionSetInch;
 
   }
 
@@ -64,16 +63,7 @@ public class Slider extends SubsystemBase {
     return Math.abs(inputs.positionSliderSetPointInch - inputs.positionSliderInch);
   }
 
-  // public void sliderIn() {
-  //   setPositionSetPoint(Constants.SliderSubsystem.sliderIn);
-  //   // while(getError()>Constants.SliderSubsystem.autoPositionErrorInch){}
 
-  // }
-
-  // public void sliderOut() {
-  //   setPositionSetPoint(Constants.SliderSubsystem.sliderOut);
-  //   // while(getError()>Constants.SliderSubsystem.autoPositionErrorInch){}
-  // }
 
 
   /** Stops the slider. */

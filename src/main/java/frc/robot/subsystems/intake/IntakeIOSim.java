@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.simulation.FlywheelSim;
 public class IntakeIOSim implements IntakeIO {
   private FlywheelSim flywheelSim = new FlywheelSim(DCMotor.getNEO(1), 1.0, 0.004);
   private PIDController pid = new PIDController(0.0, 0.0, 0.0);
-
+  //private static final double gearRatio = Constants.IntakeSubsystem.gearRatio;
   private boolean closedLoop = false;
   private double ffVolts = 0.0;
   private double appliedVolts = 0.0;
+  private double motorVelocitySetPointRPM = 0.0;
+  public double motorVelocityRPM = 0.0;
 
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
@@ -27,15 +29,16 @@ public class IntakeIOSim implements IntakeIO {
     flywheelSim.update(0.02);
 
     //inputs.positionRad = 0.0;
-    inputs.velocityRadPerSec = flywheelSim.getAngularVelocityRadPerSec();
+    inputs.motorVelocityRPM = flywheelSim.getAngularVelocityRPM();
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = flywheelSim.getCurrentDrawAmps();
   }
 
   @Override
-  public void setVelocity(double velocityRadPerSec, double ffVolts) {
+  public void setVelocity(double motorVelocitySetRPM, double ffVolts) {
     closedLoop = true;
-    pid.setSetpoint(velocityRadPerSec);
+    motorVelocitySetPointRPM = motorVelocitySetRPM;
+    pid.setSetpoint(motorVelocitySetPointRPM);
     this.ffVolts = ffVolts;
   }
 
