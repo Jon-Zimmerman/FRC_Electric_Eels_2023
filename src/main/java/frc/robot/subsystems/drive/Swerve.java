@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 public class Swerve extends SubsystemBase {
+    public SwerveDrivePoseEstimator swerveDrivePoseEstimatorLL;
     public SwerveDrivePoseEstimator swerveDrivePoseEstimator;
     // public ModuleIO[] mSwerveMods;
     private final GyroIO gyroIO;
@@ -32,6 +33,7 @@ public class Swerve extends SubsystemBase {
 
     public SwerveAutoBuilder swerveAutoBuilder;
 
+    private final LimelightIO limelightIO;
     private final LimelightIOInputsAutoLogged limelightInputs = new LimelightIOInputsAutoLogged();
 
     private final ModuleIO[] ModuleIOs = new ModuleIO[4]; // FL, FR, BL, BR
@@ -48,7 +50,7 @@ public class Swerve extends SubsystemBase {
         ModuleIOs[1] = frModuleIO;
         ModuleIOs[2] = blModuleIO;
         ModuleIOs[3] = brModuleIO;
-
+        this.limelightIO = limelightIO;
         /*
          * By pausing init for a second before setting module offsets, we avoid a bug
          * with inverting motors.
@@ -56,6 +58,8 @@ public class Swerve extends SubsystemBase {
          */
         Timer.delay(1.0);
         resetModulesToAbsolute();
+        swerveDrivePoseEstimatorLL = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics,
+                Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), new Pose2d());
         swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics,
                 Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), new Pose2d());
 
@@ -95,7 +99,8 @@ public class Swerve extends SubsystemBase {
             }
         }
 
-        if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0 && Constants.enableLockWheelsAt45) {
+        if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0
+                && Constants.enableLockWheelsAt45) {
             swerveModuleStates = getLockWheels45();
         } else {
             swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
@@ -137,7 +142,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public SwerveModuleState[] getLockWheels45() {
-        
+
         SwerveModuleState[] WheelStates45 = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 ChassisSpeeds.fromFieldRelativeSpeeds(
                         0.0,
@@ -154,13 +159,15 @@ public class Swerve extends SubsystemBase {
     }
 
     public void resetPose(Pose2d pose) {
-        swerveDrivePoseEstimator.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
+        swerveDrivePoseEstimatorLL.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
                 pose);
     }
 
     public Pose2d getPose() {
         Pose2d pose = swerveDrivePoseEstimator.getEstimatedPosition();
         Logger.getInstance().recordOutput("SwervePose", pose);
+        Pose2d poseLL = swerveDrivePoseEstimatorLL.getEstimatedPosition();
+        Logger.getInstance().recordOutput("SwervePoseLL", poseLL);
 
         return pose;
     }
@@ -204,6 +211,7 @@ public class Swerve extends SubsystemBase {
     @Override
     public void periodic() {
         gyroIO.updateInputs(gyroInputs);
+        limelightIO.updateInputs(limelightInputs);
         Logger.getInstance().processInputs("Drive/Gyro", gyroInputs);
 
         for (int i = 0; i < 4; i++) {
@@ -216,13 +224,15 @@ public class Swerve extends SubsystemBase {
             double botPose[] = limelightInputs.botPoseWPI;
             // Botpos transform in field-space (driver station WPILIB origin). Translation
             // (X,Y,Z) Rotation(Roll,Pitch,Yaw), total latency (cl+tl)
-            if (botPose[0] < Constants.acceptableLimelightMergeDistMeters && botPose[0] != 0.0)
+            if (botPose[0] < Constants.acceptableLimelightMergeDistMeters && botPose[0] != 0.0) {
 
-                swerveDrivePoseEstimator.addVisionMeasurement(
+                swerveDrivePoseEstimatorLL.addVisionMeasurement(
                         new Pose2d(new Translation2d(botPose[0], botPose[1]), new Rotation2d(botPose[5])),
                         Timer.getFPGATimestamp() - limelightInputs.latency);
-        }
+            }
+            swerveDrivePoseEstimatorLL.update(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
 
+        }
         swerveDrivePoseEstimator.update(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions());
 
         getPose();
