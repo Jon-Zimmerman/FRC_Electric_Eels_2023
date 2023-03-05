@@ -59,7 +59,8 @@ public class Intake extends SubsystemBase {
   /** Run closed loop at the specified velocity. */
   public void runVelocity(double wheelVelocitySetRPM) {
     wheelVelocitySetPointRPM = wheelVelocitySetRPM;
-    io.setVelocity(wheelVelocitySetPointRPM*gearRatio, ffModel.calculate(wheelVelocitySetRPM));
+
+    io.setVelocity(wheelVelocitySetPointRPM*gearRatio, 0.0); //ffModel.calculate(wheelVelocitySetRPM*gearRatio)
 
     // Log intake setpoint
     Logger.getInstance().recordOutput("IntakeSetpointRPM", wheelVelocitySetRPM);
@@ -87,10 +88,10 @@ public class Intake extends SubsystemBase {
   /** Stops the intake. */
   public void holdCurrent() {
     if(ConeMode){
-      io.holdCurrent(Constants.IntakeSubsystem.holdConeCurrentAmps,-4.0);
+      io.holdCurrent(Constants.IntakeSubsystem.holdConeCurrentAmps,-8.0);
     }
     else{
-      io.holdCurrent(Constants.IntakeSubsystem.holdCubeCurrentAmps, 4.0);
+      io.holdCurrent(Constants.IntakeSubsystem.holdCubeCurrentAmps, 8.0);
     }
 
 

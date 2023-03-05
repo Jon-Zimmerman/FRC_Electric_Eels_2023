@@ -12,10 +12,10 @@ public class LimelightIONetwork implements LimelightIO{
     }
     public void updateInputs(LimelightIOInputs inputs) {
         if (DriverStation.getAlliance() == Alliance.Red) {
-            inputs.botPoseWPI = table.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+            inputs.botPoseWPI = table.getEntry("botpose_wpired").getDoubleArray(new double[7]);
         }
         else if (DriverStation.getAlliance() == Alliance.Blue) {
-            inputs.botPoseWPI = table.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+            inputs.botPoseWPI = table.getEntry("botpose_wpiblue").getDoubleArray(new double[7]);
         }
         inputs.latency = inputs.botPoseWPI[6];
         //Botpos transform in field-space (driver station WPILIB origin). Translation (X,Y,Z) Rotation(Roll,Pitch,Yaw), total latency (cl+tl)

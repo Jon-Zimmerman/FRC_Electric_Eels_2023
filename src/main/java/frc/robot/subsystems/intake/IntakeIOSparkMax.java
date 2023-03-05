@@ -41,6 +41,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
   @Override
   public void setVelocity(double motorVelocitySetRPM, double ffVolts) {
+    motorVelocitySetPointRPM = motorVelocitySetRPM;
     intakePidController.setReference(
         motorVelocitySetPointRPM,
         ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
@@ -60,7 +61,7 @@ public class IntakeIOSparkMax implements IntakeIO {
 
   public void configurePID(double kP, double kI, double kD) {
     intakeMotor.restoreFactoryDefaults();
-    intakeMotor.setInverted(false);
+    intakeMotor.setInverted(Constants.IntakeSubsystem.isInverted);
     intakeMotor.enableVoltageCompensation(12.0);
     intakeMotor.setSmartCurrentLimit(Constants.IntakeSubsystem.maxCurrentAmps);
 

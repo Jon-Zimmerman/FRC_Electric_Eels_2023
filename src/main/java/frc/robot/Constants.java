@@ -17,10 +17,10 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.CHASSIS;
+    private static final RobotType robot = RobotType.REAL;
     public static boolean enableLimelight = false;
     public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
-    public static boolean enableLockToHeading= false;
+    public static boolean enableLockToHeading= true;
     public static double acceptableLimelightMergeDistMeters = 1.5; //distance from grid in X to allow tag inputs
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
@@ -153,7 +153,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 4;
             public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(291.000);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(225.000);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -161,8 +161,8 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxSpeedMetersPerSecond = 2.0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 2.0;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
@@ -175,18 +175,19 @@ public final class Constants {
     }
     // Elevator Extender Motor
     public static final class ElevatorSubsystem {
-        public static final int deviceID = 12;
+        public static final int deviceID = 13;
+        public static final boolean isInverted = true;
 
         // FeedForward Control
         public static final double ks = 0.00;
-        public static final double kv = 0.2;
-        public static final double kg = 0.75;
+        public static final double kv = 0.00; //0.2
+        public static final double kg = 0.00; //0.75
 
         // public static final double ks = 0.00;
         // public static final double kv = 0.25;
         // public static final double kg = 0.85;
 
-        public static final double kP = 2;
+        public static final double kP = 0.2;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -198,24 +199,24 @@ public final class Constants {
         public static final double sprocketDiameterInch = 2.0;
 
         //motor shaft details
-        public static final int maxCurrentAmps = 20;
+        public static final int maxCurrentAmps = 30;
         public static final double maxAngularVelocityRPM = 1000.0;
         public static final double maxAngularAccRPMPerSec = 10.0;
-        public static final double minOutputVelocityRPM = 100.0; //requests below this no voltage output
+        public static final double minOutputVelocityRPM = 200.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorCounts = 100.0;
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 18.0;
-        public static final double maxLinearAccelerationInchPerSec = 25.0;
+        public static final double maxLinearVelocityInchPerSec = 10.0;
+        public static final double maxLinearAccelerationInchPerSec = 10.0;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
         public static final double elevatorPosBottom = 0.0;
-        public static final double elevatorPosMid = 5.0;
-        public static final double elevatorPosLoading = 10.0;
-        public static final double elevatorPosTop = 15.0;
-        public static final double elevatorSoftLimitUpperInch = 40.0;
+        public static final double elevatorPosMid = 12.0;
+        public static final double elevatorPosLoading = 15.0;
+        public static final double elevatorPosTop = 20.0;
+        public static final double elevatorSoftLimitUpperInch = 22.0;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
         public static final double allowableTeleopErrorInch = 1.0;
@@ -223,18 +224,19 @@ public final class Constants {
 
     // Slider Motor
     public static final class SliderSubsystem {
-        public static final int deviceID = 13;
+        public static final int deviceID = 14;
         public static final int sensorResolution = 2048;
+        public static final boolean isInverted = false;
         // FeedForward Control
         public static final double ks = 0.0;
-        public static final double kv = 0.03;
+        public static final double kv = 0.00;
         public static final double kg = 0.00;
 
         public static final double gearRatio = 30.0/12.0;
         public static final double sprocketDiameterInch = 2.0;
-        public static final double kP = 2.5;
+        public static final double kP = 0.6;
         public static final double kI = 0.00;
-        public static final double kD = 0.2;
+        public static final double kD = 0.0;
         public static final double kIz = 0.0;
         public static final double kF = 0.0;
         public static final double kMaxOutput = 1.0;
@@ -243,37 +245,37 @@ public final class Constants {
 
         public static final int maxCurrentAmps = 25;
 
-        public static final double maxAngularVelocityRPM = 1000.0;
-        public static final double maxAngularAccRPMPerSec = 10.0;
+        public static final double maxAngularVelocityRPM = 400.0;
+        public static final double maxAngularAccRPMPerSec = 500.0;
         public static final double minOutputVelocityRPM = 100.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorCounts = 100.0;
         public static final double autoPositionErrorInch = 2.0;
 
-        //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 30.0;
-        public static final double maxLinearAccelerationInchPerSec = 100.0;
+        public static final double maxLinearVelocityInchPerSec = 50.0;
+        public static final double maxLinearAccelerationInchPerSec = 80.0;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 3.0;
-        public static final double sliderSoftLimitUpperInch = 16.0;
+        public static final double sliderOut = 17.0;
+        public static final double sliderSoftLimitUpperInch = 18.0;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
 
-        public static final double allowableErrorInch = 1.0;
+        //public static final double allowableErrorInch = 1.0;
 
     }
 
     // Intake motor
     public static final class IntakeSubsystem {
-        public static final int deviceID = 14;
+        public static final int deviceID = 12;
+        public static final boolean isInverted = false;
 
         // FeedForward Control
         public static final double ks = 0.0;
-        public static final double kv = 0.005;
+        public static final double kv = 0.000;
         // Closed Loop Control
-        public static final double kP = 0.8;
-        public static final double kI = 0.01;
+        public static final double kP = 0.01;
+        public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
         public static final double kFF = 0;
@@ -287,11 +289,11 @@ public final class Constants {
 
 
         public static final double intakeInCubeVelRPM = 50.0;
-        public static final int holdCubeCurrentAmps = 2;
+        public static final int holdCubeCurrentAmps = 10;
         public static final double intakeOutCubeVelRPM = -50.0;
         
         public static final double intakeInConeVelRPM = -100.0;
-        public static final int holdConeCurrentAmps = 2;
+        public static final int holdConeCurrentAmps = 10;
         public static final double intakeOutConeVelRPM = 100.0;
     }
 

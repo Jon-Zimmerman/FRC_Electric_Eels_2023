@@ -56,6 +56,10 @@ public class ElevatorIOSparkMax implements ElevatorIO {
   public void setPosition(double positionSetInch, double ffVolts) {
     positionElevatorSetPointInch = positionSetInch;
     positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
+
+    if(ffVolts< 0.1){
+      ffVolts = 0.0;
+    }
     elevatorPidController.setReference(positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
   @Override
@@ -78,7 +82,7 @@ public class ElevatorIOSparkMax implements ElevatorIO {
 
     int smartMotionSlot = 0;
     elevatorMotor.restoreFactoryDefaults();
-    elevatorMotor.setInverted(false);
+    elevatorMotor.setInverted(Constants.ElevatorSubsystem.isInverted);
     elevatorMotor.enableVoltageCompensation(12.0);
     elevatorMotor.setSmartCurrentLimit(Constants.ElevatorSubsystem.maxCurrentAmps);
 

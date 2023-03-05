@@ -47,6 +47,10 @@ public class Elevator extends SubsystemBase {
     // Logger.getInstance().recordOutput("ElevatorSetpointInch",
     // inputs.positionSetPointInch);
 
+    
+    if(Math.abs(m_goal.position-inputs.positionElevatorInch)<1.0 ){
+      m_goal.position = inputs.positionElevatorInch;
+    }
     var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
     m_setpoint = profile.calculate(Constants.simLoopPeriodSecs);
 

@@ -80,8 +80,8 @@ public class Swerve extends SubsystemBase {
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
         SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
         SwerveModuleState[] swerveModuleStates;
-        double lockToHeadingPScalar = 0.3;
-        double translationScalar = 0.6;
+        double lockToHeadingPScalar = 0.03;
+        double translationScalar = 0.5;
         double degreeThreshold = 15.0;
         if (lockToHeading && Constants.enableLockToHeading) {
             double error = 0.0;

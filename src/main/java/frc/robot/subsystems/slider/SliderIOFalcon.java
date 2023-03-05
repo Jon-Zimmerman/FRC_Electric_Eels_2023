@@ -62,7 +62,7 @@ public class SliderIOFalcon implements SliderIO {
   
   @Override
   public void updateState() {
-    positionMotorShaftRot = sliderMotor.getSelectedSensorPosition() / gearRatio;
+    positionMotorShaftRot = sliderMotor.getSelectedSensorPosition() / gearRatio / sensorResolution;
     velocityMotorRPM = sliderMotor.getSelectedSensorVelocity() * 10.0 /sensorResolution * gearRatio;
     positionSliderInch = positionMotorShaftRot/gearRatio*sprocketCircumferenceInch;
     velocitySliderInchPerSec = velocityMotorRPM/gearRatio*sprocketCircumferenceInch;
@@ -82,7 +82,7 @@ public class SliderIOFalcon implements SliderIO {
     sliderMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor,0,0);
     sliderMotor.configNeutralDeadband(0.04,0);
     sliderMotor.setSensorPhase(false);
-    sliderMotor.setInverted(false);
+    sliderMotor.setInverted(Constants.SliderSubsystem.isInverted);
 
 		sliderMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, Constants.SliderSubsystem.kTimeoutMs);
@@ -106,11 +106,12 @@ public class SliderIOFalcon implements SliderIO {
     ( sprocketCircumferenceInch) * 100.0/1000.0 * sensorResolution;
     double CruiseAcc= Constants.SliderSubsystem.maxLinearAccelerationInchPerSec /
     ( sprocketCircumferenceInch) * 100.0/1000.0 * sensorResolution;
-		
-    /* Set acceleration and vcruise velocity - see documentation */
-		sliderMotor.configMotionCruiseVelocity(CruiseVel, Constants.SliderSubsystem.kTimeoutMs);
-		sliderMotor.configMotionAcceleration(CruiseAcc, Constants.SliderSubsystem.kTimeoutMs);
 
+    /* Set acceleration and vcruise velocity - see documentation */
+		
+		sliderMotor.configMotionAcceleration(CruiseAcc, Constants.SliderSubsystem.kTimeoutMs);
+    sliderMotor.configMotionCruiseVelocity(CruiseVel, Constants.SliderSubsystem.kTimeoutMs);
+    sliderMotor.configAllowableClosedloopError(0, Constants.SliderSubsystem.allowableSmartMotionPosErrorCounts);
 		/* Zero the sensor once on robot boot up */
 		sliderMotor.setSelectedSensorPosition(0, 0, Constants.SliderSubsystem.kTimeoutMs);
     

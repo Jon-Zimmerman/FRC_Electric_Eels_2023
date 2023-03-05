@@ -17,8 +17,6 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.One_Cone_And_Balance;
 import frc.robot.autos.One_Cone_And_Balance_Chassis;
 
-
-
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -64,7 +62,7 @@ public class RobotContainer {
 
   private final double allowableSliderTeleopInch = Constants.ElevatorSubsystem.allowableTeleopErrorInch;
 
-  //Controllers
+  // Controllers
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser = new LoggedDashboardChooser<>("Auto Choices");
@@ -85,37 +83,39 @@ public class RobotContainer {
   private final JoystickButton elevatorLoading = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton elevatorTop = new JoystickButton(driver2, XboxController.Button.kY.value);
 
-  // DPad
+  //DPad
   private final POVButton sliderIn = new POVButton(driver2, 180);
   private final POVButton sliderOut = new POVButton(driver2, 0);
 
-  private final Joystick driver = new Joystick(0);
-  private final int translationAxis = XboxController.Axis.kLeftY.value;
-  private final int strafeAxis = XboxController.Axis.kLeftX.value;
-  private final int rotationAxis = XboxController.Axis.kRightX.value;
+  // private final Joystick driver = new Joystick(0);
+  // private final int translationAxis = XboxController.Axis.kLeftY.value;
+  // private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  // private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-  private final JoystickButton lockToHeading = new JoystickButton(driver,
-      XboxController.Button.kA.value);
+  // private final JoystickButton lockToHeading = new JoystickButton(driver,
+  //     XboxController.Button.kA.value);
 
-  private final JoystickButton zeroGyro = new JoystickButton(driver,
-      XboxController.Button.kY.value);
-  private final JoystickButton calibrate = new JoystickButton(driver,
-      XboxController.Button.kRightBumper.value);
+  // private final JoystickButton zeroGyro = new JoystickButton(driver,
+  //     XboxController.Button.kY.value);
+  // private final JoystickButton calibrate = new JoystickButton(driver,
+  //     XboxController.Button.kRightBumper.value);
   // probably remove robotcentric
 
   // private final JoystickButton autoFocus = new JoystickButton(driver,
-  //     XboxController.Button.kA.value);
+  // XboxController.Button.kA.value);
 
   // /* Driver Buttons */
-  // private final Joystick driver = new Joystick(0);
-  // private final int translationAxis = Joystick.AxisType.kY.value;
-  // private final int strafeAxis = Joystick.AxisType.kX.value;
-  // private final int rotationAxis = Joystick.AxisType.kZ.value;
-  // // private final int throttleAxis = Joystick.AxisType.kTwist.value;
-  // private final JoystickButton calibrate = new JoystickButton(driver, 12);
+  private final Joystick driver = new Joystick(0);
+  private final int translationAxis = Joystick.AxisType.kY.value;
+  private final int strafeAxis = Joystick.AxisType.kX.value;
+  private final int rotationAxis = Joystick.AxisType.kZ.value;
+  // private final int throttleAxis = Joystick.AxisType.kTwist.value;
+  private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
-  // private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
-  // private final JoystickButton robotCentric = new JoystickButton(driver, 7);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
+  private final JoystickButton robotCentric = new JoystickButton(driver, 7);
+  private final JoystickButton lockToHeading = new JoystickButton(driver,
+  1);
 
   // Subsystems
 
@@ -130,16 +130,30 @@ public class RobotContainer {
       // Real robot, instantiate hardware IO implementations
       case REAL:
         // drive = new Drive(new DriveIOSparkMax());
-        j_Swerve = new Swerve(
-            new LimelightIONetwork(),
-            new GyroIONavx(),
-            new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
-            new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
-            new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
-            new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
-        intake = new Intake(new IntakeIOSparkMax());
-        elevator = new Elevator(new ElevatorIOSparkMax());
-        slider = new Slider(new SliderIOFalcon());
+        if (Constants.enableLimelight) {
+          j_Swerve = new Swerve(
+              new LimelightIONetwork(),
+              new GyroIONavx(),
+              new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
+              new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
+              new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
+              new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
+          intake = new Intake(new IntakeIOSparkMax());
+          elevator = new Elevator(new ElevatorIOSparkMax());
+          slider = new Slider(new SliderIOFalcon());
+        } else {
+          j_Swerve = new Swerve(
+              new LimelightIOSim(),
+              new GyroIONavx(),
+              new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
+              new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
+              new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
+              new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
+          intake = new Intake(new IntakeIOSparkMax());
+          elevator = new Elevator(new ElevatorIOSparkMax());
+          slider = new Slider(new SliderIOFalcon());
+
+        }
 
         break;
 
@@ -234,13 +248,17 @@ public class RobotContainer {
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
-    elevatorBottom.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,allowableElevatorTeleopInch,elevator));
-    elevatorMid.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid,allowableElevatorTeleopInch,elevator));
-    elevatorLoading.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,allowableElevatorTeleopInch,elevator));
-    elevatorTop.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,allowableElevatorTeleopInch,elevator));
+    elevatorBottom.whileTrue(
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom, allowableElevatorTeleopInch, elevator));
+    elevatorMid.whileTrue(
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid, allowableElevatorTeleopInch, elevator));
+    elevatorLoading.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,
+        allowableElevatorTeleopInch, elevator));
+    elevatorTop.whileTrue(
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop, allowableElevatorTeleopInch, elevator));
 
-    sliderIn.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,allowableSliderTeleopInch,slider));
-    sliderOut.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,allowableSliderTeleopInch,slider));
+    sliderIn.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderIn, allowableSliderTeleopInch, slider));
+    sliderOut.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderOut, allowableSliderTeleopInch, slider));
   }
 
   /**
