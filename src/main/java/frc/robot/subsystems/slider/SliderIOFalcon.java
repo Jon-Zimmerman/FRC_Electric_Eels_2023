@@ -52,18 +52,23 @@ public class SliderIOFalcon implements SliderIO {
   }
 
   @Override
-  public void setPosition(double positionInch, double ffVolts) {
+  public void setPosition(double positionInch, double ffVolts) { 
+    if(ffVolts< 0.1){
+      ffVolts = 0.0;
+    }
+    positionSliderSetPointInch = positionInch;
 
-    
     double setPointSensorCounts = Conversions.MetersToFalcon(Units.inchesToMeters(positionInch), Units.inchesToMeters(sprocketCircumferenceInch), gearRatio);
+    positionMotorSetPointRot = Conversions.falconToDegrees(setPointSensorCounts, gearRatio)/360.0;
     //double setPointSensorCounts = positionInch/(sprocketCircumferenceInch)/Math.PI/gearRatio* sensorResolution*10.0;
     sliderMotor.set(TalonFXControlMode.MotionMagic,setPointSensorCounts);
   }
   
   @Override
   public void updateState() {
-    positionMotorShaftRot = sliderMotor.getSelectedSensorPosition() / gearRatio / sensorResolution;
-    velocityMotorRPM = sliderMotor.getSelectedSensorVelocity() * 10.0 /sensorResolution * gearRatio;
+    positionMotorShaftRot = Conversions.falconToDegrees(sliderMotor.getSelectedSensorPosition(), gearRatio)/360.0;
+
+    velocityMotorRPM = Conversions.falconToRPM(sliderMotor.getSelectedSensorVelocity(), gearRatio);
     positionSliderInch = positionMotorShaftRot/gearRatio*sprocketCircumferenceInch;
     velocitySliderInchPerSec = velocityMotorRPM/gearRatio*sprocketCircumferenceInch;
     appliedVolts = sliderMotor.getMotorOutputPercent() * RobotController.getBatteryVoltage();
@@ -93,8 +98,8 @@ public class SliderIOFalcon implements SliderIO {
 		sliderMotor.configPeakOutputForward(1, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.configPeakOutputReverse(-1, Constants.SliderSubsystem.kTimeoutMs);
 
-    sliderMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true,Constants.SliderSubsystem.maxCurrentAmps,30,1.0));
-    sliderMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,Constants.SliderSubsystem.maxCurrentAmps/2.0,20,0.5));
+    sliderMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,Constants.SliderSubsystem.maxCurrentAmps,Constants.SliderSubsystem.maxCurrentAmps+5.0,1.0));
+    //sliderMotor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true,Constants.SliderSubsystem.maxCurrentAmps/2.0,20,0.5));
 
 		/* Set Motion Magic gains in slot0 - see documentation */
 		sliderMotor.selectProfileSlot(0, 0);
@@ -102,10 +107,13 @@ public class SliderIOFalcon implements SliderIO {
 		sliderMotor.config_kP(0, kP, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.config_kI(0, kI, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.config_kD(0, kD, Constants.SliderSubsystem.kTimeoutMs);
-    double CruiseVel = Constants.SliderSubsystem.maxLinearVelocityInchPerSec /
-    ( sprocketCircumferenceInch) * 100.0/1000.0 * sensorResolution;
-    double CruiseAcc= Constants.SliderSubsystem.maxLinearAccelerationInchPerSec /
-    ( sprocketCircumferenceInch) * 100.0/1000.0 * sensorResolution;
+
+    double CruiseVel = Conversions.MPSToFalcon(Units.inchesToMeters(Constants.SliderSubsystem.maxLinearVelocityInchPerSec), 
+    Units.inchesToMeters(sprocketCircumferenceInch), 
+    gearRatio); 
+    double CruiseAcc = Conversions.MPSToFalcon(Units.inchesToMeters(Constants.SliderSubsystem.maxLinearAccelerationInchPerSec), 
+    Units.inchesToMeters(sprocketCircumferenceInch), 
+    gearRatio); 
 
     /* Set acceleration and vcruise velocity - see documentation */
 		

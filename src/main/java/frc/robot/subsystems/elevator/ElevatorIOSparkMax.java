@@ -54,12 +54,15 @@ public class ElevatorIOSparkMax implements ElevatorIO {
 
   @Override
   public void setPosition(double positionSetInch, double ffVolts) {
-    positionElevatorSetPointInch = positionSetInch;
-    positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
-
+    if(positionSetInch < 0.5){
+      ffVolts = 0.0;
+    }
     if(ffVolts< 0.1){
       ffVolts = 0.0;
     }
+    positionElevatorSetPointInch = positionSetInch;
+    positionMotorSetPointRot = positionSetInch / (sprocketCircumferenceInch) * gearRatio;
+
     elevatorPidController.setReference(positionMotorSetPointRot, ControlType.kPosition, 0, ffVolts, ArbFFUnits.kVoltage);
   }
   @Override
@@ -103,8 +106,8 @@ public class ElevatorIOSparkMax implements ElevatorIO {
         Constants.ElevatorSubsystem.minOutputVelocityRPM, smartMotionSlot);
     elevatorPidController.setSmartMotionMaxAccel(
         Constants.ElevatorSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    // elevatorPidController.setSmartMotionAllowedClosedLoopError(
-    //     Constants.ElevatorSubsystem.allowableSmartMotionPosErrorCounts, smartMotionSlot);
+    elevatorPidController.setSmartMotionAllowedClosedLoopError(
+    Constants.ElevatorSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
 
     elevatorMotor.burnFlash();
   }

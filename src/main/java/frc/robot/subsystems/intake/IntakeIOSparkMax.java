@@ -6,21 +6,24 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
-
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 //import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
 import frc.robot.Constants;
 
 public class IntakeIOSparkMax implements IntakeIO {
-  //private static final double gearRatio = Constants.IntakeSubsystem.gearRatio;
+  // private static final double gearRatio = Constants.IntakeSubsystem.gearRatio;
   private final CANSparkMax intakeMotor;
   // private final CANSparkMax follower;
   private final RelativeEncoder intakeEncoder;
 
   private final SparkMaxPIDController intakePidController;
+  private final Spark lightStrips = new Spark(3);
   private double motorVelocitySetPointRPM = 0.0;
 
   public double motorVelocityRPM = 0.0;
+
+  private double motorVoltageSetPoint = 0.0;
 
   public IntakeIOSparkMax() {
     intakeMotor = new CANSparkMax(Constants.IntakeSubsystem.deviceID, MotorType.kBrushless);
@@ -37,6 +40,7 @@ public class IntakeIOSparkMax implements IntakeIO {
     inputs.motorVelocityRPM = intakeEncoder.getVelocity();
     inputs.appliedVolts = intakeMotor.getAppliedOutput() * RobotController.getBatteryVoltage();
     inputs.currentAmps = intakeMotor.getOutputCurrent();
+    inputs.motorVoltageSetPoint = motorVoltageSetPoint;
   }
 
   @Override
@@ -47,15 +51,31 @@ public class IntakeIOSparkMax implements IntakeIO {
         ControlType.kVelocity, 0, ffVolts, ArbFFUnits.kVoltage);
   }
 
+  public void setVoltage(double voltageSet, double ffVolts) {
+    motorVoltageSetPoint = voltageSet;
+    intakePidController.setReference(
+        motorVoltageSetPoint,
+        ControlType.kVoltage, 0, ffVolts, ArbFFUnits.kVoltage);
+  }
+
   @Override
   public void stop() {
     intakeMotor.stopMotor();
   }
+  
+  @Override
+  public void setLEDsPurple() {
+    lightStrips.set(0.91);
+  }
 
   @Override
-  public void holdCurrent(int amps, double voltage) {
-    stop();
-    intakeMotor.set(voltage / 12.0);
+  public void setLEDsYellow() {
+    lightStrips.set(0.67);
+  }
+
+  @Override
+  public void setCurrentLimit(int amps) {
+    // stop();
     intakeMotor.setSmartCurrentLimit(amps);
   }
 

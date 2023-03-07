@@ -16,7 +16,8 @@ public class IntakeIOSim implements IntakeIO {
   private double appliedVolts = 0.0;
   private double motorVelocitySetPointRPM = 0.0;
   public double motorVelocityRPM = 0.0;
-
+  private double motorVoltageSetPoint = 0.0;
+  
   @Override
   public void updateInputs(IntakeIOInputs inputs) {
     if (closedLoop) {
@@ -32,6 +33,7 @@ public class IntakeIOSim implements IntakeIO {
     inputs.motorVelocityRPM = flywheelSim.getAngularVelocityRPM();
     inputs.appliedVolts = appliedVolts;
     inputs.currentAmps = flywheelSim.getCurrentDrawAmps();
+    inputs.motorVoltageSetPoint = motorVoltageSetPoint;
   }
 
   @Override
@@ -42,9 +44,14 @@ public class IntakeIOSim implements IntakeIO {
     this.ffVolts = ffVolts;
   }
 
+  public void setVoltage(double voltageSet, double ffVolts) {
+    motorVoltageSetPoint = voltageSet;
+    pid.setSetpoint(motorVoltageSetPoint);
+  }
+
   @Override
-  public void holdCurrent(int amps,double voltage) {
-    flywheelSim.setInputVoltage(1.0/12.0);
+  public void setCurrentLimit(int amps) {
+    //flywheelSim.setInputVoltage(1.0/12.0);
   }
 
   @Override

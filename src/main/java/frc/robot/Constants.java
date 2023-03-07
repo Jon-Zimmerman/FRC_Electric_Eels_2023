@@ -17,11 +17,12 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.REAL;
+    private static final RobotType robot = RobotType.SIM;
     public static boolean enableLimelight = false;
+    public static boolean LimelightAffectsOdometry = false;
     public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
     public static boolean enableLockToHeading= true;
-    public static double acceptableLimelightMergeDistMeters = 1.5; //distance from grid in X to allow tag inputs
+    public static double acceptableLimelightMergeDistMeters = 3; //distance from back of grid in X direction to allow tag inputs
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
@@ -65,12 +66,12 @@ public final class Constants {
         public static final boolean canCoderInvert = chosenModule.canCoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleContinuousCurrentLimit = 35;
+        public static final int angleContinuousCurrentLimit = 32;
         public static final int anglePeakCurrentLimit = 45;
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 35;
+        public static final int driveContinuousCurrentLimit = 32;
         public static final int drivePeakCurrentLimit = 45;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
@@ -106,9 +107,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 8.0;
+        public static final double maxSpeed = 7.0;
         /** Radians per Second */
-        public static final double maxAngularVelocity = (Math.PI);// 1;
+        public static final double maxAngularVelocity = (Math.PI)*1.1;// 1;
         // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
         public static final double maxOpenLoopThrottle = 1.0;
         /* Neutral Modes */
@@ -196,14 +197,14 @@ public final class Constants {
         public static final double kMinOutput = -1;
 
         public static final double gearRatio = 25.0;
-        public static final double sprocketDiameterInch = 2.0;
+        public static final double sprocketDiameterInch = 1.92;
 
         //motor shaft details
         public static final int maxCurrentAmps = 30;
         public static final double maxAngularVelocityRPM = 1000.0;
         public static final double maxAngularAccRPMPerSec = 10.0;
         public static final double minOutputVelocityRPM = 200.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorCounts = 100.0;
+        public static final double allowableSmartMotionPosErrorRotations = 0.1*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
@@ -233,7 +234,7 @@ public final class Constants {
         public static final double kg = 0.00;
 
         public static final double gearRatio = 30.0/12.0;
-        public static final double sprocketDiameterInch = 2.0;
+        public static final double sprocketDiameterInch = 1.29;
         public static final double kP = 0.6;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
@@ -248,11 +249,11 @@ public final class Constants {
         public static final double maxAngularVelocityRPM = 400.0;
         public static final double maxAngularAccRPMPerSec = 500.0;
         public static final double minOutputVelocityRPM = 100.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorCounts = 100.0;
+        public static final double allowableSmartMotionPosErrorCounts = 1000.0;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 50.0;
-        public static final double maxLinearAccelerationInchPerSec = 80.0;
+        public static final double maxLinearVelocityInchPerSec = 10.0;
+        public static final double maxLinearAccelerationInchPerSec = 15.0;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
@@ -274,7 +275,7 @@ public final class Constants {
         public static final double ks = 0.0;
         public static final double kv = 0.000;
         // Closed Loop Control
-        public static final double kP = 0.01;
+        public static final double kP = 0.001;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -282,19 +283,33 @@ public final class Constants {
         public static final double kMaxOutput = 1;
         public static final double kMinOutput = -1;
 
-        public static final int maxCurrentAmps = 10;
+
 
         public static final double gearRatio = 2.0;
-        public static final double maxAngularVelocityRPM = 100.0;
+        //public static final double maxAngularVelocityRPM = 100.0;
 
-
+        public static final int maxCurrentAmps = 25;
+        public static final int holdCubeCurrentAmps = 8;
+        public static final int holdConeCurrentAmps = 8;
+        //Velocity control mode
         public static final double intakeInCubeVelRPM = 50.0;
-        public static final int holdCubeCurrentAmps = 10;
+
         public static final double intakeOutCubeVelRPM = -50.0;
         
         public static final double intakeInConeVelRPM = -100.0;
-        public static final int holdConeCurrentAmps = 10;
+
         public static final double intakeOutConeVelRPM = 100.0;
+        //Voltage control mode
+        public static final double holdCubeVoltage = 1.0;
+        public static final double holdConeVoltage = 1.0;
+
+        public static final double intakeInCubeVoltage = 10.0;
+        public static final double intakeOutCubeVoltage = -10.0;
+        
+        public static final double intakeInConeVoltage = -10.0;
+        public static final double intakeOutConeVoltage = 10.0;   
+        
+
     }
 
 

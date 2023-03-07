@@ -78,9 +78,9 @@ public class Swerve extends SubsystemBase {
     public void drive(Translation2d translation, double rotation, boolean isOpenLoop, boolean lockToHeading) {
         // boolean fieldRelative = Constants.Swerve.fieldRelative;
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
-        SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
+
         SwerveModuleState[] swerveModuleStates;
-        double lockToHeadingPScalar = 0.03;
+        double lockToHeadingPScalar = 0.3;
         double translationScalar = 0.5;
         double degreeThreshold = 15.0;
         if (lockToHeading && Constants.enableLockToHeading) {
@@ -92,8 +92,12 @@ public class Swerve extends SubsystemBase {
             } else if ((gyroInputs.yawDegrees % 360.0) < (-180.0 + degreeThreshold)) {
                 error = -180.0 - (gyroInputs.yawDegrees % 360.0);
             }
-            rotation = error / 10.0 * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
+
+            rotation = error / degreeThreshold * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
             translation = translation.times(translationScalar);
+            SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
+            SmartDashboard.putNumber("LocktoHeadingError", error);
+            SmartDashboard.putNumber("LocktoHeadingRotation", rotation);
             if (Constants.getMode() == Mode.SIM) {
                 gyroIO.additionalRotation(rotation);
             }
@@ -164,10 +168,17 @@ public class Swerve extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        Pose2d pose = swerveDrivePoseEstimator.getEstimatedPosition();
-        Logger.getInstance().recordOutput("SwervePose", pose);
-        Pose2d poseLL = swerveDrivePoseEstimatorLL.getEstimatedPosition();
-        Logger.getInstance().recordOutput("SwervePoseLL", poseLL);
+        Pose2d pose = new Pose2d();
+        if(Constants.LimelightAffectsOdometry){
+            pose = swerveDrivePoseEstimatorLL.getEstimatedPosition();
+            Logger.getInstance().recordOutput("SwervePoseLL", pose);
+        }
+        else{
+            pose = swerveDrivePoseEstimator.getEstimatedPosition();
+            Logger.getInstance().recordOutput("SwervePose", pose);
+            Pose2d poseLL = swerveDrivePoseEstimatorLL.getEstimatedPosition();
+            Logger.getInstance().recordOutput("SwervePoseLL", poseLL);
+        }
 
         return pose;
     }

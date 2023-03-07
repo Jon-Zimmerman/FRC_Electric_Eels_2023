@@ -12,8 +12,8 @@ public class GyroIONavx implements GyroIO{
         zeroGyro();
     }
     public void updateInputs(GyroIOInputs inputs) {
-        inputs.yawDegrees = (Constants.Swerve.invertGyro) ? 360.0 - ahrs.getYaw() : ahrs.getYaw();
-
+        //inputs.yawDegrees = (Constants.Swerve.invertGyro) ? 360.0 - ahrs.getYaw() : ahrs.getYaw();
+        inputs.yawDegrees = (Constants.Swerve.invertGyro) ? ahrs.getYaw()*-1.0 : ahrs.getYaw();
         // if (ahrs.isMagnetometerCalibrated()) {
         //     //      // We will only get valid fused headings if the magnetometer is calibrated
         //        inputs.yawDegrees =  ahrs.getFusedHeading();

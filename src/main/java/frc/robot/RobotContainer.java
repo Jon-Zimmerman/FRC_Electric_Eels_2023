@@ -113,7 +113,7 @@ public class RobotContainer {
   private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
-  private final JoystickButton robotCentric = new JoystickButton(driver, 7);
+  //private final JoystickButton robotCentric = new JoystickButton(driver, 7);
   private final JoystickButton lockToHeading = new JoystickButton(driver,
   1);
 
@@ -248,13 +248,13 @@ public class RobotContainer {
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));
 
-    elevatorBottom.whileTrue(
+    elevatorBottom.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom, allowableElevatorTeleopInch, elevator));
-    elevatorMid.whileTrue(
+    elevatorMid.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid, allowableElevatorTeleopInch, elevator));
-    elevatorLoading.whileTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,
+    elevatorLoading.onTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,
         allowableElevatorTeleopInch, elevator));
-    elevatorTop.whileTrue(
+    elevatorTop.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop, allowableElevatorTeleopInch, elevator));
 
     sliderIn.onTrue(new SliderGoToPosition(Constants.SliderSubsystem.sliderIn, allowableSliderTeleopInch, slider));

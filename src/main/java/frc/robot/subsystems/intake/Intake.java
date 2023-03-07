@@ -88,13 +88,11 @@ public class Intake extends SubsystemBase {
   /** Stops the intake. */
   public void holdCurrent() {
     if(ConeMode){
-      io.holdCurrent(Constants.IntakeSubsystem.holdConeCurrentAmps,-8.0);
+      io.setCurrentLimit(Constants.IntakeSubsystem.holdConeCurrentAmps);
     }
     else{
-      io.holdCurrent(Constants.IntakeSubsystem.holdCubeCurrentAmps, 8.0);
+      io.setCurrentLimit(Constants.IntakeSubsystem.holdCubeCurrentAmps);
     }
-
-
 
   }
 
@@ -110,6 +108,12 @@ public class Intake extends SubsystemBase {
 
   public void flipIntakeMode() {
     ConeMode = !ConeMode;
+    if(ConeMode){
+      io.setLEDsYellow();
+    }
+    else{
+      io.setLEDsPurple();
+    }
   }
 
 }
