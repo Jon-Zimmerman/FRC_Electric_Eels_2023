@@ -46,7 +46,7 @@ public class GetOnChargeStation extends CommandBase {
       if (!onRamp ) {
         if (!(timecheck.hasElapsed(approachTimeLimit))) { // cascade logic to decrease calls to timer
           m_swerve.drive(approachTranslation, 0.0, false, true);
-          if (roll > initialTriggerDegrees || m_swerve.getPose().getX()<4.5) {
+          if (roll > initialTriggerDegrees ) {
             onRamp = true;// set rampEngaged = true
             timecheck.reset();
           }
@@ -54,7 +54,7 @@ public class GetOnChargeStation extends CommandBase {
       } else {
         if (!balanced) {
           if (!(timecheck.hasElapsed(balancingTimeLimit))) {
-            if (roll > stopThresholdDegrees || m_swerve.getPose().getX()>4.25) {
+            if (roll > stopThresholdDegrees) {
               m_swerve.drive(balancingTranslation, 0.0, false,true);
             } else if (roll < -stopThresholdDegrees) {
               m_swerve.drive(balancingTranslation.times(-1.0), 0.0, false,true);
@@ -74,10 +74,10 @@ public class GetOnChargeStation extends CommandBase {
       }
     }
    
-    if(m_swerve.getPose().getX()>7.0 || m_swerve.getPose().getX()<2.0){
-      failed = true;
-      m_swerve.drive(stop, 0.0, false , false);
-    }
+    // if(m_swerve.getPose().getX()>7.0 || m_swerve.getPose().getX()<2.0){
+    //   failed = true;
+    //   m_swerve.drive(stop, 0.0, false , false);
+    // }
   }
 
   // Make this return true when this Command no longer needs to run execute()

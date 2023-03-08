@@ -17,7 +17,7 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.SIM;
+    private static final RobotType robot = RobotType.REAL;
     public static boolean enableLimelight = false;
     public static boolean LimelightAffectsOdometry = false;
     public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
@@ -109,7 +109,7 @@ public final class Constants {
         /** Meters per Second */
         public static final double maxSpeed = 7.0;
         /** Radians per Second */
-        public static final double maxAngularVelocity = (Math.PI)*1.1;// 1;
+        public static final double maxAngularVelocity = (Math.PI)*0.85;// 1;
         // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
         public static final double maxOpenLoopThrottle = 1.0;
         /* Neutral Modes */
@@ -181,8 +181,8 @@ public final class Constants {
 
         // FeedForward Control
         public static final double ks = 0.00;
-        public static final double kv = 0.00; //0.2
-        public static final double kg = 0.00; //0.75
+        public static final double kv = 0.05; //0.2
+        public static final double kg = 0.50; //0.75
 
         // public static final double ks = 0.00;
         // public static final double kv = 0.25;
@@ -200,10 +200,10 @@ public final class Constants {
         public static final double sprocketDiameterInch = 1.92;
 
         //motor shaft details
-        public static final int maxCurrentAmps = 30;
-        public static final double maxAngularVelocityRPM = 1000.0;
-        public static final double maxAngularAccRPMPerSec = 10.0;
-        public static final double minOutputVelocityRPM = 200.0; //requests below this no voltage output
+        public static final int maxCurrentAmps = 35;
+        public static final double maxAngularVelocityRPM = 500.0;
+        public static final double maxAngularAccRPMPerSec = 300.0;
+        public static final double minOutputVelocityRPM = 100.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 0.1*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
@@ -214,10 +214,10 @@ public final class Constants {
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
         public static final double elevatorPosBottom = 0.0;
-        public static final double elevatorPosMid = 12.0;
-        public static final double elevatorPosLoading = 15.0;
-        public static final double elevatorPosTop = 20.0;
-        public static final double elevatorSoftLimitUpperInch = 22.0;
+        public static final double elevatorPosMid = 15.0;
+        public static final double elevatorPosLoading = 20.0;
+        public static final double elevatorPosTop = 27.0;
+        public static final double elevatorSoftLimitUpperInch = 25.0;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
         public static final double allowableTeleopErrorInch = 1.0;
@@ -257,8 +257,8 @@ public final class Constants {
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 17.0;
-        public static final double sliderSoftLimitUpperInch = 18.0;
+        public static final double sliderOut = 13.0;
+        public static final double sliderSoftLimitUpperInch = 13.0;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
 
@@ -275,7 +275,7 @@ public final class Constants {
         public static final double ks = 0.0;
         public static final double kv = 0.000;
         // Closed Loop Control
-        public static final double kP = 0.001;
+        public static final double kP = 0.1;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -289,8 +289,8 @@ public final class Constants {
         //public static final double maxAngularVelocityRPM = 100.0;
 
         public static final int maxCurrentAmps = 25;
-        public static final int holdCubeCurrentAmps = 8;
-        public static final int holdConeCurrentAmps = 8;
+        public static final int holdCubeCurrentAmps = 10;
+        public static final int holdConeCurrentAmps = 10;
         //Velocity control mode
         public static final double intakeInCubeVelRPM = 50.0;
 
@@ -300,8 +300,8 @@ public final class Constants {
 
         public static final double intakeOutConeVelRPM = 100.0;
         //Voltage control mode
-        public static final double holdCubeVoltage = 1.0;
-        public static final double holdConeVoltage = 1.0;
+        public static final double holdCubeVoltage = 4.0;
+        public static final double holdConeVoltage = -4.0;
 
         public static final double intakeInCubeVoltage = 10.0;
         public static final double intakeOutCubeVoltage = -10.0;

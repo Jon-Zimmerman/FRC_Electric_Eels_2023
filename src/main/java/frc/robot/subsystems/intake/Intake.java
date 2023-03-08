@@ -68,29 +68,33 @@ public class Intake extends SubsystemBase {
 
   public void intakeIn() {
     if(ConeMode){
-      runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+      //runVelocity(Constants.IntakeSubsystem.intakeInConeVelRPM);
+      io.setVoltage(Constants.IntakeSubsystem.intakeInConeVoltage, 0.0);  
     }
     else{
-      runVelocity(Constants.IntakeSubsystem.intakeInCubeVelRPM);
+      //runVelocity(Constants.IntakeSubsystem.intakeInCubeVelRPM);
+      io.setVoltage(Constants.IntakeSubsystem.intakeInCubeVoltage, 0.0);  
     }
 
   }
 
   public void intakeOut() {  
     if(ConeMode){
-      runVelocity(Constants.IntakeSubsystem.intakeOutConeVelRPM);
+      io.setVoltage(Constants.IntakeSubsystem.intakeOutConeVoltage, 0.0);  
     }
     else{
-      runVelocity(Constants.IntakeSubsystem.intakeOutCubeVelRPM);
+      io.setVoltage(Constants.IntakeSubsystem.intakeOutCubeVoltage, 0.0);  
     }
   }
 
   /** Stops the intake. */
   public void holdCurrent() {
     if(ConeMode){
+      io.setVoltage(Constants.IntakeSubsystem.holdConeVoltage, 0.0);  
       io.setCurrentLimit(Constants.IntakeSubsystem.holdConeCurrentAmps);
     }
     else{
+      io.setVoltage(Constants.IntakeSubsystem.holdCubeVoltage, 0.0); 
       io.setCurrentLimit(Constants.IntakeSubsystem.holdCubeCurrentAmps);
     }
 

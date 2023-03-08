@@ -64,7 +64,11 @@ public class Elevator extends SubsystemBase {
     //positionSetPointInch = positionInch;
 
   }
+  public double getPosition() {
+  return inputs.positionElevatorInch;
+    //positionSetPointInch = positionInch;
 
+  }
   public double getError() {
     return Math.abs(inputs.positionElevatorSetPointInch - inputs.positionElevatorInch);
   }

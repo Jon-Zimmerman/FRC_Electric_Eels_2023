@@ -93,11 +93,13 @@ public class Swerve extends SubsystemBase {
                 error = -180.0 - (gyroInputs.yawDegrees % 360.0);
             }
 
-            rotation = error / degreeThreshold * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
+            double rotationtest = error / degreeThreshold * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
+           rotation = rotation*translationScalar;
             translation = translation.times(translationScalar);
             SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
             SmartDashboard.putNumber("LocktoHeadingError", error);
-            SmartDashboard.putNumber("LocktoHeadingRotation", rotation);
+            SmartDashboard.putNumber("LocktoHeadingRotation", rotationtest);
+            
             if (Constants.getMode() == Mode.SIM) {
                 gyroIO.additionalRotation(rotation);
             }
