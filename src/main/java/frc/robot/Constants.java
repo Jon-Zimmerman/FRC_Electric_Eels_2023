@@ -182,13 +182,13 @@ public final class Constants {
         // FeedForward Control
         public static final double ks = 0.00;
         public static final double kv = 0.05; //0.2
-        public static final double kg = 0.50; //0.75
+        public static final double kg = 0.6; //0.75
 
         // public static final double ks = 0.00;
         // public static final double kv = 0.25;
         // public static final double kg = 0.85;
 
-        public static final double kP = 0.2;
+        public static final double kP = 0.23;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -200,24 +200,24 @@ public final class Constants {
         public static final double sprocketDiameterInch = 1.92;
 
         //motor shaft details
-        public static final int maxCurrentAmps = 35;
+        public static final int maxCurrentAmps = 20;
         public static final double maxAngularVelocityRPM = 500.0;
         public static final double maxAngularAccRPMPerSec = 300.0;
-        public static final double minOutputVelocityRPM = 100.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorRotations = 0.1*gearRatio;
+        public static final double minOutputVelocityRPM = 80.0; //requests below this no voltage output
+        public static final double allowableSmartMotionPosErrorRotations = 0.05*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 10.0;
-        public static final double maxLinearAccelerationInchPerSec = 10.0;
+        public static final double maxLinearVelocityInchPerSec = 12.0;
+        public static final double maxLinearAccelerationInchPerSec = 12.0;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
         public static final double elevatorPosBottom = 0.0;
         public static final double elevatorPosMid = 15.0;
-        public static final double elevatorPosLoading = 20.0;
-        public static final double elevatorPosTop = 27.0;
-        public static final double elevatorSoftLimitUpperInch = 25.0;
+        public static final double elevatorPosLoading = 21.5;
+        public static final double elevatorPosTop = 24.0;
+        public static final double elevatorSoftLimitUpperInch = 25.5;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
         public static final double allowableTeleopErrorInch = 1.0;
@@ -235,7 +235,7 @@ public final class Constants {
 
         public static final double gearRatio = 30.0/12.0;
         public static final double sprocketDiameterInch = 1.29;
-        public static final double kP = 0.6;
+        public static final double kP = 0.8;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0.0;
@@ -244,21 +244,21 @@ public final class Constants {
         public static final double kMinOutput = -1.0;
         public static final int kTimeoutMs = 30;
 
-        public static final int maxCurrentAmps = 25;
+        public static final int maxCurrentAmps = 35;
 
-        public static final double maxAngularVelocityRPM = 400.0;
-        public static final double maxAngularAccRPMPerSec = 500.0;
-        public static final double minOutputVelocityRPM = 100.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorCounts = 1000.0;
+        public static final double maxAngularVelocityRPM = 500.0;
+        public static final double maxAngularAccRPMPerSec = 600.0;
+        public static final double minOutputVelocityRPM = 150.0; //requests below this no voltage output
+        public static final double allowableSmartMotionPosErrorCounts = 800.0;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 10.0;
-        public static final double maxLinearAccelerationInchPerSec = 15.0;
+        public static final double maxLinearVelocityInchPerSec = 15.0;
+        public static final double maxLinearAccelerationInchPerSec = 20.0;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 13.0;
-        public static final double sliderSoftLimitUpperInch = 13.0;
+        public static final double sliderOut = 14.5;
+        public static final double sliderSoftLimitUpperInch = 14.5;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
 
