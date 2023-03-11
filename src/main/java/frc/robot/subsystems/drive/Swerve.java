@@ -167,6 +167,8 @@ public class Swerve extends SubsystemBase {
     public void resetPose(Pose2d pose) {
         swerveDrivePoseEstimatorLL.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
                 pose);
+        swerveDrivePoseEstimator.resetPosition(Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(),
+                pose);
     }
 
     public Pose2d getPose() {

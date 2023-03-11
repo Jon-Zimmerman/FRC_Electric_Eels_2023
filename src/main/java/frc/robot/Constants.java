@@ -81,8 +81,8 @@ public final class Constants {
          * loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
          */
-        public static final double openLoopRamp = 0.50;
-        public static final double closedLoopRamp = 0.50;
+        public static final double openLoopRamp = 0.35;
+        public static final double closedLoopRamp = 0.35;
         public static final double JitterCutoff = 0.015; //jitter cutoff value to stop the motors from turning at low speeds and being unable to start due to low starting torque
 
         /* Angle Motor PID Values */
@@ -154,7 +154,7 @@ public final class Constants {
             public static final int driveMotorID = 6;
             public static final int angleMotorID = 4;
             public static final int canCoderID = 11;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(225.000);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(218.000);
             public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
                     canCoderID, angleOffset);
         }
@@ -162,13 +162,13 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 2.0;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 2.0;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
+        public static final double kMaxSpeedMetersPerSecond = 1.0;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 0.1*Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;
 
-        public static final PIDConstants translationPIDConstants = new PIDConstants(2.1, 0.0, 0.0);
-        public static final PIDConstants rotationPIDConstants = new PIDConstants(1.3, 0.0, 0.0);
+        public static final PIDConstants translationPIDConstants = new PIDConstants(0.1, 0.0, 0.0);
+        public static final PIDConstants rotationPIDConstants = new PIDConstants(0.7, 0.0, 0.0);
 
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
@@ -182,13 +182,13 @@ public final class Constants {
         // FeedForward Control
         public static final double ks = 0.00;
         public static final double kv = 0.05; //0.2
-        public static final double kg = 0.6; //0.75
+        public static final double kg = 0.5; //0.75
 
         // public static final double ks = 0.00;
         // public static final double kv = 0.25;
         // public static final double kg = 0.85;
 
-        public static final double kP = 0.23;
+        public static final double kP = 0.37;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -233,13 +233,13 @@ public final class Constants {
         public static final double kv = 0.00;
         public static final double kg = 0.00;
 
-        public static final double gearRatio = 30.0/12.0;
+        public static final double gearRatio = 4.0*30.0/12.0;
         public static final double sprocketDiameterInch = 1.29;
         public static final double kP = 0.8;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0.0;
-        public static final double kF = 0.0;
+        public static final double kFF = 0.0;
         public static final double kMaxOutput = 1.0;
         public static final double kMinOutput = -1.0;
         public static final int kTimeoutMs = 30;
@@ -249,7 +249,7 @@ public final class Constants {
         public static final double maxAngularVelocityRPM = 500.0;
         public static final double maxAngularAccRPMPerSec = 600.0;
         public static final double minOutputVelocityRPM = 150.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorCounts = 800.0;
+        public static final double allowableSmartMotionPosErrorRotations = 0.05*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
         public static final double maxLinearVelocityInchPerSec = 15.0;
@@ -257,10 +257,11 @@ public final class Constants {
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 14.5;
+        public static final double sliderOut = 14.75;
         public static final double sliderSoftLimitUpperInch = 14.5;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
+
 
         //public static final double allowableErrorInch = 1.0;
 
@@ -285,7 +286,7 @@ public final class Constants {
 
 
 
-        public static final double gearRatio = 2.0;
+        public static final double gearRatio = 4.0*2.0;
         //public static final double maxAngularVelocityRPM = 100.0;
 
         public static final int maxCurrentAmps = 25;
@@ -300,8 +301,8 @@ public final class Constants {
 
         public static final double intakeOutConeVelRPM = 100.0;
         //Voltage control mode
-        public static final double holdCubeVoltage = 4.0;
-        public static final double holdConeVoltage = -4.0;
+        public static final double holdCubeVoltage = 5.0;
+        public static final double holdConeVoltage = -5.0;
 
         public static final double intakeInCubeVoltage = 10.0;
         public static final double intakeOutCubeVoltage = -10.0;

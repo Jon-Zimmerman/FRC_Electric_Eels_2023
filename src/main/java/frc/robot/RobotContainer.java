@@ -37,6 +37,7 @@ import frc.robot.subsystems.elevator.ElevatorIOSparkMax;
 import frc.robot.subsystems.slider.Slider;
 import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
+import frc.robot.subsystems.slider.SliderIOSparkMax;
 import frc.robot.subsystems.slider.SliderIOFalcon;
 
 import frc.robot.subsystems.drive.GyroIO;
@@ -141,7 +142,7 @@ public class RobotContainer {
               new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
           intake = new Intake(new IntakeIOSparkMax());
           elevator = new Elevator(new ElevatorIOSparkMax());
-          slider = new Slider(new SliderIOFalcon());
+          slider = new Slider(new SliderIOSparkMax());
         } else {
           j_Swerve = new Swerve(
               new LimelightIOSim(),
@@ -152,7 +153,7 @@ public class RobotContainer {
               new ModuleIOFalcon(3, Constants.Swerve.Mod3.constants));
           intake = new Intake(new IntakeIOSparkMax());
           elevator = new Elevator(new ElevatorIOSparkMax());
-          slider = new Slider(new SliderIOFalcon());
+          slider = new Slider(new SliderIOSparkMax());
 
         }
 

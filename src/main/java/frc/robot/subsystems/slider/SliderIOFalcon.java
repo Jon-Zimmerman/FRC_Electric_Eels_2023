@@ -103,7 +103,7 @@ public class SliderIOFalcon implements SliderIO {
 
 		/* Set Motion Magic gains in slot0 - see documentation */
 		sliderMotor.selectProfileSlot(0, 0);
-		sliderMotor.config_kF(0, Constants.SliderSubsystem.kF, Constants.SliderSubsystem.kTimeoutMs);
+		sliderMotor.config_kF(0, Constants.SliderSubsystem.kFF, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.config_kP(0, kP, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.config_kI(0, kI, Constants.SliderSubsystem.kTimeoutMs);
 		sliderMotor.config_kD(0, kD, Constants.SliderSubsystem.kTimeoutMs);
@@ -119,7 +119,7 @@ public class SliderIOFalcon implements SliderIO {
 		
 		sliderMotor.configMotionAcceleration(CruiseAcc, Constants.SliderSubsystem.kTimeoutMs);
     sliderMotor.configMotionCruiseVelocity(CruiseVel, Constants.SliderSubsystem.kTimeoutMs);
-    sliderMotor.configAllowableClosedloopError(0, Constants.SliderSubsystem.allowableSmartMotionPosErrorCounts);
+    sliderMotor.configAllowableClosedloopError(0, Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations*2048);
 		/* Zero the sensor once on robot boot up */
 		sliderMotor.setSelectedSensorPosition(0, 0, Constants.SliderSubsystem.kTimeoutMs);
     

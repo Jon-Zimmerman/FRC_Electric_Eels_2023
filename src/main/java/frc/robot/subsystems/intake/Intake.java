@@ -28,6 +28,8 @@ public class Intake extends SubsystemBase {
         ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
         io.configurePID(Constants.IntakeSubsystem.kP, Constants.IntakeSubsystem.kI,
             Constants.IntakeSubsystem.kD);
+            io.setLEDsYellow();
+            ConeMode = true;
         break;
       case REPLAY:
         ffModel = new SimpleMotorFeedforward(Constants.IntakeSubsystem.ks, Constants.IntakeSubsystem.kv);
