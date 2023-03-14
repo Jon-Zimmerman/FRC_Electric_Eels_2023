@@ -17,7 +17,7 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.REAL;
+    private static final RobotType robot = RobotType.SIM;
     public static boolean enableLimelight = false;
     public static boolean LimelightAffectsOdometry = false;
     public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
@@ -27,7 +27,7 @@ public final class Constants {
     public static final boolean tuningMode = false;
 
     public static final double translationStickDeadband = 0.15;
-    public static final double rotationStickDeadband = 0.15;
+    public static final double rotationStickDeadband = 0.05;
 
     public static final class Swerve {
         

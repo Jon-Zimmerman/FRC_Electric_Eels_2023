@@ -48,7 +48,7 @@ public class Elevator extends SubsystemBase {
     // inputs.positionSetPointInch);
 
     
-    if(Math.abs(m_goal.position-inputs.positionElevatorInch)<1.0 ){
+    if(Math.abs(m_goal.position-inputs.positionElevatorInch)<0.25 ){
       m_goal.position = inputs.positionElevatorInch;
     }
     var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);

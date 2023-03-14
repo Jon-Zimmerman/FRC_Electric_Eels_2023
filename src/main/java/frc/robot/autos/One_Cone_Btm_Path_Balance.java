@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.commands.SliderGoToPosition;
 import frc.robot.commands.ElevatorGoToPosition;
-import frc.robot.commands.GetOnChargeStation;
+import frc.robot.commands.GetOnChargeStationFromMid;
 
 //import java.util.HashMap;
 //import frc.robot.commands.GoToElevatorTop;
@@ -26,11 +26,11 @@ import frc.robot.subsystems.elevator.Elevator;
 
 import frc.robot.subsystems.slider.Slider;
 
-public class One_Cone_And_Balance extends SequentialCommandGroup {
-    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Path4", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+public class One_Cone_Btm_Path_Balance extends SequentialCommandGroup {
+    List<PathPlannerTrajectory> pathGroup = PathPlanner.loadPathGroup("Bottom_Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
-    final Command followPath4;
-    public One_Cone_And_Balance(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
+    final Command followBottomPath;
+    public One_Cone_Btm_Path_Balance(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
         //Could try and use this method which allows you to put points in pathplanner GUI,
         //But not really any easier because you can't add them before the path starts.
         //eventMap.put("ElevatorTop", new InstantCommand(() -> elevator.elevatorTop()));
@@ -40,7 +40,7 @@ public class One_Cone_And_Balance extends SequentialCommandGroup {
         //eventMap.put("intakeIn", new InstantCommand(() -> intake.intakeIn()));
         
 
-        followPath4 = s_Swerve.swerveAutoBuilder.fullAuto (pathGroup);
+        followBottomPath = s_Swerve.swerveAutoBuilder.fullAuto (pathGroup);
 
         //s_Swerve.resetPose(
         
@@ -51,8 +51,8 @@ public class One_Cone_And_Balance extends SequentialCommandGroup {
         // new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(1.0), //make time based
         // new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,10.0,slider).withTimeout(3.0),
         // new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,15.0,elevator).withTimeout(3.0),
-        followPath4,
-        new GetOnChargeStation(s_Swerve)
+        followBottomPath,
+        new GetOnChargeStationFromMid(s_Swerve)
         );
     }
 

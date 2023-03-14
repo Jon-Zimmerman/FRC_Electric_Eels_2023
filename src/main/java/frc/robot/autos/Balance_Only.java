@@ -11,7 +11,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.Constants;
-import frc.robot.commands.GetOnChargeStation;
+import frc.robot.commands.GetOnChargeStationFromMid;
 
 import java.util.HashMap;
 //import frc.robot.commands.GoToElevatorTop;
@@ -39,7 +39,7 @@ public class Balance_Only extends SequentialCommandGroup {
         addCommands(
         //s_Swerve.swerveAutoBuilder.resetPose(pathGroup.get(0)),
         ///followPath1,
-        new GetOnChargeStation(s_Swerve)
+        new GetOnChargeStationFromMid(s_Swerve)
         );
     }
 

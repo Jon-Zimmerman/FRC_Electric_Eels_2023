@@ -7,13 +7,15 @@ import frc.robot.subsystems.drive.Swerve;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 
-public class GetOnChargeStation extends CommandBase {
+public class GetOnChargeStationFromMid extends CommandBase {
 
   private final Swerve m_swerve;
   private final Timer timecheck;
   private boolean onRamp;
   private boolean balanced;
   private boolean failed;
+  private boolean parked;
+
   private double roll;
   private final double stopThresholdDegrees = 3.0;
   private final double initialTriggerDegrees = 9.0;
@@ -23,7 +25,7 @@ public class GetOnChargeStation extends CommandBase {
   private final Translation2d approachTranslation = new Translation2d(-1.0, 0); // meters per second;
   private final Translation2d balancingTranslation = new Translation2d(-0.3, 0); // meters per second;
 
-  public GetOnChargeStation(Swerve swerve) {
+  public GetOnChargeStationFromMid(Swerve swerve) {
     m_swerve = swerve;
     addRequirements(m_swerve);
     timecheck = new Timer();
@@ -35,6 +37,7 @@ public class GetOnChargeStation extends CommandBase {
     onRamp = false;
     balanced = false;
     failed = false;
+    parked = false;
     timecheck.start();
 
   }
@@ -67,6 +70,7 @@ public class GetOnChargeStation extends CommandBase {
           if ((roll < stopThresholdDegrees) && (roll > -stopThresholdDegrees)) {
             
             m_swerve.drive(stop, 0.0, false , true);
+            parked = true;
           } else {
             balanced = false;
           }
@@ -83,6 +87,6 @@ public class GetOnChargeStation extends CommandBase {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return false;
+    return parked;
   }
 }
