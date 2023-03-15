@@ -81,15 +81,15 @@ public class GetOnChargeStationFromGrid extends CommandBase {
       }
     }
    
-    // if(m_swerve.getPose().getX()>7.0 || m_swerve.getPose().getX()<2.0){
-    //   failed = true;
-    //   m_swerve.drive(stop, 0.0, false , false);
-    // }
+    if(m_swerve.getPose().getX()>6.0 || m_swerve.getPose().getX()<1.5){
+      failed = true;
+      m_swerve.drive(stop, 0.0, false , false);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return parked;
+    return parked || failed;
   }
 }

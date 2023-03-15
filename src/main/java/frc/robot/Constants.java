@@ -17,7 +17,7 @@ import frc.lib.util.Alert.AlertType;
 
 public final class Constants {
     // public static final Mode currentMode = Mode.REAL;
-    private static final RobotType robot = RobotType.SIM;
+    private static final RobotType robot = RobotType.REAL;
     public static boolean enableLimelight = false;
     public static boolean LimelightAffectsOdometry = false;
     public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
@@ -27,7 +27,7 @@ public final class Constants {
     public static final boolean tuningMode = false;
 
     public static final double translationStickDeadband = 0.15;
-    public static final double rotationStickDeadband = 0.05;
+    public static final double rotationStickDeadband = 0.12;
 
     public static final class Swerve {
         
@@ -81,8 +81,8 @@ public final class Constants {
          * loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
          */
-        public static final double openLoopRamp = 0.35;
-        public static final double closedLoopRamp = 0.35;
+        public static final double openLoopRamp = 0.5;
+        public static final double closedLoopRamp = 0.5;
         public static final double JitterCutoff = 0.015; //jitter cutoff value to stop the motors from turning at low speeds and being unable to start due to low starting torque
 
         /* Angle Motor PID Values */
@@ -200,23 +200,23 @@ public final class Constants {
         public static final double sprocketDiameterInch = 1.92;
 
         //motor shaft details
-        public static final int maxCurrentAmps = 20;
-        public static final double maxAngularVelocityRPM = 500.0;
-        public static final double maxAngularAccRPMPerSec = 300.0;
+        public static final int maxCurrentAmps = 30;
+        public static final double maxAngularVelocityRPM = 80.0;
+        public static final double maxAngularAccRPMPerSec = 60.0;
         public static final double minOutputVelocityRPM = 80.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 0.05*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 12.0;
-        public static final double maxLinearAccelerationInchPerSec = 12.0;
+        public static final double maxLinearVelocityInchPerSec = 16.0;
+        public static final double maxLinearAccelerationInchPerSec = 15.0;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
         public static final double elevatorPosBottom = 0.0;
-        public static final double elevatorPosMid = 15.0;
-        public static final double elevatorPosLoading = 21.5;
-        public static final double elevatorPosTop = 24.0;
+        public static final double elevatorPosMid = 22.0;
+        public static final double elevatorPosLoading = 23.0;
+        public static final double elevatorPosTop = 24.2;
         public static final double elevatorSoftLimitUpperInch = 25.5;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
@@ -244,7 +244,7 @@ public final class Constants {
         public static final double kMinOutput = -1.0;
         public static final int kTimeoutMs = 30;
 
-        public static final int maxCurrentAmps = 35;
+        public static final int maxCurrentAmps = 30;
 
         public static final double maxAngularVelocityRPM = 500.0;
         public static final double maxAngularAccRPMPerSec = 600.0;
@@ -252,13 +252,13 @@ public final class Constants {
         public static final double allowableSmartMotionPosErrorRotations = 0.05*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 15.0;
+        public static final double maxLinearVelocityInchPerSec = 16.0;
         public static final double maxLinearAccelerationInchPerSec = 20.0;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 14.75;
-        public static final double sliderSoftLimitUpperInch = 14.5;
+        public static final double sliderOut = 14.6;
+        public static final double sliderSoftLimitUpperInch = 15.0;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
 
@@ -305,7 +305,7 @@ public final class Constants {
         public static final double holdConeVoltage = -5.0;
 
         public static final double intakeInCubeVoltage = 10.0;
-        public static final double intakeOutCubeVoltage = -10.0;
+        public static final double intakeOutCubeVoltage = -5.0;
         
         public static final double intakeInConeVoltage = -10.0;
         public static final double intakeOutConeVoltage = 10.0;   

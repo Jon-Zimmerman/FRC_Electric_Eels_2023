@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
@@ -92,7 +93,7 @@ public class IntakeIOSparkMax implements IntakeIO {
     intakePidController.setFF(Constants.IntakeSubsystem.kFF);
     intakePidController.setOutputRange(Constants.IntakeSubsystem.kMinOutput,
         Constants.IntakeSubsystem.kMaxOutput);
-
+    intakeMotor.setIdleMode(IdleMode.kCoast);
     intakeMotor.burnFlash();
   }
 }

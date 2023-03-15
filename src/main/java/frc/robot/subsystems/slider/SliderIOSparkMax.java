@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder; //or sparkmaxrelativeencoder?
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
@@ -108,7 +109,7 @@ public class SliderIOSparkMax implements SliderIO {
         Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
     sliderPidController.setSmartMotionAllowedClosedLoopError(
     Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
-
+    sliderMotor.setIdleMode(IdleMode.kCoast);
     sliderMotor.burnFlash();
   }
 }
