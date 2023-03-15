@@ -188,7 +188,7 @@ public final class Constants {
         // public static final double kv = 0.25;
         // public static final double kg = 0.85;
 
-        public static final double kP = 0.37;
+        public static final double kP = 0.08;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -235,7 +235,7 @@ public final class Constants {
 
         public static final double gearRatio = 4.0*30.0/12.0;
         public static final double sprocketDiameterInch = 1.29;
-        public static final double kP = 0.8;
+        public static final double kP = 0.08;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0.0;
@@ -308,7 +308,7 @@ public final class Constants {
         public static final double intakeOutCubeVoltage = -5.0;
         
         public static final double intakeInConeVoltage = -10.0;
-        public static final double intakeOutConeVoltage = 10.0;   
+        public static final double intakeOutConeVoltage = 5.0;   
         
 
     }
