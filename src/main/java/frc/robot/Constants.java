@@ -66,13 +66,13 @@ public final class Constants {
         public static final boolean canCoderInvert = chosenModule.canCoderInvert;
 
         /* Swerve Current Limiting */
-        public static final int angleContinuousCurrentLimit = 32;
-        public static final int anglePeakCurrentLimit = 45;
+        public static final int angleContinuousCurrentLimit = 25;
+        public static final int anglePeakCurrentLimit = 32;
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 32;
-        public static final int drivePeakCurrentLimit = 45;
+        public static final int driveContinuousCurrentLimit = 25;
+        public static final int drivePeakCurrentLimit = 32;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 
@@ -204,12 +204,12 @@ public final class Constants {
         public static final double maxAngularVelocityRPM = 80.0;
         public static final double maxAngularAccRPMPerSec = 60.0;
         public static final double minOutputVelocityRPM = 80.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorRotations = 0.05*gearRatio;
+        public static final double allowableSmartMotionPosErrorRotations = 3.0*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 16.0;
-        public static final double maxLinearAccelerationInchPerSec = 15.0;
+        public static final double maxLinearVelocityInchPerSec = 19.0;
+        public static final double maxLinearAccelerationInchPerSec = 16.0;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
@@ -249,11 +249,11 @@ public final class Constants {
         public static final double maxAngularVelocityRPM = 500.0;
         public static final double maxAngularAccRPMPerSec = 600.0;
         public static final double minOutputVelocityRPM = 150.0; //requests below this no voltage output
-        public static final double allowableSmartMotionPosErrorRotations = 0.05*gearRatio;
+        public static final double allowableSmartMotionPosErrorRotations = 3.0*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 16.0;
-        public static final double maxLinearAccelerationInchPerSec = 20.0;
+        public static final double maxLinearVelocityInchPerSec = 18.0;
+        public static final double maxLinearAccelerationInchPerSec = 22.0;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
