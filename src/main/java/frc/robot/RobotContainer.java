@@ -14,10 +14,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
-import frc.robot.autos.Balance_Only;
-import frc.robot.autos.One_Cone_Top_Path_Balance;
+//import frc.robot.autos.Balance_Only;
+//import frc.robot.autos.One_Cone_Top_Path_Balance;
 import frc.robot.autos.One_Cone_Mid_Path_Balance;
-import frc.robot.autos.One_Cone_Btm_Path_Balance;
+
+import frc.robot.autos.Cube_Drive_Forward_Bal;
+//import frc.robot.autos.One_Cone_Btm_Path_Balance;
 
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
@@ -217,10 +219,11 @@ public class RobotContainer {
     }
 
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("One_Cone_Top_Path_Balance", new One_Cone_Top_Path_Balance(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("One_Cone_Top_Path_Balance", new One_Cone_Top_Path_Balance(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("One_Cone_Mid_Path_Balance", new One_Cone_Mid_Path_Balance(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("One_Cone_Btm_Path_Balance", new One_Cone_Btm_Path_Balance(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Balance_Only (Testing Mode)", new Balance_Only(j_Swerve));
+    autoChooser.addOption("Cube_Drive_Forward_Bal", new Cube_Drive_Forward_Bal(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("One_Cone_Btm_Path_Balance", new One_Cone_Btm_Path_Balance(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("Balance_Only (Testing Mode)", new Balance_Only(j_Swerve));
 
     // SmartDashboard.putData("Auto Routine", autoChooser);
 
