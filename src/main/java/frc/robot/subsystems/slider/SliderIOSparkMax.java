@@ -90,14 +90,14 @@ public class SliderIOSparkMax implements SliderIO {
     sliderMotor.enableVoltageCompensation(12.0);
     sliderMotor.setSmartCurrentLimit(Constants.SliderSubsystem.maxCurrentAmps);
 
-    sliderMotor.setSoftLimit( SoftLimitDirection.kReverse, (float) (sliderSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
-    sliderMotor.setSoftLimit( SoftLimitDirection.kForward, (float) (sliderSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
+    //sliderMotor.setSoftLimit( SoftLimitDirection.kReverse, (float) (sliderSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
+    //sliderMotor.setSoftLimit( SoftLimitDirection.kForward, (float) (sliderSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
 
     sliderPidController.setP(kP);
     sliderPidController.setI(kI);
     sliderPidController.setD(kD);
-    sliderPidController.setIZone(Constants.SliderSubsystem.kIz);
-    sliderPidController.setFF(Constants.SliderSubsystem.kFF);
+    //sliderPidController.setIZone(Constants.SliderSubsystem.kIz);
+    //sliderPidController.setFF(Constants.SliderSubsystem.kFF);
     sliderPidController.setOutputRange(Constants.SliderSubsystem.kMinOutput,
         Constants.SliderSubsystem.kMaxOutput);
 
@@ -107,8 +107,8 @@ public class SliderIOSparkMax implements SliderIO {
         Constants.SliderSubsystem.minOutputVelocityRPM, smartMotionSlot);
     sliderPidController.setSmartMotionMaxAccel(
         Constants.SliderSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    sliderPidController.setSmartMotionAllowedClosedLoopError(
-    Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
+    //sliderPidController.setSmartMotionAllowedClosedLoopError(
+    //Constants.SliderSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
     sliderMotor.setIdleMode(IdleMode.kCoast);
     sliderMotor.burnFlash();
   }

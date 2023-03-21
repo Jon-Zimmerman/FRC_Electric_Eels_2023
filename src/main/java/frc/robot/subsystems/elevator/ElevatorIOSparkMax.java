@@ -89,14 +89,14 @@ public class ElevatorIOSparkMax implements ElevatorIO {
     elevatorMotor.enableVoltageCompensation(12.0);
     elevatorMotor.setSmartCurrentLimit(Constants.ElevatorSubsystem.maxCurrentAmps);
 
-    elevatorMotor.setSoftLimit( SoftLimitDirection.kReverse, (float) (elevatorSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
-    elevatorMotor.setSoftLimit( SoftLimitDirection.kForward, (float) (elevatorSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
+    //elevatorMotor.setSoftLimit( SoftLimitDirection.kReverse, (float) (elevatorSoftLimitLower*gearRatio/(sprocketDiameterInch*Math.PI)));
+    //elevatorMotor.setSoftLimit( SoftLimitDirection.kForward, (float) (elevatorSoftLimitUpper*gearRatio/(sprocketDiameterInch*Math.PI)));
 
     elevatorPidController.setP(kP);
     elevatorPidController.setI(kI);
     elevatorPidController.setD(kD);
-    elevatorPidController.setIZone(Constants.ElevatorSubsystem.kIz);
-    elevatorPidController.setFF(Constants.ElevatorSubsystem.kFF);
+    //elevatorPidController.setIZone(Constants.ElevatorSubsystem.kIz);
+    //elevatorPidController.setFF(Constants.ElevatorSubsystem.kFF);
     elevatorPidController.setOutputRange(Constants.ElevatorSubsystem.kMinOutput,
         Constants.ElevatorSubsystem.kMaxOutput);
 
@@ -106,8 +106,8 @@ public class ElevatorIOSparkMax implements ElevatorIO {
         Constants.ElevatorSubsystem.minOutputVelocityRPM, smartMotionSlot);
     elevatorPidController.setSmartMotionMaxAccel(
         Constants.ElevatorSubsystem.maxAngularAccRPMPerSec, smartMotionSlot);
-    elevatorPidController.setSmartMotionAllowedClosedLoopError(
-    Constants.ElevatorSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
+    //elevatorPidController.setSmartMotionAllowedClosedLoopError(
+    //Constants.ElevatorSubsystem.allowableSmartMotionPosErrorRotations, smartMotionSlot);
 
     elevatorMotor.burnFlash();
   }

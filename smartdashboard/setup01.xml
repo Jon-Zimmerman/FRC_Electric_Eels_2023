@@ -1,5 +1,11 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="LocktoHeadingRotation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="497"/>
+	</widget>
+	<widget field="LocktoHeadingError" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="53"/>
+	</widget>
 	<widget field="Robocentric yes?" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="0" y="156"/>
 	</widget>
