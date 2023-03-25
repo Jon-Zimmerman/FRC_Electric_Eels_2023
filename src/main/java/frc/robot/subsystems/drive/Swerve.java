@@ -96,19 +96,23 @@ public class Swerve extends SubsystemBase {
             double rotationtest = error / degreeThreshold * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
            rotation = rotation*translationScalar;
             translation = translation.times(translationScalar);
-            SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
-            SmartDashboard.putNumber("LocktoHeadingError", error);
-            SmartDashboard.putNumber("LocktoHeadingRotation", rotationtest);
+            //SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
+            //SmartDashboard.putNumber("LocktoHeadingError", error);
+            //SmartDashboard.putNumber("LocktoHeadingRotation", rotationtest);
             
             if (Constants.getMode() == Mode.SIM) {
                 gyroIO.additionalRotation(rotation);
             }
         }
-
-        if (translation.getX() == 0.0 && translation.getX() == 0.0 && rotation == 0.0
+        //SmartDashboard.putNumber("tX", translation.getX());
+        //SmartDashboard.putNumber("tY", translation.getY());
+        //SmartDashboard.putNumber("rot", rotation);
+        if (translation.getX() == 0.0 && translation.getY() == 0.0 && rotation == 0.0
                 && Constants.enableLockWheelsAt45) {
+                    //SmartDashboard.putNumber("brake?", 1);
             swerveModuleStates = getLockWheels45();
         } else {
+            //SmartDashboard.putNumber("brake?", 0);
             swerveModuleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                     ChassisSpeeds.fromFieldRelativeSpeeds(
                             translation.getX(),
@@ -157,9 +161,10 @@ public class Swerve extends SubsystemBase {
                         Rotation2d.fromDegrees(gyroInputs.yawDegrees)));
         // SwerveModuleState desiredState = new SwerveModuleState();
         for (int i = 0; i < 4; i++) {
-            WheelStates45[i].angle = Rotation2d.fromDegrees(i * 90 + 45); // set angles for 45, 135,225,315 in order to
+            final double[] anglestobrake= {225,135,315,45};
+            WheelStates45[i].angle = Rotation2d.fromDegrees( anglestobrake[i]); // set angles for 45, 135,225,315 in order to
             // brake really well
-            WheelStates45[i].speedMetersPerSecond = 0; // set speed to 0
+            WheelStates45[i].speedMetersPerSecond = 01; // set speed to 0
         }
         return WheelStates45;
     }

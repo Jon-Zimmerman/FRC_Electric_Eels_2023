@@ -20,7 +20,7 @@ public final class Constants {
     private static final RobotType robot = RobotType.REAL;
     public static boolean enableLimelight = false;
     public static boolean LimelightAffectsOdometry = false;
-    public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
+    public static boolean enableLockWheelsAt45= true; //Not currently implemented at all, value does nothing
     public static boolean enableLockToHeading= true;
     public static double acceptableLimelightMergeDistMeters = 3; //distance from back of grid in X direction to allow tag inputs
     public static final double simLoopPeriodSecs = 0.02;
