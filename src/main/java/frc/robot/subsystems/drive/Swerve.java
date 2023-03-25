@@ -83,7 +83,7 @@ public class Swerve extends SubsystemBase {
         double lockToHeadingPScalar = 0.3;
         double translationScalar = 0.5;
         double degreeThreshold = 15.0;
-        if (lockToHeading && Constants.enableLockToHeading) {
+        if (lockToHeading && Constants.enableLockToHeading) { // lock robot to a specific heading so that you can successfully place game objects
             double error = 0.0;
             if ((Math.abs(gyroInputs.yawDegrees % 360.0)) < degreeThreshold) {
                 error = 0.0 - (gyroInputs.yawDegrees % 360.0);
@@ -164,7 +164,7 @@ public class Swerve extends SubsystemBase {
             final double[] anglestobrake= {225,135,315,45};
             WheelStates45[i].angle = Rotation2d.fromDegrees( anglestobrake[i]); // set angles for 45, 135,225,315 in order to
             // brake really well
-            WheelStates45[i].speedMetersPerSecond = 01; // set speed to 0
+            WheelStates45[i].speedMetersPerSecond = 0; // set speed to 0
         }
         return WheelStates45;
     }
