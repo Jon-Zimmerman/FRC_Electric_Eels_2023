@@ -181,14 +181,14 @@ public final class Constants {
 
         // FeedForward Control
         public static final double ks = 0.00;
-        public static final double kv = 0.05; //0.2
+        public static final double kv = 0.04; //0.2
         public static final double kg = 0.5; //0.75
 
         // public static final double ks = 0.00;
         // public static final double kv = 0.25;
         // public static final double kg = 0.85;
 
-        public static final double kP = 0.08;
+        public static final double kP = 0.05;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0;
@@ -201,15 +201,15 @@ public final class Constants {
 
         //motor shaft details
         public static final int maxCurrentAmps = 30;
-        public static final double maxAngularVelocityRPM = 80.0;
-        public static final double maxAngularAccRPMPerSec = 60.0;
+        public static final double maxAngularVelocityRPM = 100.0;
+        public static final double maxAngularAccRPMPerSec = 80.0;
         public static final double minOutputVelocityRPM = 10.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 3.0*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 19.0;
-        public static final double maxLinearAccelerationInchPerSec = 16.0;
+        public static final double maxLinearVelocityInchPerSec = 28.0;
+        public static final double maxLinearAccelerationInchPerSec = 28.0;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
@@ -217,7 +217,7 @@ public final class Constants {
         public static final double elevatorPosMid = 22.0;
         public static final double elevatorPosLoading = 23.0;
         public static final double elevatorPosTop = 24.2;
-        public static final double elevatorSoftLimitUpperInch = 25.5;
+        public static final double elevatorSoftLimitUpperInch = 25.25;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
         public static final double allowableTeleopErrorInch = 1.0;
@@ -235,7 +235,7 @@ public final class Constants {
 
         public static final double gearRatio = 4.0*30.0/12.0;
         public static final double sprocketDiameterInch = 1.29;
-        public static final double kP = 0.08;
+        public static final double kP = 0.06;
         public static final double kI = 0.00;
         public static final double kD = 0.0;
         public static final double kIz = 0.0;
@@ -246,14 +246,14 @@ public final class Constants {
 
         public static final int maxCurrentAmps = 30;
 
-        public static final double maxAngularVelocityRPM = 500.0;
-        public static final double maxAngularAccRPMPerSec = 600.0;
+        public static final double maxAngularVelocityRPM = 800.0;
+        public static final double maxAngularAccRPMPerSec = 1000.0;
         public static final double minOutputVelocityRPM = 20.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 1.4*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 18.0;
-        public static final double maxLinearAccelerationInchPerSec = 22.0;
+        public static final double maxLinearVelocityInchPerSec = 45.0;
+        public static final double maxLinearAccelerationInchPerSec = 45.0;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
@@ -301,13 +301,13 @@ public final class Constants {
 
         public static final double intakeOutConeVelRPM = 100.0;
         //Voltage control mode
-        public static final double holdCubeVoltage = 5.0;
-        public static final double holdConeVoltage = -5.0;
+        public static final double holdCubeVoltage = 4.0;
+        public static final double holdConeVoltage = -3.2;
 
-        public static final double intakeInCubeVoltage = 10.0;
+        public static final double intakeInCubeVoltage = 8.0;
         public static final double intakeOutCubeVoltage = -5.0;
         
-        public static final double intakeInConeVoltage = -10.0;
+        public static final double intakeInConeVoltage = -7.0;
         public static final double intakeOutConeVoltage = 5.0;   
         
 
