@@ -244,8 +244,8 @@ public class RobotContainer {
     // controller.getLeftX()), drive));
     j_Swerve.setDefaultCommand(new TeleopSwerve(
         j_Swerve,
-        () -> -driver.getRawAxis(translationAxis),
-        () -> -driver.getRawAxis(strafeAxis),
+        () -> driver.getRawAxis(translationAxis),
+        () -> driver.getRawAxis(strafeAxis),
         () -> driver.getRawAxis(rotationAxis),
         () -> lockToHeading.getAsBoolean()));
 
