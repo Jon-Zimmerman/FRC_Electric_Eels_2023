@@ -16,7 +16,7 @@ import frc.robot.Constants;
 import frc.robot.commands.SliderGoToPosition;
 import frc.robot.commands.ElevatorGoToPosition;
 import frc.robot.commands.GetOnChargeStationFromMid;
-
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 //import java.util.HashMap;
 //import frc.robot.commands.GoToElevatorTop;
 
@@ -45,14 +45,15 @@ public class One_Cone_Btm_Path_Balance extends SequentialCommandGroup {
         //s_Swerve.resetPose(
         
         addCommands(
+        new InstantCommand(() -> intake.setIntakeModeCone()),
         s_Swerve.swerveAutoBuilder.resetPose(pathGroup.get(0)),
-        // new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
-        // new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
-        // new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(1.0), //make time based
-        // new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,10.0,slider).withTimeout(3.0),
-        // new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,15.0,elevator).withTimeout(3.0),
-        followBottomPath,
-        new GetOnChargeStationFromMid(s_Swerve)
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.5), //make time based
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,10.0,slider).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,15.0,elevator).withTimeout(3.0),
+        followBottomPath
+        //new GetOnChargeStationFromMid(s_Swerve)
         );
     }
 

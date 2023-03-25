@@ -26,8 +26,8 @@ public final class Constants {
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
 
-    public static final double translationStickDeadband = 0.15;
-    public static final double rotationStickDeadband = 0.12;
+    public static final double translationStickDeadband = 0.08;
+    public static final double rotationStickDeadband = 0.08;
 
     public static final class Swerve {
         

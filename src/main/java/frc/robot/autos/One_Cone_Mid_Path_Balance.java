@@ -49,12 +49,10 @@ public class One_Cone_Mid_Path_Balance extends SequentialCommandGroup {
         s_Swerve.swerveAutoBuilder.resetPose(pathGroup.get(0)),
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
-        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(1.5), //make time based
-
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0)
-        //followMidPath,   
-        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
-  
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.5), //make time based
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0)//,
+        //followMidPath
         //new GetOnChargeStationFromGrid(s_Swerve)
         );
     }

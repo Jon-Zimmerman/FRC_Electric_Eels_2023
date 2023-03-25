@@ -64,7 +64,7 @@
 		<location x="0" y="176"/>
 	</widget>
 	<widget field="SysIdVoltageCommand" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="269" y="432"/>
+		<location x="504" y="356"/>
 	</widget>
 	<widget field="Mod 3 Cancoder" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="16" y="92"/>
