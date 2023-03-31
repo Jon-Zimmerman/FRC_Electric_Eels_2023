@@ -20,8 +20,8 @@ public final class Constants {
     private static final RobotType robot = RobotType.REAL;
     public static boolean enableLimelight = false;
     public static boolean LimelightAffectsOdometry = false;
-    public static boolean enableLockWheelsAt45= true; //Not currently implemented at all, value does nothing
-    public static boolean enableLockToHeading= true;
+    public static boolean enableLockWheelsAt45= false; //Not currently implemented at all, value does nothing
+    public static boolean enableLockToHeading= false;
     public static double acceptableLimelightMergeDistMeters = 3; //distance from back of grid in X direction to allow tag inputs
     public static final double simLoopPeriodSecs = 0.02;
     public static final boolean tuningMode = false;
@@ -107,7 +107,7 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 7.0;
+        public static final double maxSpeed = 8.0;
         /** Radians per Second */
         public static final double maxAngularVelocity = (Math.PI)*1.25;// 1;
         // maximum *decimal*, 0 to 1 throttle to clamp to in swervemodule.java
