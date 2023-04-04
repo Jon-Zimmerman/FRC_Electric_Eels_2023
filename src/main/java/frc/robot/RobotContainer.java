@@ -13,16 +13,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-
-
+import frc.robot.autos.Bottom_Cube_Extended_Cube;
 import frc.robot.autos.Bottom_Cube_Travel;
 
 import frc.robot.autos.Top_Cube_Travel;
 
 
 import frc.robot.autos.Mid_Cube_Balance;
-
-
+import frc.robot.autos.Top_Cube_Extended_Cube;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -43,7 +41,7 @@ import frc.robot.subsystems.slider.Slider;
 import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
 import frc.robot.subsystems.slider.SliderIOSparkMax;
-import frc.robot.subsystems.slider.SliderIOFalcon;
+//import frc.robot.subsystems.slider.SliderIOFalcon;
 
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOSim;
@@ -224,6 +222,8 @@ public class RobotContainer {
     autoChooser.addOption("Top_Cube_Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Bottom_Cube_Extended_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top_Cube_Extended_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("One_Cone_Mid_Path_Balance", new One_Cone_Mid_Path_Balance(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Cube_Drive_Forward_Bal", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("One_Cone_Btm_Path_Balance", new One_Cone_Btm_Path_Balance(j_Swerve, intake, elevator, slider));

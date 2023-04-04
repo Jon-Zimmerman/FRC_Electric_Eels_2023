@@ -8,7 +8,7 @@ import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
-import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+//import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import frc.lib.math.Conversions;
@@ -16,7 +16,7 @@ import frc.lib.math.Conversions;
 
 public class SliderIOFalcon implements SliderIO {
   private static final double gearRatio = Constants.SliderSubsystem.gearRatio;
-  private static final double sensorResolution = (double)Constants.SliderSubsystem.sensorResolution;
+  //private static final double sensorResolution = (double)Constants.SliderSubsystem.sensorResolution;
   private static final double sprocketDiameterInch = Constants.SliderSubsystem.sprocketDiameterInch;
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
 
