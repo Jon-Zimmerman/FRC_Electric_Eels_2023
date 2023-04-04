@@ -4,7 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder; //or sparkmaxrelativeencoder?
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
+//import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.RobotController;
@@ -17,8 +17,8 @@ public class ElevatorIOSparkMax implements ElevatorIO {
   private final SparkMaxPIDController elevatorPidController;
   private static final double gearRatio = Constants.ElevatorSubsystem.gearRatio;
   private static final double sprocketDiameterInch = Constants.ElevatorSubsystem.sprocketDiameterInch;
-  private static final double elevatorSoftLimitUpper = Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch;
-  private static final double elevatorSoftLimitLower = Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch;
+  //private static final double elevatorSoftLimitUpper = Constants.ElevatorSubsystem.elevatorSoftLimitUpperInch;
+  //private static final double elevatorSoftLimitLower = Constants.ElevatorSubsystem.elevatorSoftLimitLowerInch;
   private static final double sprocketCircumferenceInch = sprocketDiameterInch * Math.PI;
 
   public double positionElevatorSetPointInch = 0.0;

@@ -41,7 +41,7 @@ import frc.robot.subsystems.slider.Slider;
 import frc.robot.subsystems.slider.SliderIO;
 import frc.robot.subsystems.slider.SliderIOSim;
 import frc.robot.subsystems.slider.SliderIOSparkMax;
-import frc.robot.subsystems.slider.SliderIOFalcon;
+//import frc.robot.subsystems.slider.SliderIOFalcon;
 
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOSim;
