@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -222,13 +223,14 @@ public class RobotContainer {
         break;
     }
 
-    autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
+    //autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
+    autoChooser.addDefaultOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Top_Cube_Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Bottom_Cube_Extended_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Top_Cube_Extended_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
+    //autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
     //autoChooser.addOption("One_Cone_Mid_Path_Balance", new One_Cone_Mid_Path_Balance(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Cube_Drive_Forward_Bal", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("One_Cone_Btm_Path_Balance", new One_Cone_Btm_Path_Balance(j_Swerve, intake, elevator, slider));
