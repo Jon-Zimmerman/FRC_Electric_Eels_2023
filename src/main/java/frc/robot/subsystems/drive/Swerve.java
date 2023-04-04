@@ -81,19 +81,19 @@ public class Swerve extends SubsystemBase {
 
         SwerveModuleState[] swerveModuleStates;
         double lockToHeadingPScalar = 0.3;
-        double translationScalar = 0.5;
+        double translationScalar = 0.44;
         double degreeThreshold = 15.0;
         if (lockToHeading && Constants.enableLockToHeading) { // lock robot to a specific heading so that you can successfully place game objects
-            double error = 0.0;
-            if ((Math.abs(gyroInputs.yawDegrees % 360.0)) < degreeThreshold) {
-                error = 0.0 - (gyroInputs.yawDegrees % 360.0);
-            } else if ((gyroInputs.yawDegrees % 360.0) > (180.0 - degreeThreshold)) {
-                error = 180.0 - (gyroInputs.yawDegrees % 360.0);
-            } else if ((gyroInputs.yawDegrees % 360.0) < (-180.0 + degreeThreshold)) {
-                error = -180.0 - (gyroInputs.yawDegrees % 360.0);
-            }
+            // double error = 0.0;
+            // if ((Math.abs(gyroInputs.yawDegrees % 360.0)) < degreeThreshold) {
+            //     error = 0.0 - (gyroInputs.yawDegrees % 360.0);
+            // } else if ((gyroInputs.yawDegrees % 360.0) > (180.0 - degreeThreshold)) {
+            //     error = 180.0 - (gyroInputs.yawDegrees % 360.0);
+            // } else if ((gyroInputs.yawDegrees % 360.0) < (-180.0 + degreeThreshold)) {
+            //     error = -180.0 - (gyroInputs.yawDegrees % 360.0);
+            // }
 
-            double rotationtest = error / degreeThreshold * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
+            // double rotationtest = error / degreeThreshold * lockToHeadingPScalar * Constants.Swerve.maxAngularVelocity;
            rotation = rotation*translationScalar;
             translation = translation.times(translationScalar);
             //SmartDashboard.putNumber("gyroyaw", gyroInputs.yawDegrees);
