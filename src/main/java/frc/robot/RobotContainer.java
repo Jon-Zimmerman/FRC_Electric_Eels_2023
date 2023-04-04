@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.autos.Bottom_Cube_Extended_Cube;
@@ -20,6 +21,7 @@ import frc.robot.autos.Top_Cube_Travel;
 
 
 import frc.robot.autos.Mid_Cube_Balance;
+import frc.robot.autos.Test_Odometry;
 import frc.robot.autos.Top_Cube_Extended_Cube;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
@@ -134,8 +136,10 @@ public class RobotContainer {
     switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
       case REAL:
+      Timer.delay(1.0);
         // drive = new Drive(new DriveIOSparkMax());
         if (Constants.enableLimelight) {
+          
           j_Swerve = new Swerve(
               new LimelightIONetwork(),
               new GyroIONavx(),
@@ -224,6 +228,7 @@ public class RobotContainer {
     autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Bottom_Cube_Extended_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Top_Cube_Extended_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
     //autoChooser.addOption("One_Cone_Mid_Path_Balance", new One_Cone_Mid_Path_Balance(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Cube_Drive_Forward_Bal", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("One_Cone_Btm_Path_Balance", new One_Cone_Btm_Path_Balance(j_Swerve, intake, elevator, slider));
