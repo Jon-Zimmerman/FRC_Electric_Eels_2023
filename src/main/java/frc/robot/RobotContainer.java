@@ -224,7 +224,7 @@ public class RobotContainer {
     }
 
     //autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addDefaultOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
+    autoChooser.addDefaultOption("Test odometry", new Test_Odometry(j_Swerve));
     autoChooser.addOption("Top_Cube_Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
