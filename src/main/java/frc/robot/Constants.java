@@ -246,14 +246,14 @@ public final class Constants {
 
         public static final int maxCurrentAmps = 30;
 
-        public static final double maxAngularVelocityRPM = 800.0;
-        public static final double maxAngularAccRPMPerSec = 1000.0;
+        public static final double maxAngularVelocityRPM = 1200.0;
+        public static final double maxAngularAccRPMPerSec = 1500.0;
         public static final double minOutputVelocityRPM = 20.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 1.4*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 45.0;
-        public static final double maxLinearAccelerationInchPerSec = 45.0;
+        public static final double maxLinearVelocityInchPerSec = 60;
+        public static final double maxLinearAccelerationInchPerSec = 70;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
