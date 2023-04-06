@@ -41,7 +41,7 @@ public final class Constants {
         /* Drivetrain Constants */
         public static final double trackWidth = Units.inchesToMeters(19);
         public static final double wheelBase = Units.inchesToMeters(28.875);
-        public static final double wheelCircumference = chosenModule.wheelCircumference *(Units.inchesToMeters(104.25)/4.0);
+        public static final double wheelCircumference = chosenModule.wheelCircumference *(Units.inchesToMeters(104.25)/4.0)*0.86;
 
         /*
          * Swerve Kinematics
@@ -162,7 +162,7 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 1.0;
+        public static final double kMaxSpeedMetersPerSecond = 0.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
         public static final double kMaxAngularSpeedRadiansPerSecond = 0.1*Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;

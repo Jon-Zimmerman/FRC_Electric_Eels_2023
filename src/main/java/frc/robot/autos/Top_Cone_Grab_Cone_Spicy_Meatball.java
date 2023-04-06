@@ -42,11 +42,11 @@ public class Top_Cone_Grab_Cone_Spicy_Meatball extends SequentialCommandGroup {
             // place first Cube
         new InstantCommand(() -> intake.setIntakeModeCone()),
         s_Swerve.swerveAutoBuilder.resetPose(SpicyMB_Drive_To_Top_Cone.get(0)),
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
-        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.5), //make time based
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
+        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
+        //new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
+        //new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.5), //make time based
+        //new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
+        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
         SpicyMBDriveToTopConeCommand,
 
         // pickup second cone
@@ -56,12 +56,12 @@ public class Top_Cone_Grab_Cone_Spicy_Meatball extends SequentialCommandGroup {
         new InstantCommand(() ->  intake.holdCurrent()),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,0.5,slider).withTimeout(1.0),
 
-        SpicyMBDriveToGridCommand,
+        SpicyMBDriveToGridCommand
 
 
         //extend elevator
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0)
+        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
+        //new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0)
 
 
         // ready for teleop

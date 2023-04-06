@@ -89,8 +89,8 @@ public class RobotContainer {
   private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton elevatorBottom = new JoystickButton(driver2, XboxController.Button.kA.value);
-  private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
-  private final JoystickButton elevatorAltLoading = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kX.value);
+  //private final JoystickButton elevatorAltLoading = new JoystickButton(driver2, XboxController.Button.kX.value);
   private final JoystickButton elevatorLoading = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton elevatorTop = new JoystickButton(driver2, XboxController.Button.kY.value);
 
@@ -269,8 +269,8 @@ public class RobotContainer {
 
     elevatorBottom.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom, allowableElevatorTeleopInch, elevator));
-    elevatorAltLoading.onTrue(
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosAltLoading, allowableElevatorTeleopInch, elevator));
+    //elevatorAltLoading.onTrue(
+        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosAltLoading, allowableElevatorTeleopInch, elevator));
     elevatorMid.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid, allowableElevatorTeleopInch, elevator));
     elevatorLoading.onTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,
