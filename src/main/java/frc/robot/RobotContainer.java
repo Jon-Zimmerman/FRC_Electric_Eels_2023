@@ -15,15 +15,17 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+
+import frc.robot.autos.Test_Odometry;
+import frc.robot.autos.Top_Cube_Travel;
+import frc.robot.autos.Top_Cube_Extended_Cube;
+import frc.robot.autos.Top_Cone_Grab_Cone_Spicy_Meatball;
+
+import frc.robot.autos.Mid_Cube_Balance;
+
 import frc.robot.autos.Bottom_Cube_Extended_Cube;
 import frc.robot.autos.Bottom_Cube_Travel;
 
-import frc.robot.autos.Top_Cube_Travel;
-
-
-import frc.robot.autos.Mid_Cube_Balance;
-import frc.robot.autos.Test_Odometry;
-import frc.robot.autos.Top_Cube_Extended_Cube;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -87,11 +89,12 @@ public class RobotContainer {
   private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
   private final JoystickButton elevatorBottom = new JoystickButton(driver2, XboxController.Button.kA.value);
-  private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kX.value);
+  private final JoystickButton elevatorMid = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
+  private final JoystickButton elevatorAltLoading = new JoystickButton(driver2, XboxController.Button.kX.value);
   private final JoystickButton elevatorLoading = new JoystickButton(driver2, XboxController.Button.kB.value);
   private final JoystickButton elevatorTop = new JoystickButton(driver2, XboxController.Button.kY.value);
 
-  //DPad
+  // DPad
   private final POVButton sliderIn = new POVButton(driver2, 180);
   private final POVButton sliderOut = new POVButton(driver2, 0);
 
@@ -101,12 +104,12 @@ public class RobotContainer {
   // private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   // private final JoystickButton lockToHeading = new JoystickButton(driver,
-  //     XboxController.Button.kA.value);
+  // XboxController.Button.kA.value);
 
   // private final JoystickButton zeroGyro = new JoystickButton(driver,
-  //     XboxController.Button.kY.value);
+  // XboxController.Button.kY.value);
   // private final JoystickButton calibrate = new JoystickButton(driver,
-  //     XboxController.Button.kRightBumper.value);
+  // XboxController.Button.kRightBumper.value);
   // probably remove robotcentric
 
   // private final JoystickButton autoFocus = new JoystickButton(driver,
@@ -121,9 +124,9 @@ public class RobotContainer {
   private final JoystickButton calibrate = new JoystickButton(driver, 12);
 
   private final JoystickButton zeroGyro = new JoystickButton(driver, 8);
-  //private final JoystickButton robotCentric = new JoystickButton(driver, 7);
+  // private final JoystickButton robotCentric = new JoystickButton(driver, 7);
   private final JoystickButton lockToHeading = new JoystickButton(driver,
-  1);
+      1);
 
   // Subsystems
 
@@ -137,10 +140,10 @@ public class RobotContainer {
     switch (Constants.getMode()) {
       // Real robot, instantiate hardware IO implementations
       case REAL:
-      Timer.delay(1.0);
+        Timer.delay(1.0);
         // drive = new Drive(new DriveIOSparkMax());
         if (Constants.enableLimelight) {
-          
+
           j_Swerve = new Swerve(
               new LimelightIONetwork(),
               new GyroIONavx(),
@@ -223,23 +226,19 @@ public class RobotContainer {
         break;
     }
 
-    //autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addDefaultOption("Test odometry", new Test_Odometry(j_Swerve));
-    autoChooser.addOption("Top_Cube_Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Bottom_Cube_Extended_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Top_Cube_Extended_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
-    //autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
-    //autoChooser.addOption("One_Cone_Mid_Path_Balance", new One_Cone_Mid_Path_Balance(j_Swerve, intake, elevator, slider));
-    //autoChooser.addOption("Cube_Drive_Forward_Bal", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
-    //autoChooser.addOption("One_Cone_Btm_Path_Balance", new One_Cone_Btm_Path_Balance(j_Swerve, intake, elevator, slider));
-    //autoChooser.addOption("Balance_Only (Testing Mode)", new Balance_Only(j_Swerve));
+    autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
+    autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
 
-     //SmartDashboard.putData("Auto Routine", autoChooser);
+    autoChooser.addOption("Top_Cube_Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
+
+    autoChooser.addOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
+
+    autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Bottom_Cube_Ext_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
 
     // Configure the button bindings
-
     configureButtonBindings();
   }
 
@@ -270,6 +269,8 @@ public class RobotContainer {
 
     elevatorBottom.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom, allowableElevatorTeleopInch, elevator));
+    elevatorAltLoading.onTrue(
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosAltLoading, allowableElevatorTeleopInch, elevator));
     elevatorMid.onTrue(
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosMid, allowableElevatorTeleopInch, elevator));
     elevatorLoading.onTrue(new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosLoading,

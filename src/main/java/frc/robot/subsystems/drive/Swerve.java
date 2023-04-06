@@ -80,9 +80,9 @@ public class Swerve extends SubsystemBase {
         // SmartDashboard.putNumber("maxspeed",Constants.Swerve.maxSpeed);
 
         SwerveModuleState[] swerveModuleStates;
-        double lockToHeadingPScalar = 0.3;
+        //double lockToHeadingPScalar = 0.3;
         double translationScalar = 0.44;
-        double degreeThreshold = 15.0;
+        //double degreeThreshold = 15.0;
         if (lockToHeading && Constants.enableLockToHeading) { // lock robot to a specific heading so that you can successfully place game objects
             // double error = 0.0;
             // if ((Math.abs(gyroInputs.yawDegrees % 360.0)) < degreeThreshold) {
