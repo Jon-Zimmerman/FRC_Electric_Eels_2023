@@ -227,16 +227,16 @@ public class RobotContainer {
     }
 
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
-    autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
+    //autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
 
-    autoChooser.addOption("Top_Cube_Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top: Cube & Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
 
-    autoChooser.addOption("Mid_Cube_Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Middle: Cube & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
 
-    autoChooser.addOption("Bottom_Cube_Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Bottom_Cube_Ext_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Bottom: Cube & Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("Bottom_Cube_Ext_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
 
     // Configure the button bindings
     configureButtonBindings();
