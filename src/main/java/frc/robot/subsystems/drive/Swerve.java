@@ -81,7 +81,7 @@ public class Swerve extends SubsystemBase {
 
         SwerveModuleState[] swerveModuleStates;
         //double lockToHeadingPScalar = 0.3;
-        double translationScalar = 0.44;
+        double translationScalar = 0.20;
         //double degreeThreshold = 15.0;
         if (lockToHeading && Constants.enableLockToHeading) { // lock robot to a specific heading so that you can successfully place game objects
             // double error = 0.0;

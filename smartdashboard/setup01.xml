@@ -4,7 +4,7 @@
 		<location x="66" y="122"/>
 	</widget>
 	<widget field="LocktoHeadingRotation" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="385" y="181"/>
+		<location x="158" y="221"/>
 	</widget>
 	<widget field="LocktoHeadingError" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="2" y="100"/>
@@ -49,7 +49,7 @@
 		<location x="182" y="28"/>
 	</widget>
 	<widget field="Auto Selector" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
-		<location x="432" y="148"/>
+		<location x="204" y="192"/>
 	</widget>
 	<widget field="Auto Choices" type="String Chooser" class="edu.wpi.first.smartdashboard.gui.elements.Chooser">
 		<location x="446" y="6"/>
@@ -57,4 +57,5 @@
 </dashboard>
 <live-window>
 </live-window>
+	<hidden field="Alerts"/>
 </xml>

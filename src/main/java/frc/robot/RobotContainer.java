@@ -231,7 +231,7 @@ public class RobotContainer {
 
     autoChooser.addOption("Top: Cube & Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
-    //autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
 
     autoChooser.addOption("Middle: Cube & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
 

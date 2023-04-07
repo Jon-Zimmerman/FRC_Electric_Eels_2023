@@ -162,7 +162,7 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 0.5;
+        public static final double kMaxSpeedMetersPerSecond = 1.8;
         public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
         public static final double kMaxAngularSpeedRadiansPerSecond = 0.1*Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;
@@ -214,10 +214,10 @@ public final class Constants {
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
         public static final double elevatorPosBottom = 0.0;
-        public static final double elevatorPosMid = 15.0;
+        public static final double elevatorPosMid = 17.2;
         public static final double elevatorPosAltLoading = 22.0;
         public static final double elevatorPosLoading = 23.0;
-        public static final double elevatorPosTop = 24.1;
+        public static final double elevatorPosTop = 24.2;
         public static final double elevatorSoftLimitUpperInch = 25.25;
 
         public static final double simCarriageWeightKg = 9.0; // ~20 lbs
