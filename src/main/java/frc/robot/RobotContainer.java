@@ -25,7 +25,7 @@ import frc.robot.autos.Mid_Cube_Balance;
 
 import frc.robot.autos.Bottom_Cube_Extended_Cube;
 import frc.robot.autos.Bottom_Cube_Travel;
-
+import frc.robot.autos.Cone_Speedy_Meatball;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -232,7 +232,7 @@ public class RobotContainer {
     autoChooser.addOption("Top: Cube & Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
-
+    autoChooser.addOption("Top: Cone & Speedy Meatball", new Cone_Speedy_Meatball(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Middle: Cube & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
 
     autoChooser.addOption("Bottom: Cube & Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));

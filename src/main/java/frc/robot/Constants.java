@@ -305,7 +305,7 @@ public final class Constants {
         public static final double holdCubeVoltage = 4.0;
         public static final double holdConeVoltage = -3.2;
 
-        public static final double intakeInCubeVoltage = 6.0;
+        public static final double intakeInCubeVoltage = 8.0;
         public static final double intakeOutCubeVoltage = -5.0;
         
         public static final double intakeInConeVoltage = -7.0;
