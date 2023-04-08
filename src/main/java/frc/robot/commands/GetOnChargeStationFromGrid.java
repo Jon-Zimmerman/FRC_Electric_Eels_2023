@@ -18,17 +18,17 @@ public class GetOnChargeStationFromGrid extends CommandBase {
 
   private double roll;
 
-  private final double stopThresholdDegrees = 6.0;
+  private final double stopThresholdDegrees =5.0;
   //private final double initialTriggerDegrees = 9.0;
   //private final double approachTimeLimit = 4.0;
-  private final double balancingTimeLimit = 10.0;
+  private final double balancingTimeLimit = 8.0;
 
   //private final double invertDirectionScalar = -1.0;
   private final Translation2d stop = new Translation2d(0.0, 0.0);
   // private final Translation2d approachTranslation = new Translation2d(-1.0 *
   // invertDirectionScalar, 0); // meters per
   // second;
-  private final Translation2d balancingTranslation = new Translation2d(0.6, 0); // meters per
+  private final Translation2d balancingTranslation = new Translation2d(0.1, 0); // meters per
                                                                                  // second;
 
   public GetOnChargeStationFromGrid(Swerve swerve) {
@@ -66,13 +66,13 @@ public class GetOnChargeStationFromGrid extends CommandBase {
 
       if (!balanced) {
 
-        if (roll > stopThresholdDegrees) {
-          m_swerve.drive(balancingTranslation, 0.0, false, true);
-        } else if (roll < -stopThresholdDegrees) {
-          m_swerve.drive(balancingTranslation.times(-1.0), 0.0, false, true);
+        if (roll > stopThresholdDegrees ) {  //|| true
+          m_swerve.drive(balancingTranslation.times(-1.0), 0.0, false, false);
+        } else if (roll < -stopThresholdDegrees ) {
+          m_swerve.drive(balancingTranslation, 0.0, false, false);
         } else {
           balanced = true;
-          m_swerve.drive(stop, 0.0, false, true);
+          m_swerve.drive(stop, 0.0, false, false);
         }
       }
       if ((roll > stopThresholdDegrees) && (roll < -stopThresholdDegrees)) {

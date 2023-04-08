@@ -42,15 +42,15 @@ public class Mid_Cube_Balance extends SequentialCommandGroup {
         //s_Swerve.resetPose(
         
         addCommands(
-        //new InstantCommand(() -> intake.setIntakeModeCube()),
+        new InstantCommand(() -> intake.setIntakeModeCone()),
         s_Swerve.swerveAutoBuilder.resetPose(backOffPath.get(0)),
-        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
-        //new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
-        //new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.75), //make time based
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.75), //make time based
         backOffGridCommand,
-        //new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
         ////followMidPath,   
-        //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
         balanceCommand,
         new GetOnChargeStationFromGrid(s_Swerve)
         );
