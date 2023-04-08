@@ -30,7 +30,8 @@ public final class Constants {
     public static final double rotationStickDeadband = 0.08;
 
     public static final class Swerve {
-        
+        public static final int pigeonID = 15;
+        public static final boolean pigeonMode = true;
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
         public static final boolean teleopIsOpenLoop = false;
         public static final boolean fieldRelative = true; //note changing to false will not change operation mode
@@ -162,8 +163,8 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 1.8;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
+        public static final double kMaxSpeedMetersPerSecond = 2.5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 1.8;
         public static final double kMaxAngularSpeedRadiansPerSecond = 0.1*Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;
 

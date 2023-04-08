@@ -6,6 +6,7 @@ package frc.robot.subsystems.drive;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.math.Conversions;
 import frc.lib.util.CTREModuleState;
@@ -125,6 +126,7 @@ public class ModuleIOFalcon implements ModuleIO {
     public void resetToAbsolute() {
         double absolutePosition = Conversions.degreesToFalcon(getCancoder() - angleOffset.getDegrees(),
                 Constants.Swerve.angleGearRatio);
+        Timer.delay(0.25);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);
     }
 
@@ -138,6 +140,8 @@ public class ModuleIOFalcon implements ModuleIO {
         mAngleMotor.configAllSettings(Robot.ctreConfigs.swerveAngleFXConfig);
         mAngleMotor.setInverted(Constants.Swerve.angleMotorInvert);
         mAngleMotor.setNeutralMode(Constants.Swerve.angleNeutralMode);
+        resetToAbsolute();
+        Timer.delay(1.5);
         resetToAbsolute();
     }
 
