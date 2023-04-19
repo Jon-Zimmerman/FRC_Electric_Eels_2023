@@ -18,7 +18,7 @@ public class GetOnChargeStationFromGrid extends CommandBase {
 
   private double roll;
 
-  private final double stopThresholdDegrees =5.0;
+  private final double stopThresholdDegrees =9.0;
   //private final double initialTriggerDegrees = 9.0;
   //private final double approachTimeLimit = 4.0;
   private final double balancingTimeLimit = 8.0;
@@ -75,7 +75,7 @@ public class GetOnChargeStationFromGrid extends CommandBase {
           m_swerve.drive(stop, 0.0, false, false);
         }
       }
-      if ((roll > stopThresholdDegrees) && (roll < -stopThresholdDegrees)) {
+      if ((roll > stopThresholdDegrees) || (roll < -stopThresholdDegrees)) {
         balanced = false;
       }
 
