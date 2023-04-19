@@ -28,7 +28,7 @@ public class GetOnChargeStationFromGrid extends CommandBase {
   // private final Translation2d approachTranslation = new Translation2d(-1.0 *
   // invertDirectionScalar, 0); // meters per
   // second;
-  private final Translation2d balancingTranslation = new Translation2d(0.1, 0); // meters per
+  private final Translation2d balancingTranslation = new Translation2d(0.25, 0); // meters per
                                                                                  // second;
 
   public GetOnChargeStationFromGrid(Swerve swerve) {
@@ -75,9 +75,9 @@ public class GetOnChargeStationFromGrid extends CommandBase {
           m_swerve.drive(stop, 0.0, false, false);
         }
       }
-      if ((roll > stopThresholdDegrees) || (roll < -stopThresholdDegrees)) {
-        balanced = false;
-      }
+      // if ((roll > stopThresholdDegrees) || (roll < -stopThresholdDegrees)) {
+      //   balanced = false;
+      // }
 
     }
 

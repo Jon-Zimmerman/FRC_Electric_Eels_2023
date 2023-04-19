@@ -163,9 +163,9 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 2.5;
+        public static final double kMaxSpeedMetersPerSecond = 4;
         public static final double kMaxAccelerationMetersPerSecondSquared = 1.8;
-        public static final double kMaxAngularSpeedRadiansPerSecond = 0.1*Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 0.5*Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;
 
         public static final PIDConstants translationPIDConstants = new PIDConstants(0.1, 0.0, 0.0);
