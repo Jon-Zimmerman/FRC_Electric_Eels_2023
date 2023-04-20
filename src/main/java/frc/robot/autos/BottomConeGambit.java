@@ -62,11 +62,11 @@ public class BottomConeGambit extends SequentialCommandGroup {
         // turn around
         Path03Command,
         //extend elevator
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,27.0,elevator).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,1,slider).withTimeout(3.0),
         //place second cube on mid
         Path04Command, // dont forget commas
-        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.5), //make time based
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.4), //make time based
         new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0)
         //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0)
         // ready for teleop

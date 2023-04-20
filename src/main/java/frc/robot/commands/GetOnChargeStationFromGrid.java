@@ -2,7 +2,7 @@ package frc.robot.commands;
 
 //import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
+import frc.robot.Constants;
 import frc.robot.subsystems.drive.Swerve;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
@@ -28,7 +28,8 @@ public class GetOnChargeStationFromGrid extends CommandBase {
   // private final Translation2d approachTranslation = new Translation2d(-1.0 *
   // invertDirectionScalar, 0); // meters per
   // second;
-  private final Translation2d balancingTranslation = new Translation2d(0.25, 0); // meters per
+  private final Translation2d balancingTranslation = 
+  new Translation2d(Constants.AutoConstants.BalanceSpeed, 0); // meters per
                                                                                  // second;
 
   public GetOnChargeStationFromGrid(Swerve swerve) {
