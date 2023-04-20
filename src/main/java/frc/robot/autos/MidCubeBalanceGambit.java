@@ -28,13 +28,13 @@ import frc.robot.subsystems.elevator.Elevator;
 
 import frc.robot.subsystems.slider.Slider;
 
-public class Mid_Cube_Out_Balance extends SequentialCommandGroup {
+public class MidCubeBalanceGambit extends SequentialCommandGroup {
     List<PathPlannerTrajectory> backOffPath = PathPlanner.loadPathGroup("Middle out and back", new PathConstraints(1.5, 2));
     //List<PathPlannerTrajectory> balancePath= PathPlanner.loadPathGroup("Optimal_Balance", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     final Command OutAndBackPathCommand;
     public final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
-    public Mid_Cube_Out_Balance(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
+    public MidCubeBalanceGambit(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
    
         OutAndBackPathCommand = s_Swerve.swerveAutoBuilder.fullAuto (backOffPath);
         //balanceCommand = s_Swerve.swerveAutoBuilder.fullAuto (balancePath);

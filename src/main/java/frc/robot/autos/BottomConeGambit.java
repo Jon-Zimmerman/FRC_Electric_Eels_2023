@@ -23,7 +23,7 @@ import frc.robot.subsystems.elevator.Elevator;
 
 import frc.robot.subsystems.slider.Slider;
 
-public class Bottom_Cube_Extended_Cube extends SequentialCommandGroup {
+public class BottomConeGambit extends SequentialCommandGroup {
     List<PathPlannerTrajectory> Path01= PathPlanner.loadPathGroup("Bottom_Ext_01", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     List<PathPlannerTrajectory> Path02= PathPlanner.loadPathGroup("Bottom_Extended_02", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     List<PathPlannerTrajectory> Path03= PathPlanner.loadPathGroup("Bottom_Extended_03", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
@@ -31,7 +31,7 @@ public class Bottom_Cube_Extended_Cube extends SequentialCommandGroup {
 
     final Command Path01Command,Path02Command,Path03Command,Path04Command;
 
-    public Bottom_Cube_Extended_Cube(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
+    public BottomConeGambit(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
         Path01Command = s_Swerve.swerveAutoBuilder.fullAuto (Path01);
         Path02Command = s_Swerve.swerveAutoBuilder.fullAuto (Path02);
         Path03Command = s_Swerve.swerveAutoBuilder.fullAuto (Path03);

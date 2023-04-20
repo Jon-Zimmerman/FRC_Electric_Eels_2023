@@ -23,7 +23,7 @@ import frc.robot.subsystems.elevator.Elevator;
 
 import frc.robot.subsystems.slider.Slider;
 
-public class Cone_Speedy_Meatball extends SequentialCommandGroup {
+public class TopConeGambit extends SequentialCommandGroup {
     List<PathPlannerTrajectory> SpicyMB_Drive_To_Top_Cube= PathPlanner.loadPathGroup("Speedy Meatball Step 1", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     List<PathPlannerTrajectory> SpicyMB_Pickup_Cube= PathPlanner.loadPathGroup("Speedy Meatball Step 2", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     List<PathPlannerTrajectory> SpicyMB_Drive_To_Grid= PathPlanner.loadPathGroup("Speedy Meatball Step 3", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
@@ -32,7 +32,7 @@ public class Cone_Speedy_Meatball extends SequentialCommandGroup {
 
     final Command DriveToTopCubeCommand,PickupCubeCommand,DriveToGridCommand, PlaceCubeCommand;
 
-    public Cone_Speedy_Meatball(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
+    public TopConeGambit(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
         DriveToTopCubeCommand = s_Swerve.swerveAutoBuilder.fullAuto (SpicyMB_Drive_To_Top_Cube);
         PickupCubeCommand = s_Swerve.swerveAutoBuilder.fullAuto (SpicyMB_Pickup_Cube);
         DriveToGridCommand = s_Swerve.swerveAutoBuilder.fullAuto (SpicyMB_Drive_To_Grid);
