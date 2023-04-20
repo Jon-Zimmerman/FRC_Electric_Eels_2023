@@ -163,10 +163,10 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
 
-        public static final double kMaxSpeedMetersPerSecond = 4;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.8;
-        public static final double kMaxAngularSpeedRadiansPerSecond = 0.5*Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;
+        public static final double kMaxSpeedMetersPerSecond = 3.5;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 4;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 1*Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 1*Math.PI;
 
         public static final PIDConstants translationPIDConstants = new PIDConstants(0.1, 0.0, 0.0);
         public static final PIDConstants rotationPIDConstants = new PIDConstants(0.7, 0.0, 0.0);
@@ -209,8 +209,8 @@ public final class Constants {
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 28.0;
-        public static final double maxLinearAccelerationInchPerSec = 28.0;
+        public static final double maxLinearVelocityInchPerSec = 50;
+        public static final double maxLinearAccelerationInchPerSec = 50;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;

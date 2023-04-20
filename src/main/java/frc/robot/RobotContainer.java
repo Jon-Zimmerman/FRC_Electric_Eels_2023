@@ -22,7 +22,7 @@ import frc.robot.autos.Top_Cube_Extended_Cube;
 import frc.robot.autos.Top_Cone_Grab_Cone_Spicy_Meatball;
 
 import frc.robot.autos.Mid_Cube_Balance;
-
+import frc.robot.autos.Mid_Cube_Out_Balance;
 import frc.robot.autos.Bottom_Cube_Extended_Cube;
 import frc.robot.autos.Bottom_Cube_Travel;
 import frc.robot.autos.Cone_Speedy_Meatball;
@@ -234,9 +234,9 @@ public class RobotContainer {
     //autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Top: THE GAMBIT! Cone, then Cube and return", new Cone_Speedy_Meatball(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Middle: Cone & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
-    
-    autoChooser.addOption("Bottom: Cube & Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Middle: 'Safe' Cone & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Middle: THE GAMBIT! Cube & Out & Balance", new Mid_Cube_Out_Balance(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Bottom: Safe Cube & Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
     autoChooser.addOption("Bottom: THE GAMBIT! Cone, then Cube and return", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
 
     // Configure the button bindings

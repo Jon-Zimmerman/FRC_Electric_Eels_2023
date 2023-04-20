@@ -29,7 +29,7 @@ import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.slider.Slider;
 
 public class Mid_Cube_Out_Balance extends SequentialCommandGroup {
-    List<PathPlannerTrajectory> backOffPath = PathPlanner.loadPathGroup("Middle out and back", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    List<PathPlannerTrajectory> backOffPath = PathPlanner.loadPathGroup("Middle out and back", new PathConstraints(1.5, 2));
     //List<PathPlannerTrajectory> balancePath= PathPlanner.loadPathGroup("Optimal_Balance", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
     final Command OutAndBackPathCommand;
@@ -42,7 +42,7 @@ public class Mid_Cube_Out_Balance extends SequentialCommandGroup {
         
         addCommands(
         new InstantCommand(() -> intake.setIntakeModeCube()),
-        new InstantCommand(() ->  intake.holdCurrent()),
+        //new InstantCommand(() ->  intake.holdCurrent()),
         s_Swerve.swerveAutoBuilder.resetPose(backOffPath.get(0)),
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),

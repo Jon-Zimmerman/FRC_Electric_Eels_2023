@@ -50,11 +50,12 @@ public class Bottom_Cube_Extended_Cube extends SequentialCommandGroup {
         new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
         Path01Command,
-
+        new InstantCommand(() -> intake.setIntakeModeCube()),
         // pickup cube
+        new InstantCommand(() ->  intake.intakeIn()),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
 
-        new InstantCommand(() ->  intake.intakeIn()), //make time based
+         //make time based
         Path02Command, // start the second path so that we move and run intake
         new InstantCommand(() ->  intake.holdCurrent()),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
@@ -64,7 +65,7 @@ public class Bottom_Cube_Extended_Cube extends SequentialCommandGroup {
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
         //place second cube on mid
-        Path04Command,
+        Path04Command, // dont forget commas
         new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.5), //make time based
         new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0)
         //new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0)
