@@ -44,11 +44,11 @@ public class TopConeGambit extends SequentialCommandGroup {
         new InstantCommand(() -> intake.setIntakeModeCone()),
         s_Swerve.swerveAutoBuilder.resetPose(SpicyMB_Drive_To_Top_Cube.get(0)),
         new InstantCommand(() ->  intake.intakeIn()), // keep cone in
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,7.0,elevator).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,15.0,elevator).withTimeout(3.0),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,1.5,slider).withTimeout(3.0),
         new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.3), //make time based
         new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,10.0,slider).withTimeout(3.0),
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,15.0,elevator).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,50.0,elevator).withTimeout(3.0),
         ////Drive to Cube
         DriveToTopCubeCommand,
 
@@ -65,11 +65,11 @@ public class TopConeGambit extends SequentialCommandGroup {
 
 
         //extend elevator
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
-        PlaceCubeCommand,
-        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.3),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,0.5,slider).withTimeout(3.0)
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,60.0,elevator).withTimeout(3.0),
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,7,slider).withTimeout(3.0),
+        PlaceCubeCommand
+        //new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.3),
+        //new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,0.5,slider).withTimeout(3.0)
 
         // ready for teleop
         );
