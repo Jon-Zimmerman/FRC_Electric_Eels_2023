@@ -163,7 +163,7 @@ public final class Constants {
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
         public static final double BalanceSpeed=0.75; //m/s
-        public static final double kMaxSpeedMetersPerSecond = 3.5;
+        public static final double kMaxSpeedMetersPerSecond = 4;
         public static final double kMaxAccelerationMetersPerSecondSquared = 4;
         public static final double kMaxAngularSpeedRadiansPerSecond = 1*Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = 1*Math.PI;
