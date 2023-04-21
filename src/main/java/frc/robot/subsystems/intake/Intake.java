@@ -121,6 +121,10 @@ public class Intake extends SubsystemBase {
       io.setLEDsPurple();
     }
   }
+
+  public void fixLights(){
+    io.fixLights(ConeMode);
+  }
   public void setIntakeModeCone(){
     ConeMode = true;
     io.setLEDsYellow();

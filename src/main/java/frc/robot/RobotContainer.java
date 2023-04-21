@@ -86,6 +86,7 @@ public class RobotContainer {
 
   private final Joystick driver2 = new Joystick(1);
   private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
+  private final JoystickButton lightsReset = new JoystickButton(driver2, 8);
   private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
   private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
@@ -264,6 +265,7 @@ public class RobotContainer {
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));
 
     flipIntakeMode.onTrue(new InstantCommand(() -> intake.flipIntakeMode()));
+    lightsReset.onTrue(new InstantCommand(() -> intake.fixLights()));
 
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));

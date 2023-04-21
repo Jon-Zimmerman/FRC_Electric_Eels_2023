@@ -38,6 +38,9 @@ public interface IntakeIO {
   public default void setLEDsYellow() {
   }
 
+  public default void fixLights(boolean ConeMode) {
+  }
+
   public default void configurePID(double kP, double kI, double kD) {
   }
 
