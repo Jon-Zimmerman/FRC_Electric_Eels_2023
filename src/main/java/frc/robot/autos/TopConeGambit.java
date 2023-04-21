@@ -52,7 +52,7 @@ public class TopConeGambit extends SequentialCommandGroup {
         ////Drive to Cube
         DriveToTopCubeCommand,
 
-        new InstantCommand(() -> intake.setIntakeModeCube()),
+        new InstantCommand(() -> intake.setIntakeModeCone()),
         // pickup cube
         new InstantCommand(() ->  intake.intakeIn()),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,2.0,slider).withTimeout(3.0), 
@@ -63,10 +63,10 @@ public class TopConeGambit extends SequentialCommandGroup {
 
         DriveToGridCommand,
 
-
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,50.0,slider).withTimeout(3.0),
         //extend elevator
-        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,60.0,elevator).withTimeout(3.0),
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,7,slider).withTimeout(3.0),
+        new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,14.0,elevator).withTimeout(3.0),
+
         PlaceCubeCommand
         //new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.3),
         //new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,0.5,slider).withTimeout(3.0)

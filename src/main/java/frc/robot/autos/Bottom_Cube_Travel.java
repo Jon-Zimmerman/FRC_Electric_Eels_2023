@@ -24,7 +24,8 @@ import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.slider.Slider;
 
 public class Bottom_Cube_Travel extends SequentialCommandGroup {
-    List<PathPlannerTrajectory> bottomPath= PathPlanner.loadPathGroup("Bottom_Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    //List<PathPlannerTrajectory> bottomPath= PathPlanner.loadPathGroup("Bottom_Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    List<PathPlannerTrajectory> bottomPath= PathPlanner.loadPathGroup("Bottom_Path_Clear", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     
     final Command followBottomPathCommand;
 

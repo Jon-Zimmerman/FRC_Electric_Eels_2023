@@ -226,7 +226,7 @@ public class RobotContainer {
         });
         break;
     }
-
+    Timer.delay(1.0);
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
     //autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
 
