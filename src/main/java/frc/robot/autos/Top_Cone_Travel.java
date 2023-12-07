@@ -23,12 +23,12 @@ import frc.robot.subsystems.elevator.Elevator;
 
 import frc.robot.subsystems.slider.Slider;
 
-public class Top_Cube_Travel extends SequentialCommandGroup {
+public class Top_Cone_Travel extends SequentialCommandGroup {
     List<PathPlannerTrajectory> topPath= PathPlanner.loadPathGroup("Top_Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     
     final Command followTopPathCommand;
 
-    public Top_Cube_Travel(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
+    public Top_Cone_Travel(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
         followTopPathCommand = s_Swerve.swerveAutoBuilder.fullAuto (topPath);
         
         

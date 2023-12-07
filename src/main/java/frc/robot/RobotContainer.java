@@ -17,15 +17,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 import frc.robot.autos.Test_Odometry;
-import frc.robot.autos.Top_Cube_Travel;
+import frc.robot.autos.Top_Cone_Travel;
 import frc.robot.autos.Top_Cube_Extended_Cube;
 import frc.robot.autos.Top_Cone_Grab_Cone_Spicy_Meatball;
 
 import frc.robot.autos.Mid_Cube_Balance;
-
-import frc.robot.autos.Bottom_Cube_Extended_Cube;
+import frc.robot.autos.MidCubeBalanceGambit;
+import frc.robot.autos.BottomConeGambit;
 import frc.robot.autos.Bottom_Cube_Travel;
-
+import frc.robot.autos.TopConeGambit;
+//import frc.robot.autos.Cone_Speedy_Meatball;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.drive.ModuleIO;
@@ -51,7 +52,7 @@ import frc.robot.subsystems.slider.SliderIOSparkMax;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOSim;
 import frc.robot.subsystems.drive.GyroIONavx;
-
+import frc.robot.subsystems.drive.GyroIOPigeon;
 import frc.robot.subsystems.drive.LimelightIO;
 import frc.robot.subsystems.drive.LimelightIOSim;
 import frc.robot.subsystems.drive.LimelightIONetwork;
@@ -85,6 +86,7 @@ public class RobotContainer {
 
   private final Joystick driver2 = new Joystick(1);
   private final JoystickButton flipIntakeMode = new JoystickButton(driver2, 7);
+  private final JoystickButton lightsReset = new JoystickButton(driver2, 8);
   private final JoystickButton intakeIn = new JoystickButton(driver2, XboxController.Button.kRightBumper.value);
   private final JoystickButton intakeOut = new JoystickButton(driver2, XboxController.Button.kLeftBumper.value);
 
@@ -142,11 +144,11 @@ public class RobotContainer {
       case REAL:
         Timer.delay(1.0);
         // drive = new Drive(new DriveIOSparkMax());
-        if (Constants.enableLimelight) {
+        if (Constants.Swerve.pigeonMode) {
 
           j_Swerve = new Swerve(
-              new LimelightIONetwork(),
-              new GyroIONavx(),
+              new LimelightIOSim(),
+              new GyroIOPigeon(),
               new ModuleIOFalcon(0, Constants.Swerve.Mod0.constants),
               new ModuleIOFalcon(1, Constants.Swerve.Mod1.constants),
               new ModuleIOFalcon(2, Constants.Swerve.Mod2.constants),
@@ -225,18 +227,18 @@ public class RobotContainer {
         });
         break;
     }
-
+    Timer.delay(1.0);
     autoChooser.addDefaultOption("Do Nothing", new InstantCommand());
     //autoChooser.addOption("Test odometry", new Test_Odometry(j_Swerve));
 
-    autoChooser.addOption("Top: Cube & Travel", new Top_Cube_Travel(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top: Safe Cone & Travel", new Top_Cone_Travel(j_Swerve, intake, elevator, slider));
     //autoChooser.addOption("Top_Cube_Grab_Cube", new Top_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
-    autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
-
-    autoChooser.addOption("Middle: Cube & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
-
-    autoChooser.addOption("Bottom: Cube & Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
-    //autoChooser.addOption("Bottom_Cube_Ext_Cube", new Bottom_Cube_Extended_Cube(j_Swerve, intake, elevator, slider));
+    //autoChooser.addOption("Top_Cone_Grab_Cube_Score_SpicyMB", new Top_Cone_Grab_Cone_Spicy_Meatball(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Top: THE GAMBIT! Cone, then Cube and return", new TopConeGambit(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Middle: 'Safe' Cone & Balance", new Mid_Cube_Balance(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Middle: THE GAMBIT! Cube & Out & Balance", new MidCubeBalanceGambit(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Bottom: Safe Cube & Travel", new Bottom_Cube_Travel(j_Swerve, intake, elevator, slider));
+    autoChooser.addOption("Bottom: THE GAMBIT! Cone, then Cube and return", new BottomConeGambit(j_Swerve, intake, elevator, slider));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -263,6 +265,7 @@ public class RobotContainer {
     calibrate.onTrue(new InstantCommand(() -> j_Swerve.calibrateGyro()));
 
     flipIntakeMode.onTrue(new InstantCommand(() -> intake.flipIntakeMode()));
+    lightsReset.onTrue(new InstantCommand(() -> intake.fixLights()));
 
     intakeIn.whileTrue(new StartEndCommand(() -> intake.intakeIn(), () -> intake.holdCurrent(), intake));
     intakeOut.whileTrue(new StartEndCommand(() -> intake.intakeOut(), intake::stop, intake));

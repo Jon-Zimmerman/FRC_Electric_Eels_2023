@@ -56,7 +56,7 @@ public class Swerve extends SubsystemBase {
          * with inverting motors.
          * See https://github.com/Team364/BaseFalconSwerve/issues/8 for more info.
          */
-        Timer.delay(1.0);
+        Timer.delay(2.0);
         resetModulesToAbsolute();
         swerveDrivePoseEstimatorLL = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics,
                 Rotation2d.fromDegrees(gyroInputs.yawDegrees), getModulePositions(), new Pose2d());

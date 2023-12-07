@@ -8,8 +8,10 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxPIDController.ArbFFUnits;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.PWM;
 //import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Constants;
 
 public class IntakeIOSparkMax implements IntakeIO {
@@ -19,7 +21,8 @@ public class IntakeIOSparkMax implements IntakeIO {
   private final RelativeEncoder intakeEncoder;
 
   private final SparkMaxPIDController intakePidController;
-  private final Spark lightStrips = new Spark(3);
+  //private final Spark lightStrips = new Spark(3);
+  private final PWM lightStrips = new PWM(3);
   private double motorVelocitySetPointRPM = 0.0;
 
   public double motorVelocityRPM = 0.0;
@@ -66,14 +69,27 @@ public class IntakeIOSparkMax implements IntakeIO {
   
   @Override
   public void setLEDsPurple() {
-    lightStrips.set(0.91);
+    lightStrips.setPosition(0.955);
   }
 
   @Override
   public void setLEDsYellow() {
-    lightStrips.set(0.67);
+    lightStrips.setPosition(0.835);
   }
+  @Override
+  public void fixLights(boolean ConeMode){
+    lightStrips.setRaw(1645);
+    Timer.delay(0.3);
+    lightStrips.setPosition(0.885);
 
+    if(ConeMode){
+      setLEDsYellow();
+    }
+    else{
+      setLEDsPurple();
+    }
+    
+  }
   @Override
   public void setCurrentLimit(int amps) {
     // stop();

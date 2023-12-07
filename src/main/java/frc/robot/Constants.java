@@ -30,7 +30,8 @@ public final class Constants {
     public static final double rotationStickDeadband = 0.08;
 
     public static final class Swerve {
-        
+        public static final int pigeonID = 15;
+        public static final boolean pigeonMode = true;
         public static final boolean invertGyro = true; // Always ensure Gyro is CCW+ CW-
         public static final boolean teleopIsOpenLoop = false;
         public static final boolean fieldRelative = true; //note changing to false will not change operation mode
@@ -161,11 +162,11 @@ public final class Constants {
     }
     public static final class AutoConstants {
         public static final boolean readAllianceColortoFlipPaths = true;
-
-        public static final double kMaxSpeedMetersPerSecond = 1.8;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 1.0;
-        public static final double kMaxAngularSpeedRadiansPerSecond = 0.1*Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 0.1*Math.PI;
+        public static final double BalanceSpeed=0.25; //m/s
+        public static final double kMaxSpeedMetersPerSecond = 4;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 4;
+        public static final double kMaxAngularSpeedRadiansPerSecond = 1*Math.PI;
+        public static final double kMaxAngularSpeedRadiansPerSecondSquared = 1*Math.PI;
 
         public static final PIDConstants translationPIDConstants = new PIDConstants(0.1, 0.0, 0.0);
         public static final PIDConstants rotationPIDConstants = new PIDConstants(0.7, 0.0, 0.0);
@@ -208,8 +209,8 @@ public final class Constants {
         public static final double autoPositionErrorInch = 2.0;
 
         //Elevator details
-        public static final double maxLinearVelocityInchPerSec = 28.0;
-        public static final double maxLinearAccelerationInchPerSec = 28.0;
+        public static final double maxLinearVelocityInchPerSec = 50;
+        public static final double maxLinearAccelerationInchPerSec = 50;
 
         //Inches
         public static final double elevatorSoftLimitLowerInch = 0;
@@ -245,20 +246,20 @@ public final class Constants {
         public static final double kMinOutput = -1.0;
         public static final int kTimeoutMs = 30;
 
-        public static final int maxCurrentAmps = 30;
+        public static final int maxCurrentAmps = 60;
 
-        public static final double maxAngularVelocityRPM = 1200.0;
-        public static final double maxAngularAccRPMPerSec = 1500.0;
+        public static final double maxAngularVelocityRPM = 10000.0;
+        public static final double maxAngularAccRPMPerSec = 10000.0;
         public static final double minOutputVelocityRPM = 20.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 1.4*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 60;
-        public static final double maxLinearAccelerationInchPerSec = 70;
+        public static final double maxLinearVelocityInchPerSec = 110;
+        public static final double maxLinearAccelerationInchPerSec = 140;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 14.6;
+        public static final double sliderOut = 7.0; //14.6 maximum
         public static final double sliderSoftLimitUpperInch = 15.0;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
@@ -305,7 +306,7 @@ public final class Constants {
         public static final double holdCubeVoltage = 4.0;
         public static final double holdConeVoltage = -3.2;
 
-        public static final double intakeInCubeVoltage = 6.0;
+        public static final double intakeInCubeVoltage = 8.0;
         public static final double intakeOutCubeVoltage = -5.0;
         
         public static final double intakeInConeVoltage = -7.0;

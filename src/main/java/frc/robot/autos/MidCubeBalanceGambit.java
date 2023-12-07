@@ -28,30 +28,28 @@ import frc.robot.subsystems.elevator.Elevator;
 
 import frc.robot.subsystems.slider.Slider;
 
-public class Mid_Cube_Balance extends SequentialCommandGroup {
-    List<PathPlannerTrajectory> backOffPath = PathPlanner.loadPathGroup("Back_Off_Grid_Bal", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-    List<PathPlannerTrajectory> balancePath= PathPlanner.loadPathGroup("Optimal_Balance", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+public class MidCubeBalanceGambit extends SequentialCommandGroup {
+    List<PathPlannerTrajectory> backOffPath = PathPlanner.loadPathGroup("Middle out and back", new PathConstraints(1.5, 2));
+    //List<PathPlannerTrajectory> balancePath= PathPlanner.loadPathGroup("Optimal_Balance", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     //final HashMap<String, Command> eventMap = new HashMap<String, Command>();
-    final Command backOffGridCommand;
-    final Command balanceCommand;
+    final Command OutAndBackPathCommand;
     public final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
-    public Mid_Cube_Balance(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
+    public MidCubeBalanceGambit(Swerve s_Swerve, Intake intake, Elevator elevator,Slider slider){
    
-        backOffGridCommand = s_Swerve.swerveAutoBuilder.fullAuto (backOffPath);
-        balanceCommand = s_Swerve.swerveAutoBuilder.fullAuto (balancePath);
+        OutAndBackPathCommand = s_Swerve.swerveAutoBuilder.fullAuto (backOffPath);
+        //balanceCommand = s_Swerve.swerveAutoBuilder.fullAuto (balancePath);
         //s_Swerve.resetPose(
         
         addCommands(
-        new InstantCommand(() -> intake.setIntakeModeCone()),
+        new InstantCommand(() -> intake.setIntakeModeCube()),
+        //new InstantCommand(() ->  intake.holdCurrent()),
         s_Swerve.swerveAutoBuilder.resetPose(backOffPath.get(0)),
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosTop,5.0,elevator).withTimeout(3.0),
         new SliderGoToPosition(Constants.SliderSubsystem.sliderOut,0.5,slider).withTimeout(3.0),
-        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.75), //make time based
-        backOffGridCommand,
-        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),
-        ////followMidPath,   
+        new StartEndCommand(() ->  intake.intakeOut(),intake::stop,intake).withTimeout(0.3), //make time based
+        new SliderGoToPosition(Constants.SliderSubsystem.sliderIn,5.0,slider).withTimeout(3.0),  
         new ElevatorGoToPosition(Constants.ElevatorSubsystem.elevatorPosBottom,6.0,elevator).withTimeout(3.0),
-        balanceCommand,
+        OutAndBackPathCommand,
         new GetOnChargeStationFromGrid(s_Swerve)
         );
         
