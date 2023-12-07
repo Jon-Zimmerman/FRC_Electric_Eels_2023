@@ -246,20 +246,20 @@ public final class Constants {
         public static final double kMinOutput = -1.0;
         public static final int kTimeoutMs = 30;
 
-        public static final int maxCurrentAmps = 30;
+        public static final int maxCurrentAmps = 60;
 
-        public static final double maxAngularVelocityRPM = 1200.0;
-        public static final double maxAngularAccRPMPerSec = 1500.0;
+        public static final double maxAngularVelocityRPM = 10000.0;
+        public static final double maxAngularAccRPMPerSec = 10000.0;
         public static final double minOutputVelocityRPM = 20.0; //requests below this no voltage output
         public static final double allowableSmartMotionPosErrorRotations = 1.4*gearRatio;
         public static final double autoPositionErrorInch = 2.0;
 
-        public static final double maxLinearVelocityInchPerSec = 60;
-        public static final double maxLinearAccelerationInchPerSec = 70;
+        public static final double maxLinearVelocityInchPerSec = 110;
+        public static final double maxLinearAccelerationInchPerSec = 140;
         //Inches
         public static final double sliderSoftLimitLowerInch = 0.0;
         public static final double sliderIn = 0.0;
-        public static final double sliderOut = 14.6;
+        public static final double sliderOut = 7.0; //14.6 maximum
         public static final double sliderSoftLimitUpperInch = 15.0;
 
         public static final double simCarriageWeightKg = 4.0; // ~20 lbs
